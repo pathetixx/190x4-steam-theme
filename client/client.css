@@ -1,17 +1,35 @@
 /* ============================================================================
-   190x4 — STEAM THEME · client.css  (CSS-ONLY, no runtime JS)
-   Инжектится во ВСЕ окна Steam (".*"), включая SharedJSContext, где живёт UI.
-   §1 ФУНДАМЕНТ — без классов (фон, шрифт, скроллбар, focus, акцент-переменные).
-   §2 ЦЕЛИ — реальные хеш-классы из дампа реестра (classmap, build 1780352834,
-      2026-06-04). Хеши Steam меняются на апдейтах — рефреш через tools/2-dump.ps1
-      и пересборку этого файла. НИКАКОГО рантайм-резолвера: его eager require()
-      по всем webpack-модулям ронял Steam на старте.
-   Цвета — из theme/colors.css.
+   190x4 — STEAM THEME · client.css  (CSS-ONLY, инъекция через ^Steam$)
+   Структура повторяет рабочие темы (GoldenEra): основной CSS клиента вешается на
+   ^Steam$ — это и грузит Steam без краша, и достаёт DOM библиотеки.
+   НЕ использовать ".*" (роняет клиент на старте) и НЕ использовать рантайм-JS
+   (eager require по webpack-модулям ронял Steam).
+   :root-токены продублированы прямо здесь, чтобы var() резолвился в этом окне
+   независимо от RootColors. Палитра-источник — theme/colors.css.
+   Хеш-классы из дампа реестра (build 1780352834, 2026-06-04) — рефреш через
+   tools/2-dump.ps1 при апдейте Steam.
    ============================================================================ */
 
-/* §1 ============================================================ ФУНДАМЕНТ */
-body { background: var(--x4-bg-0) !important; color: var(--x4-text-md); font-family: var(--x4-f-ui); }
+:root {
+  --x4-bg-0: #07090d; --x4-bg-1: #0d1016; --x4-bg-2: #11151d; --x4-bg-3: #161b25;
+  --x4-line: rgba(255,255,255,.06); --x4-line-2: rgba(255,255,255,.10);
+  --x4-accent: #ff2530; --x4-accent-2: #ff3a44; --x4-accent-dim: #b3121b;
+  --x4-accent-deep: #4a0a0f; --x4-accent-soft: rgba(255,37,48,.12);
+  --x4-accent-line: rgba(255,37,48,.40);
+  --x4-glow: 0 0 12px rgba(255,37,48,.55);
+  --x4-glow-lg: 0 0 22px rgba(255,37,48,.45), 0 0 4px rgba(255,37,48,.8);
+  --x4-text-hi: #e8edf4; --x4-text-md: #b6bfcd; --x4-text-lo: #8a93a3;
+  --x4-r-sm: 2px; --x4-r-md: 3px; --x4-r-lg: 5px;
+  --x4-f-ui: 'Saira','Motiva Sans',sans-serif;
+  --x4-ease: cubic-bezier(.2,.7,.3,1);
+  /* core-переменные Steam → бренд */
+  --SystemAccentColor: #ff2530;
+  --SystemAccentColorLight1: #ff3a44; --SystemAccentColorLight2: #ff5560;
+  --SystemAccentColorDark1: #b3121b; --SystemAccentColorDark2: #4a0a0f;
+  --highlight-color: #ff2530; --gpFocusRingColor: #ff2530;
+}
 
+/* §1 ============================================================ ФУНДАМЕНТ */
 ::-webkit-scrollbar { width: 10px; height: 10px; }
 ::-webkit-scrollbar-track { background: rgba(0,0,0,.25); }
 ::-webkit-scrollbar-thumb {
@@ -30,22 +48,20 @@ body { background: var(--x4-bg-0) !important; color: var(--x4-text-md); font-fam
   border-bottom: 1px solid var(--x4-line);
 }
 
-/* активная вкладка верхней навигации (ActiveTab) — красное подчёркивание */
+/* активная вкладка верхней навигации (ActiveTab) */
 .oIVg-eNHeYCNPq0blN3Dk {
   color: #fff !important; text-shadow: 0 0 10px rgba(255,37,48,.35);
   box-shadow: inset 0 -2px 0 var(--x4-accent), 0 2px 12px -4px var(--x4-accent);
 }
 
-/* сайдбар-список библиотеки (GameList) */
+/* список библиотеки (GameList) */
 ._1e6tjguQEHdYIehM9aRmO5 { background: var(--x4-bg-1) !important; }
 
-/* строка игры в списке (GameListEntryContainer) — hover */
+/* строка игры (GameListEntryContainer) — hover */
 ._1vO6BoiVslZgs1kqDGdUs8:hover { background: rgba(255,255,255,.04); }
 
-/* капсула-обложка (CapsuleImage) — hover-подъём + красный glow */
-._2eQ4mkpf4IzUp1e9NnM2Wr {
-  transition: transform .18s var(--x4-ease), box-shadow .18s var(--x4-ease);
-}
+/* обложка-капсула (CapsuleImage) — hover glow */
+._2eQ4mkpf4IzUp1e9NnM2Wr { transition: transform .18s var(--x4-ease), box-shadow .18s var(--x4-ease); }
 ._2eQ4mkpf4IzUp1e9NnM2Wr:hover {
   transform: translateY(-4px);
   box-shadow: var(--x4-glow), 0 0 0 1px var(--x4-accent-line);
@@ -65,13 +81,13 @@ body { background: var(--x4-bg-0) !important; color: var(--x4-text-md); font-fam
   filter: brightness(1.06);
 }
 
-/* прогресс загрузки/установки (ProgressBar) — красный градиент */
+/* прогресс загрузки (ProgressBar) */
 ._2VCd-2F_zasXcshwdbxHXo {
   background: linear-gradient(90deg, var(--x4-accent-dim), var(--x4-accent)) !important;
   box-shadow: var(--x4-glow);
 }
 
-/* тоггл включён (ToggleOn) — красный */
+/* тоггл включён (ToggleOn) */
 .IRQmSFtn3V-ntcKzv-fxE {
   background: linear-gradient(180deg, var(--x4-accent-2), var(--x4-accent-dim)) !important;
   box-shadow: var(--x4-glow);
