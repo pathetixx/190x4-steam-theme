@@ -2,10 +2,30 @@
    190x4 — STEAM THEME · store.css  (Steam-WebKit)
    Магазин/сообщество (*.steampowered.com, steamcommunity.com) + in-game overlay.
    Эти страницы — обычный HTML со стабильными «человеческими» классами, поэтому
-   адресуем напрямую (в отличие от клиента, где нужен resolver). Цвета — colors.css.
+   адресуем напрямую (в отличие от клиента, где нужен resolver).
+   ВАЖНО: документ магазина/сообщества ОТДЕЛЬНЫЙ от клиента — наши --x4-*
+   переменные тут НЕ наследуются от RootColors, поэтому объявляем их прямо здесь,
+   иначе все var() пустые и страница остаётся дефолтной.
    ============================================================================ */
-html, body, .responsive_page_frame, #global_header, .pagecontent {
-  background: var(--x4-bg-0) !important; color: var(--x4-text-md);
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;800&family=Saira:wght@300;400;500;600;700&family=Saira+Semi+Condensed:wght@500;600;700&display=swap');
+
+:root {
+  --x4-bg-0: #07090d; --x4-bg-1: #0d1016; --x4-bg-2: #11151d; --x4-bg-3: #161b25;
+  --x4-line: rgba(255,255,255,.06); --x4-line-2: rgba(255,255,255,.10);
+  --x4-accent: #ff2530; --x4-accent-2: #ff3a44; --x4-accent-dim: #b3121b; --x4-accent-deep: #4a0a0f;
+  --x4-accent-soft: rgba(255,37,48,.12); --x4-accent-line: rgba(255,37,48,.40);
+  --x4-glow: 0 0 12px rgba(255,37,48,.55);
+  --x4-glow-lg: 0 0 22px rgba(255,37,48,.45), 0 0 4px rgba(255,37,48,.8);
+  --x4-text-hi: #e8edf4; --x4-text-md: #b6bfcd; --x4-text-lo: #8a93a3;
+  --x4-r-md: 3px; --x4-ease: cubic-bezier(.2,.7,.3,1);
+  --x4-f-ui: 'Saira', 'Motiva Sans', sans-serif;
+  --x4-f-display: 'Orbitron', sans-serif;
+}
+
+html, body, .responsive_page_frame, #global_header, .pagecontent,
+.responsive_page_template_content, .page_content_ctn, .apphub_background,
+.community_home, .pageheader, #footer, .footer_content {
+  background-color: var(--x4-bg-0) !important; color: var(--x4-text-md);
   font-family: var(--x4-f-ui) !important;
 }
 ::-webkit-scrollbar { width: 10px; height: 10px; }

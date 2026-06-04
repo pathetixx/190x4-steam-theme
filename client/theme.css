@@ -237,10 +237,12 @@ body.DesktopUI ._3O48LaKWcabKx07xdrt1TH {
 
 /* --- ЛОГО 190x4 вместо текста «Steam» в левом углу топбара --- */
 body.DesktopUI .bSKGlAJG2UVWTsntEJY2v {
-  font-size: 0 !important;            /* прячем родной «Steam» */
-  display: inline-flex !important; align-items: center !important;
+  font-size: 0 !important;            /* прячем родной текст «Steam» */
+  display: inline-flex !important; align-items: center !important; gap: 0 !important;
   font-family: 'Orbitron', sans-serif !important; line-height: 1 !important;
 }
+/* прячем дочернюю иконку Steam (img/svg) — оставляем только вордмарк 190x4 */
+body.DesktopUI .bSKGlAJG2UVWTsntEJY2v > * { display: none !important; }
 body.DesktopUI .bSKGlAJG2UVWTsntEJY2v::before {
   content: "190"; font-size: 15px !important; font-weight: 800 !important;
   color: rgb(var(--x4-fg-rgb)) !important; letter-spacing: .5px !important;
