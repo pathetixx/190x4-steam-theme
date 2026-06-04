@@ -14,7 +14,9 @@
   --x4-text-hi: #e8edf4; --x4-text-md: #c2cad8; --x4-f-ui: 'Saira','Motiva Sans',sans-serif;
 }
 
-html, body { background-color: transparent !important; font-family: var(--x4-f-ui) !important; }
+/* НЕ трогаем html/body окна-попапа: прозрачный фон ломал модалку перезапуска
+   (контент уходил в пустоту). Красим только сами контейнеры меню/модалок ниже. */
+body { font-family: var(--x4-f-ui) !important; }
 
 /* тело меню/попапа */
 .ContextMenuPopupBody, .contextMenuContents,

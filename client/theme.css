@@ -4,37 +4,37 @@
 /* == _stable.css == */
 /* Стабильные НЕхешированные классы Steam (диалоги/настройки/легаси контекст-меню,*/
 /* скролл/выделение). Не в module-карте -> файл в ignore, селекторы литеральные.*/
-::-webkit-scrollbar {
+body.DesktopUI ::-webkit-scrollbar {
   width: 10px !important;
   height: 10px !important;
 }
 
-::-webkit-scrollbar-track {
+body.DesktopUI ::-webkit-scrollbar-track {
   background: rgba(0, 0, 0, 0.25) !important;
 }
 
-::-webkit-scrollbar-thumb {
+body.DesktopUI ::-webkit-scrollbar-thumb {
   background: rgba(255, 37, 48, 0.55) !important;
   border: 2px solid transparent !important;
   background-clip: padding-box !important;
   border-radius: 6px !important;
 }
 
-:hover::-webkit-scrollbar-thumb {
+body.DesktopUI :hover::-webkit-scrollbar-thumb {
   background: var(--x4-accent) !important;
   background-clip: padding-box !important;
 }
 
-::selection {
+body.DesktopUI ::selection {
   background: rgba(255, 37, 48, 0.3) !important;
   color: #fff !important;
 }
 
-:focus-visible {
+body.DesktopUI :focus-visible {
   outline-color: var(--x4-accent) !important;
 }
 
-:where(.DialogButton) {
+body.DesktopUI :where(.DialogButton) {
   appearance: none !important;
   background-image: none !important;
   background-color: var(--x4-bg-3) !important;
@@ -45,68 +45,68 @@
   transition: background 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease !important;
 }
 
-:where(.DialogButton):hover {
+body.DesktopUI :where(.DialogButton):hover {
   background-color: var(--x4-accent-soft) !important;
   border-color: rgba(255, 37, 48, 0.6) !important;
 }
 
-:where(.DialogButton):active {
+body.DesktopUI :where(.DialogButton):active {
   box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.5) !important;
 }
 
-:where(.DialogButton).Primary {
+body.DesktopUI :where(.DialogButton).Primary {
   background: linear-gradient(180deg, var(--x4-accent-2), var(--x4-accent-dim)) !important;
   border-color: rgba(255, 120, 120, 0.5) !important;
   color: #fff !important;
   box-shadow: var(--x4-glow), inset 0 1px 0 rgba(255, 255, 255, 0.22) !important;
 }
 
-:where(.DialogButton).Primary:hover {
+body.DesktopUI :where(.DialogButton).Primary:hover {
   filter: brightness(1.08) !important;
   box-shadow: var(--x4-glow-lg), inset 0 1px 0 rgba(255, 255, 255, 0.28) !important;
 }
 
-.DialogBody, .DialogContent, .DialogInnerBody, .DialogControlsSection, .DialogContentTransition {
+body.DesktopUI .DialogBody, body.DesktopUI .DialogContent, body.DesktopUI .DialogInnerBody, body.DesktopUI .DialogControlsSection, body.DesktopUI .DialogContentTransition {
   background-color: var(--x4-bg-1) !important;
   color: var(--x4-fg) !important;
 }
 
-.DialogHeader, .DialogControlsSectionHeader {
+body.DesktopUI .DialogHeader, body.DesktopUI .DialogControlsSectionHeader {
   border-bottom: 1px solid var(--x4-accent-line) !important;
   color: var(--x4-fg) !important;
 }
 
-.DialogInput, .DialogInput_Wrapper, .DialogTextInputBase, .DialogDropDown, .DialogDropDown_CurrentDisplay {
+body.DesktopUI .DialogInput, body.DesktopUI .DialogInput_Wrapper, body.DesktopUI .DialogTextInputBase, body.DesktopUI .DialogDropDown, body.DesktopUI .DialogDropDown_CurrentDisplay {
   background-color: var(--x4-bg-3) !important;
   color: var(--x4-fg) !important;
   border: 1px solid rgba(255, 255, 255, 0.12) !important;
 }
 
-.DialogInput:focus, .DialogTextInputBase:focus-within {
+body.DesktopUI .DialogInput:focus, body.DesktopUI .DialogTextInputBase:focus-within {
   border-color: var(--x4-accent) !important;
   box-shadow: 0 0 0 1px rgba(255, 37, 48, 0.5) !important;
 }
 
-.DialogSlider_Slider .DialogSlider_Grabber {
+body.DesktopUI .DialogSlider_Slider .DialogSlider_Grabber {
   background: var(--x4-accent) !important;
 }
 
-.DialogCheckbox:checked, .DialogRoundCheckboxField_Control[class*=Checked] {
+body.DesktopUI .DialogCheckbox:checked, body.DesktopUI .DialogRoundCheckboxField_Control[class*=Checked] {
   background: var(--x4-accent) !important;
 }
 
-.ContextMenuPopupBody, .contextMenuContents {
+body.DesktopUI .ContextMenuPopupBody, body.DesktopUI .contextMenuContents {
   background-color: var(--x4-bg-1) !important;
   border: 1px solid var(--x4-accent-line) !important;
   color: var(--x4-fg) !important;
 }
 
-.ContextMenuButton:hover, .contextMenuItem:hover {
+body.DesktopUI .ContextMenuButton:hover, body.DesktopUI .contextMenuItem:hover {
   background-color: var(--x4-accent-soft) !important;
   color: #fff !important;
 }
 
-.title-area-highlight {
+body.DesktopUI .title-area-highlight {
   background-image: linear-gradient(to right, rgba(255, 37, 48, 0.5), transparent) !important;
 }
 
@@ -114,7 +114,7 @@
 /* 190x4 - дизайн-токены (источник правды: design/theme.css). Файл в ignore*/
 /* steam-theming-utils -> селекторы не трогаются, остаётся чистый :root.*/
 @import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;800&family=Saira:wght@300;400;500;600;700&family=Saira+Semi+Condensed:wght@500;600;700&display=swap");
-:root {
+body.DesktopUI {
   --x4-bg-0: #07090d;
   --x4-bg-1: #0d1016;
   --x4-bg-2: #11151d;
@@ -136,7 +136,7 @@
 
 /* Мост токенов SteamUI: перебиваем системный акцент в красную гамму. :root*/
 /* исключён из авто-!important -> ставим вручную, чтобы бить инлайн-токены Steam.*/
-:root {
+body.DesktopUI {
   --SystemAccentColorDark3: #4d0509 !important;
   --SystemAccentColorDark3-RGB: 77,5,9 !important;
   --SystemAccentColorDark2: #7d0d13 !important;
@@ -162,40 +162,40 @@
   --MillenniumTextColor-Error: #ff4a54 !important;
 }
 
-body {
-  font-family: var(--x4-f-ui) !important;
+body.DesktopUI {
+  font-family: var(--x4-f-ui);
 }
 
 /* == appactionbutton.css == */
 /* Кнопка <Играть>: зелёная заливка -> красный неон.*/
-._1FnJ6dPuknQFQ2RTpKTI16 {
+body.DesktopUI ._1FnJ6dPuknQFQ2RTpKTI16 {
   border-radius: 3px !important;
   box-shadow: var(--x4-glow), inset 0 1px 0 rgba(255, 255, 255, 0.22) !important;
 }
 
-._3ydigb6zZAjJ0JCDgHwSYA, ._2AzIX5kl9k6JnxLfR5H4kX, ._3cI5TXsFX3bvpR-7EBOtxq {
+body.DesktopUI ._3ydigb6zZAjJ0JCDgHwSYA, body.DesktopUI ._2AzIX5kl9k6JnxLfR5H4kX, body.DesktopUI ._3cI5TXsFX3bvpR-7EBOtxq {
   background-image: linear-gradient(180deg, var(--x4-accent-2), var(--x4-accent-dim)) !important;
   background-color: var(--x4-accent-dim) !important;
   color: #fff !important;
 }
 
-._33cnXIqTRgRr49_FNXIHj6 {
+body.DesktopUI ._33cnXIqTRgRr49_FNXIHj6 {
   text-shadow: inherit !important;
 }
 
 /* == appdetailsfeatureicon.css == */
 /* Стат-блоки экшн-бара (Облачные сохр./Посл.запуск/Вы играли/Достижения):*/
 /* иконки -> красный, лейблы -> uppercase (эталон 03-game).*/
-._2RwHEhnDQNfN31QK-EOHy7 {
+body.DesktopUI ._2RwHEhnDQNfN31QK-EOHy7 {
   color: var(--x4-accent) !important;
 }
 
-._2RwHEhnDQNfN31QK-EOHy7 svg {
+body.DesktopUI ._2RwHEhnDQNfN31QK-EOHy7 svg {
   color: var(--x4-accent) !important;
   fill: var(--x4-accent) !important;
 }
 
-._1VoVzLPXjhlaguJLgO8htG {
+body.DesktopUI ._1VoVzLPXjhlaguJLgO8htG {
   text-transform: uppercase !important;
   letter-spacing: 0.8px !important;
   font-weight: 600 !important;
@@ -203,38 +203,38 @@ body {
 }
 
 /* == appdetailsplaysection.css == */
-._2zxzStp5qY5M1evOm8keES {
+body.DesktopUI ._2zxzStp5qY5M1evOm8keES {
   background: transparent !important;
 }
 
-._3fLo166MlaNqP8r8tTyRz {
+body.DesktopUI ._3fLo166MlaNqP8r8tTyRz {
   border-top: 1px solid var(--x4-accent-line) !important;
 }
 
-._3qDWQGB0rtwM3qpXTb11Q-:hover, ._2v1XDHrL4pTW4qCXaYUPG6:hover {
+body.DesktopUI ._3qDWQGB0rtwM3qpXTb11Q-:hover, body.DesktopUI ._2v1XDHrL4pTW4qCXaYUPG6:hover {
   color: var(--x4-accent-2) !important;
 }
 
 /* == appdetailsprimarylinkssection.css == */
 /* Табы под экшн-баром (Страница в магазине/Доп.контент/...): uppercase + красный ховер.*/
-.DY4_wSF8h9T5o46hO5I9V, ._1b6LYWVijW-9E4YV0keDWZ, ._2NqVq4PVcmWt9enYtvzRf-, ._2sNDjgK9EWiPLdNGkjun-w {
+body.DesktopUI .DY4_wSF8h9T5o46hO5I9V, body.DesktopUI ._1b6LYWVijW-9E4YV0keDWZ, body.DesktopUI ._2NqVq4PVcmWt9enYtvzRf-, body.DesktopUI ._2sNDjgK9EWiPLdNGkjun-w {
   text-transform: uppercase !important;
   letter-spacing: 0.8px !important;
   font-weight: 600 !important;
   transition: color 0.15s ease !important;
 }
 
-.DY4_wSF8h9T5o46hO5I9V:hover, ._1b6LYWVijW-9E4YV0keDWZ:hover, ._2NqVq4PVcmWt9enYtvzRf-:hover {
+body.DesktopUI .DY4_wSF8h9T5o46hO5I9V:hover, body.DesktopUI ._1b6LYWVijW-9E4YV0keDWZ:hover, body.DesktopUI ._2NqVq4PVcmWt9enYtvzRf-:hover {
   color: var(--x4-accent-2) !important;
 }
 
 /* == appdetailssectionheader.css == */
 /* ЗАГОЛОВКИ СЕКЦИЙ ПРАВОЙ ПАНЕЛИ (Активность/Друзья/Достижения...): красная риска.*/
-._1Q2q_tQ9_Eq8YdEHNAHS3F {
+body.DesktopUI ._1Q2q_tQ9_Eq8YdEHNAHS3F {
   position: relative !important;
 }
 
-._1Q2q_tQ9_Eq8YdEHNAHS3F::before {
+body.DesktopUI ._1Q2q_tQ9_Eq8YdEHNAHS3F::before {
   content: "" !important;
   position: absolute !important;
   left: 0 !important;
@@ -246,7 +246,7 @@ body {
   box-shadow: var(--x4-glow) !important;
 }
 
-._1SQ30LQnUhED7sXI79rmas, ._3i0kopAostOz2IDi9HqmeN {
+body.DesktopUI ._1SQ30LQnUhED7sXI79rmas, body.DesktopUI ._3i0kopAostOz2IDi9HqmeN {
   text-transform: uppercase !important;
   letter-spacing: 0.8px !important;
   font-weight: 600 !important;
@@ -254,54 +254,54 @@ body {
 }
 
 /* == appportrait.css == */
-._13w3SEbKLJRUhSyoGQZze8 {
+body.DesktopUI ._13w3SEbKLJRUhSyoGQZze8 {
   transition: transform 0.18s ease, box-shadow 0.18s ease !important;
 }
 
-._13w3SEbKLJRUhSyoGQZze8:hover {
+body.DesktopUI ._13w3SEbKLJRUhSyoGQZze8:hover {
   transform: translateY(-3px) !important;
   box-shadow: var(--x4-glow), 0 0 0 1px var(--x4-accent-line) !important;
 }
 
 /* == bottombar.css == */
 /* Нижний бар (загрузки): графит + красный прогресс.*/
-._3vCzSrrXZzZjVJFZNg9SGu, ._1_yS5UP7el0aN4vntx3dx {
+body.DesktopUI ._3vCzSrrXZzZjVJFZNg9SGu, body.DesktopUI ._1_yS5UP7el0aN4vntx3dx {
   background-color: var(--x4-bg-1) !important;
   border-top: 1px solid rgba(255, 37, 48, 0.18) !important;
 }
 
-.wi0pDywRgOCxhG7OqQNaA {
+body.DesktopUI .wi0pDywRgOCxhG7OqQNaA {
   background-color: var(--x4-accent) !important;
 }
 
-._1KrJ3sFAqPBN9mfpaNTU5F svg {
+body.DesktopUI ._1KrJ3sFAqPBN9mfpaNTU5F svg {
   color: var(--x4-accent) !important;
   fill: var(--x4-accent) !important;
 }
 
-._1TdaAqMFadi0UTqilrkelR:hover, ._2foCkpRXhqq0UGVE50BWqj:hover {
+body.DesktopUI ._1TdaAqMFadi0UTqilrkelR:hover, body.DesktopUI ._2foCkpRXhqq0UGVE50BWqj:hover {
   color: var(--x4-accent-2) !important;
 }
 
 /* == contextmenu.css == */
 /* Контекст-меню в клиенте (модульные классы).*/
-._2EstNjFIIZm_WUSKm5Wt7n, ._14wqdluDeDnnEcg3OSLEmd {
+body.DesktopUI ._2EstNjFIIZm_WUSKm5Wt7n, body.DesktopUI ._14wqdluDeDnnEcg3OSLEmd {
   background-color: var(--x4-bg-1) !important;
   border: 1px solid var(--x4-accent-line) !important;
   color: var(--x4-fg) !important;
   border-radius: 4px !important;
 }
 
-._1n7Wloe5jZ6fSuvV18NNWI:hover, ._1n7Wloe5jZ6fSuvV18NNWI.active {
+body.DesktopUI ._1n7Wloe5jZ6fSuvV18NNWI:hover, body.DesktopUI ._1n7Wloe5jZ6fSuvV18NNWI.active {
   background-color: var(--x4-accent-soft) !important;
   color: #fff !important;
 }
 
-.WUOrULWKkGLl3ZUQdDXg8 {
+body.DesktopUI .WUOrULWKkGLl3ZUQdDXg8 {
   background-color: rgba(255, 255, 255, 0.08) !important;
 }
 
-._2Bb4JC5n6anf32WgmTfeMP {
+body.DesktopUI ._2Bb4JC5n6anf32WgmTfeMP {
   color: var(--x4-fg-dim) !important;
   text-transform: uppercase !important;
   letter-spacing: 0.6px !important;
@@ -309,47 +309,47 @@ body {
 
 /* == downloads.css == */
 /* Страница загрузок: Play/Green/TopBar -> красный/панель.*/
-.MAz4a5CbYdLofX51lonjn, .sQZ70orTPi-ELUlaS-ywR {
+body.DesktopUI .MAz4a5CbYdLofX51lonjn, body.DesktopUI .sQZ70orTPi-ELUlaS-ywR {
   background-image: linear-gradient(180deg, var(--x4-accent-2), var(--x4-accent-dim)) !important;
   background-color: var(--x4-accent-dim) !important;
   color: #fff !important;
 }
 
-.SEmVpmXrYVl3OxL1sDFTg {
+body.DesktopUI .SEmVpmXrYVl3OxL1sDFTg {
   background-color: var(--x4-bg-1) !important;
 }
 
 /* == gamelistbar.css == */
 /* Сайдбар библиотеки: фон-градиент -> графит.*/
-._3x1HklzyDs4TEjACrRO2tB {
+body.DesktopUI ._3x1HklzyDs4TEjACrRO2tB {
   background-image: linear-gradient(var(--x4-bg-1) 0%, var(--x4-bg-0) 100%) !important;
 }
 
-._2TKEazUUS3TlniZfpc8OOe {
+body.DesktopUI ._2TKEazUUS3TlniZfpc8OOe {
   background-color: transparent !important;
 }
 
 /* == gamelistentry.css == */
 /* Список игр: hover + ВЫДЕЛЕННАЯ игра (#Selected) с красной риской слева.*/
-._2-O4ZG0KrnSrzISHBKctFQ:hover, ._1vO6BoiVslZgs1kqDGdUs8:hover {
+body.DesktopUI ._2-O4ZG0KrnSrzISHBKctFQ:hover, body.DesktopUI ._1vO6BoiVslZgs1kqDGdUs8:hover {
   background: rgba(232, 237, 244, 0.06) !important;
 }
 
-._1UBpAXP408Ez_L_mXhW5Q9 {
+body.DesktopUI ._1UBpAXP408Ez_L_mXhW5Q9 {
   background-color: var(--x4-accent-soft) !important;
   box-shadow: inset 3px 0 0 var(--x4-accent) !important;
 }
 
-._10GdoB3tQXXGFToQ3yY_SK {
+body.DesktopUI ._10GdoB3tQXXGFToQ3yY_SK {
   color: var(--x4-online) !important;
 }
 
-.cNZ3wORgnf1KSNhI2eE2M {
+body.DesktopUI .cNZ3wORgnf1KSNhI2eE2M {
   color: var(--x4-online) !important;
 }
 
 /* == gamelisthome.css == */
-._3O48LaKWcabKx07xdrt1TH {
+body.DesktopUI ._3O48LaKWcabKx07xdrt1TH {
   text-transform: uppercase !important;
   letter-spacing: 1.2px !important;
   font-weight: 600 !important;
@@ -357,13 +357,13 @@ body {
 
 /* == gamelistsectionheader.css == */
 /* Заголовки коллекций (Избранное/Без категории): красная риска + uppercase.*/
-._2sYIghGVXJr6tsQVvcryy8 {
+body.DesktopUI ._2sYIghGVXJr6tsQVvcryy8 {
   background-image: none !important;
   background-color: transparent !important;
   position: relative !important;
 }
 
-._2sYIghGVXJr6tsQVvcryy8::before {
+body.DesktopUI ._2sYIghGVXJr6tsQVvcryy8::before {
   content: "" !important;
   position: absolute !important;
   left: 0 !important;
@@ -375,45 +375,45 @@ body {
   box-shadow: var(--x4-glow) !important;
 }
 
-._2mZ8LlvoUiyeEUtIWuTri {
+body.DesktopUI ._2mZ8LlvoUiyeEUtIWuTri {
   text-transform: uppercase !important;
   letter-spacing: 1px !important;
   font-weight: 600 !important;
   color: var(--x4-fg) !important;
 }
 
-._1PxXcZNpN0cCxbnjEoTdYT {
+body.DesktopUI ._1PxXcZNpN0cCxbnjEoTdYT {
   background-color: rgba(255, 37, 48, 0.18) !important;
 }
 
 /* == library.css == */
-._3xRRJfD2xy95i9NhJxLTp0, ._3BFcmjAaMyP6GTPwc0VyWi, ._2Dd4T78PcCTUVgOtDGFY5j, ._2Nq6ov7A1hGcHXVOXNt_OE {
+body.DesktopUI ._3xRRJfD2xy95i9NhJxLTp0, body.DesktopUI ._3BFcmjAaMyP6GTPwc0VyWi, body.DesktopUI ._2Dd4T78PcCTUVgOtDGFY5j, body.DesktopUI ._2Nq6ov7A1hGcHXVOXNt_OE {
   background-color: var(--x4-bg-0) !important;
 }
 
-._34CqrAnD-hs0Fl08rfvoF5 {
+body.DesktopUI ._34CqrAnD-hs0Fl08rfvoF5 {
   background-image: linear-gradient(rgba(255, 37, 48, 0.06), transparent) !important;
 }
 
 /* == main.css == */
-._3UTzw3N80nelbkfxvveH0o:hover {
+body.DesktopUI ._3UTzw3N80nelbkfxvveH0o:hover {
   color: var(--x4-accent-2) !important;
 }
 
 /* == menu.css == */
 /* Выпадашки меню-бара (Steam/Вид/Друзья...).*/
-._2jXHP0742MyApMUVUM8IFn:hover, ._2uiDecKkKjAq7nimy3uLhG:hover {
+body.DesktopUI ._2jXHP0742MyApMUVUM8IFn:hover, body.DesktopUI ._2uiDecKkKjAq7nimy3uLhG:hover {
   background-color: var(--x4-accent-soft) !important;
   color: #fff !important;
 }
 
-._21GPYlKBCLsHQpTsHw_RL_ {
+body.DesktopUI ._21GPYlKBCLsHQpTsHw_RL_ {
   background-color: rgba(255, 255, 255, 0.08) !important;
 }
 
 /* == rootmenu.css == */
 /* Лого 190x4 на месте слота Steam + кнопки меню-бара.*/
-.bSKGlAJG2UVWTsntEJY2v {
+body.DesktopUI .bSKGlAJG2UVWTsntEJY2v {
   font-size: 0 !important;
   display: inline-flex !important;
   align-items: center !important;
@@ -422,11 +422,11 @@ body {
   line-height: 1 !important;
 }
 
-.bSKGlAJG2UVWTsntEJY2v > * {
+body.DesktopUI .bSKGlAJG2UVWTsntEJY2v > * {
   display: none !important;
 }
 
-.bSKGlAJG2UVWTsntEJY2v::before {
+body.DesktopUI .bSKGlAJG2UVWTsntEJY2v::before {
   content: "190" !important;
   font-size: 15px !important;
   font-weight: 800 !important;
@@ -434,7 +434,7 @@ body {
   letter-spacing: 0.5px !important;
 }
 
-.bSKGlAJG2UVWTsntEJY2v::after {
+body.DesktopUI .bSKGlAJG2UVWTsntEJY2v::after {
   content: "x4" !important;
   font-size: 15px !important;
   font-weight: 800 !important;
@@ -443,11 +443,11 @@ body {
   text-shadow: 0 0 8px rgba(255, 37, 48, 0.7) !important;
 }
 
-._1Ky59qmywxOUtNcI1cgmkX {
+body.DesktopUI ._1Ky59qmywxOUtNcI1cgmkX {
   background: transparent !important;
 }
 
-._2UyOBeiSdBayaFdRa39N2O {
+body.DesktopUI ._2UyOBeiSdBayaFdRa39N2O {
   color: var(--x4-fg-dim) !important;
   text-transform: uppercase !important;
   letter-spacing: 0.6px !important;
@@ -456,33 +456,33 @@ body {
   transition: color 0.15s ease, background 0.15s ease !important;
 }
 
-._2UyOBeiSdBayaFdRa39N2O:hover {
+body.DesktopUI ._2UyOBeiSdBayaFdRa39N2O:hover {
   color: #fff !important;
   background: var(--x4-accent-soft) !important;
 }
 
 /* == smartscrollcontainer.css == */
 /* Hero-зона страницы игры: радиальный акцент-градиент вместо плоского.*/
-._3lDczhulqraStjCitLYJ1K {
+body.DesktopUI ._3lDczhulqraStjCitLYJ1K {
   background-image: radial-gradient(100% 100% at 45% 35%, rgba(255, 37, 48, 0.07), var(--x4-bg-0) 70%) !important;
 }
 
 /* == steamdesktop.css == */
 /* Рамка/окно: фоны -> графит, бары -> панель, нижняя акцент-нить.*/
-._1ENHEsrSLcTRtPQFl1F-wL, ._1rDh5rXSFZJOqCa4UpnI4z, ._3WJCt_OkjPA6npxOtguSt5, ._3mz8wQ6Q44B8P7pzPP4Iyw, .RGNMWtyj73_-WdhflrmuY {
+body.DesktopUI ._1ENHEsrSLcTRtPQFl1F-wL, body.DesktopUI ._1rDh5rXSFZJOqCa4UpnI4z, body.DesktopUI ._3WJCt_OkjPA6npxOtguSt5, body.DesktopUI ._3mz8wQ6Q44B8P7pzPP4Iyw, body.DesktopUI .RGNMWtyj73_-WdhflrmuY {
   background-color: var(--x4-bg-0) !important;
 }
 
-._3Z7VQ1IMk4E3HsHvrkLNgo, ._3Z3ohQ8-1NKnCZkbS6fvy, ._39oUCO1OuizVPwcnnv88no, ._30vB9DdsPK7VrZAbb5Q1Av {
+body.DesktopUI ._3Z7VQ1IMk4E3HsHvrkLNgo, body.DesktopUI ._3Z3ohQ8-1NKnCZkbS6fvy, body.DesktopUI ._39oUCO1OuizVPwcnnv88no, body.DesktopUI ._30vB9DdsPK7VrZAbb5Q1Av {
   background-color: var(--x4-bg-1) !important;
   box-shadow: none !important;
 }
 
-._39oUCO1OuizVPwcnnv88no {
+body.DesktopUI ._39oUCO1OuizVPwcnnv88no {
   border-bottom: 1px solid rgba(255, 37, 48, 0.22) !important;
 }
 
-._2CmrnGY-Amtd83ScJkFvx2, .UkR3sY319PuaUNuUWks2K {
+body.DesktopUI ._2CmrnGY-Amtd83ScJkFvx2, body.DesktopUI .UkR3sY319PuaUNuUWks2K {
   background: var(--x4-bg-3) !important;
   border: 1px solid rgba(255, 255, 255, 0.12) !important;
   border-radius: 3px !important;
@@ -490,7 +490,7 @@ body {
 
 /* == supernav.css == */
 /* Верхняя навигация (Магазин/Библиотека/Сообщество): uppercase + красный акцент.*/
-._19axKcqYRuaJ8vdYKYmtTQ {
+body.DesktopUI ._19axKcqYRuaJ8vdYKYmtTQ {
   text-transform: uppercase !important;
   letter-spacing: 1.4px !important;
   font-weight: 600 !important;
@@ -498,32 +498,32 @@ body {
   transition: color 0.15s ease !important;
 }
 
-._19axKcqYRuaJ8vdYKYmtTQ:hover, ._19axKcqYRuaJ8vdYKYmtTQ.Selected {
+body.DesktopUI ._19axKcqYRuaJ8vdYKYmtTQ:hover, body.DesktopUI ._19axKcqYRuaJ8vdYKYmtTQ.Selected {
   color: var(--x4-accent-2) !important;
 }
 
-._25lBLzuVeYAUG279up4xP8:hover {
+body.DesktopUI ._25lBLzuVeYAUG279up4xP8:hover {
   color: var(--x4-accent-2) !important;
 }
 
 /* == titlebarcontrols.css == */
 /* Колокол/баланс/кнопки окна управления.*/
-._5wILZhsLODVwGfcJ0hKmJ:hover, ._2jphjrSifC6orDT4g_7Wd:hover {
+body.DesktopUI ._5wILZhsLODVwGfcJ0hKmJ:hover, body.DesktopUI ._2jphjrSifC6orDT4g_7Wd:hover {
   color: var(--x4-accent-2) !important;
 }
 
-._2Szzh5sKyGgnLUR870zbDE:hover {
+body.DesktopUI ._2Szzh5sKyGgnLUR870zbDE:hover {
   background: var(--x4-accent-soft) !important;
   border-radius: 3px !important;
 }
 
-._1oEwirQksXfZ-3RWWslbAR {
+body.DesktopUI ._1oEwirQksXfZ-3RWWslbAR {
   color: var(--x4-accent) !important;
 }
 
 /* == updatealert.css == */
 /* Update-алерт (был сине-акцентный) -> красный.*/
-._2iJsgdTIX9Tj23rWnB7Q-c {
+body.DesktopUI ._2iJsgdTIX9Tj23rWnB7Q-c {
   background-color: var(--x4-accent) !important;
   color: #fff !important;
 }
