@@ -1,0 +1,84 @@
+/* ============================================================================
+   190x4 — STEAM THEME · client/theme.css
+   Архитектура проверенной темы Adwaita-for-Steam (переживает обновления Steam):
+     · инжект через ".*" во ВСЕ окна (а не ^Steam$ — он не доходит до библиотеки)
+     · скоуп body.DesktopUI — стабильный некешированный класс главного окна
+     · СТАБИЛЬНЫЕ селекторы [class*="module_Element_"] вместо голых хешей —
+       в DOM классы Steam идут как `gamelistentry_Container_<hash>`, и хеш-суффикс
+       меняется между сборками, а префикс — нет. Хеши из webpack-реестра в DOM
+       чистыми не появляются, поэтому отсюда выпилены.
+   Палитра — rgb-тройки в colors/root.css (RootColors), редактируется в
+   Settings → Themes → Edit. :root-фолбэк продублирован ниже.
+   ============================================================================ */
+
+:root {
+  --x4-accent-rgb: 255, 37, 48;
+  --x4-accent-2-rgb: 255, 58, 68;
+  --x4-accent-dim-rgb: 179, 18, 27;
+  --x4-accent-fg-rgb: 255, 255, 255;
+  --x4-window-bg-rgb: 7, 9, 13;
+  --x4-headerbar-bg-rgb: 13, 16, 22;
+  --x4-sidebar-bg-rgb: 11, 14, 20;
+  --x4-view-bg-rgb: 17, 21, 29;
+  --x4-fg-rgb: 232, 237, 244;
+  --x4-fg-dim-rgb: 138, 147, 163;
+}
+
+/* §1 ===================================================== СКРОЛЛБАР (red) */
+body.DesktopUI ::-webkit-scrollbar { width: 10px !important; height: 10px !important; }
+body.DesktopUI ::-webkit-scrollbar-track { background: rgba(0,0,0,.25) !important; }
+body.DesktopUI ::-webkit-scrollbar-thumb {
+  background: rgba(var(--x4-accent-rgb), .55) !important;
+  border: 2px solid transparent !important; background-clip: padding-box !important;
+  border-radius: 6px !important;
+}
+body.DesktopUI :hover::-webkit-scrollbar-thumb { background: rgb(var(--x4-accent-rgb)) !important; background-clip: padding-box !important; }
+body.DesktopUI ::selection { background: rgba(var(--x4-accent-rgb), .30) !important; color: #fff !important; }
+
+/* §2 ============================================ ФОНЫ ОКНА / БАРОВ / БИБЛИОТЕКИ */
+body.DesktopUI div[class*="steamdesktop_ContentFrame_"] { background: rgb(var(--x4-window-bg-rgb)) !important; }
+body.DesktopUI div[class*="steamdesktop_TopBar_"] { background: rgb(var(--x4-headerbar-bg-rgb)) !important; box-shadow: none !important; }
+body.DesktopUI div[class*="steamdesktop_SuperNavBar_"] { background: rgb(var(--x4-headerbar-bg-rgb)) !important; }
+body.DesktopUI div[class*="library_Container_"] { background: rgb(var(--x4-window-bg-rgb)) !important; }
+body.DesktopUI div[class*="gamelist_Container_"],
+body.DesktopUI div[class*="gamelistbar_Container_"] { background: rgb(var(--x4-sidebar-bg-rgb)) !important; }
+
+/* §3 ============================================ ВЕРХНЯЯ НАВИГАЦИЯ (Store/Library) */
+body.DesktopUI [class*="supernav_Selected_"] { color: rgb(var(--x4-accent-rgb)) !important; }
+body.DesktopUI [class*="supernav_MenuButton_"]:hover { color: rgb(var(--x4-accent-2-rgb)) !important; }
+
+/* §4 ===================================================== СПИСОК ИГР (sidebar) */
+body.DesktopUI div[class*="gamelistentry_Container_"] { border-radius: 3px !important; }
+body.DesktopUI div[class*="gamelistentry_Container_"]:hover { background: rgba(var(--x4-fg-rgb), .06) !important; }
+/* выбранная игра — красная подсветка + полоса */
+body.DesktopUI div[class*="gamelistentry_Container_"][class*="gamelistentry_Selected_"],
+body.DesktopUI div[class*="gamelistentry_Selected_"] > div[class*="gamelistentry_Container_"] {
+  background: rgba(var(--x4-accent-rgb), .16) !important;
+  box-shadow: inset 2px 0 0 rgb(var(--x4-accent-rgb)) !important;
+}
+/* обновляется / синхронизируется — акцентный текст */
+body.DesktopUI div[class*="gamelistentry_Container_"][class*="gamelistentry_Updating_"],
+body.DesktopUI div[class*="gamelistentry_Container_"][class*="gamelistentry_Synchronizing_"] { color: rgb(var(--x4-accent-rgb)) !important; }
+/* заголовок секции — выбран */
+body.DesktopUI div[class*="gamelistsectionheader_Container_"][class*="gamelistsectionheader_Selected_"] {
+  background: rgba(var(--x4-accent-rgb), .14) !important;
+}
+
+/* §5 ===================================================== КНОПКА «ИГРАТЬ» (red neon) */
+body.DesktopUI div[class*="library_AppDetailsMain_"] div[class*="appactionbutton_PlayButtonContainer_"],
+body.DesktopUI div[class*="library_AppDetailsMain_"] div[class*="appactionbutton_PlayButtonContainer_"][class*="appactionbutton_Green_"] {
+  background: linear-gradient(180deg, rgb(var(--x4-accent-2-rgb)), rgb(var(--x4-accent-dim-rgb))) !important;
+  color: rgb(var(--x4-accent-fg-rgb)) !important;
+  box-shadow: 0 0 12px rgba(var(--x4-accent-rgb), .55), inset 0 1px 0 rgba(255,255,255,.22) !important;
+}
+body.DesktopUI div[class*="library_AppDetailsMain_"] div[class*="appactionbutton_PlayButtonContainer_"][class*="appactionbutton_Green_"] div[class*="appactionbutton_ButtonText_"],
+body.DesktopUI div[class*="library_AppDetailsMain_"] div[class*="appactionbutton_PlayButtonContainer_"][class*="appactionbutton_Green_"] > div[class*="appactionbutton_ButtonChild_"] svg {
+  color: rgb(var(--x4-accent-fg-rgb)) !important; fill: rgb(var(--x4-accent-fg-rgb)) !important;
+}
+body.DesktopUI div[class*="library_AppDetailsMain_"] div[class*="appactionbutton_PlayButtonContainer_"]:hover {
+  filter: brightness(1.08);
+  box-shadow: 0 0 22px rgba(var(--x4-accent-rgb), .5), 0 0 4px rgba(var(--x4-accent-rgb), .8), inset 0 1px 0 rgba(255,255,255,.28) !important;
+}
+
+/* §6 ===================================================== FOCUS */
+body.DesktopUI :focus-visible { outline-color: rgb(var(--x4-accent-rgb)) !important; }

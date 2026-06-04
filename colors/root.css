@@ -1,14 +1,17 @@
 :root {
-  --custom-accent: #ff2530;
+  --x4-accent-rgb: 255, 37, 48;
+  --x4-accent-2-rgb: 255, 58, 68;
+  --x4-accent-dim-rgb: 179, 18, 27;
+  --x4-accent-fg-rgb: 255, 255, 255;
 
-  --main-background: #0d1016;
+  --x4-window-bg-rgb: 7, 9, 13;
+  --x4-headerbar-bg-rgb: 13, 16, 22;
+  --x4-sidebar-bg-rgb: 11, 14, 20;
+  --x4-view-bg-rgb: 17, 21, 29;
 
-  --offline-status: #59616f;
-  --online-status: #38e07b;
-  --idle-status: #4c91ac;
-  --ingame-status: #38e07b;
-  --ingameidle-status: #62813b;
+  --x4-fg-rgb: 232, 237, 244;
+  --x4-fg-dim-rgb: 138, 147, 163;
 
-  --green-color: #38e07b;
-  --purple-color: #834e8d;
+  --x4-online-rgb: 56, 224, 123;
+  --x4-offline-rgb: 89, 97, 111;
 }
