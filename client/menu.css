@@ -1,0 +1,54 @@
+/* ============================================================================
+   190x4 — STEAM THEME · client/menu.css
+   Контекст-/трей-меню Steam (target "Menu$"), модалки (".ModalDialogPopup")
+   и тосты-уведомления — ОТДЕЛЬНЫЕ popup-документы, наши --x4-* тут не
+   наследуются → объявляем здесь. Графит + красный неон, акцент-обводка.
+   ============================================================================ */
+@import url('https://fonts.googleapis.com/css2?family=Saira:wght@400;500;600;700&display=swap');
+
+:root {
+  --x4-bg-0: #07090d; --x4-bg-1: #0d1016; --x4-bg-2: #11151d; --x4-bg-3: #161b25;
+  --x4-line: rgba(255,255,255,.08); --x4-accent: #ff2530; --x4-accent-2: #ff3a44;
+  --x4-accent-soft: rgba(255,37,48,.16); --x4-accent-line: rgba(255,37,48,.35);
+  --x4-glow: 0 0 12px rgba(255,37,48,.45);
+  --x4-text-hi: #e8edf4; --x4-text-md: #c2cad8; --x4-f-ui: 'Saira','Motiva Sans',sans-serif;
+}
+
+html, body { background-color: transparent !important; font-family: var(--x4-f-ui) !important; }
+
+/* тело меню/попапа */
+.ContextMenuPopupBody, .contextMenuContents,
+[class*="contextmenu_"], [class*="ContextMenu_"],
+[class*="menu_MenuItems_"], [class*="menu_Menu_"],
+.ModalDialogPopup, .ModalDialogBody,
+[class*="notificationtoasts_"] {
+  background-color: var(--x4-bg-1) !important;
+  color: var(--x4-text-md) !important;
+  border: 1px solid var(--x4-accent-line) !important;
+  border-radius: 4px !important;
+  box-shadow: 0 8px 28px rgba(0,0,0,.6), 0 0 0 1px rgba(0,0,0,.4) !important;
+  font-family: var(--x4-f-ui) !important;
+}
+
+/* пункт меню */
+.ContextMenuButton, .contextMenuItem,
+[class*="contextmenu_menuItem"], [class*="menu_MenuItem_"] {
+  color: var(--x4-text-md) !important; border-radius: 3px !important;
+}
+.ContextMenuButton:hover, .contextMenuItem:hover,
+[class*="contextmenu_menuItem"]:hover, [class*="menu_MenuItem_"]:hover,
+[class*="menu_MenuItem_"][class*="Focus"] {
+  background-color: var(--x4-accent-soft) !important; color: #fff !important;
+}
+
+/* разделители */
+[class*="contextmenu_separator"], [class*="menu_Separator_"], .contextMenuSeparator {
+  background-color: var(--x4-line) !important; border: 0 !important;
+}
+
+/* кнопки в модалках */
+.ModalDialogPopup .DialogButton.Primary,
+[class*="notificationtoasts_"] .DialogButton.Primary {
+  background: linear-gradient(180deg, var(--x4-accent-2), #b3121b) !important;
+  color: #fff !important; box-shadow: var(--x4-glow) !important; border: 0 !important;
+}

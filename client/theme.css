@@ -310,3 +310,65 @@ body.DesktopUI ._3O48LaKWcabKx07xdrt1TH {
 body.DesktopUI ._2CmrnGY-Amtd83ScJkFvx2 {
   background: linear-gradient(to right, rgba(var(--x4-accent-rgb), .5), transparent 60%) !important;
 }
+
+/* §8 ============= ДЮРАБЕЛЬНЫЙ ХРОМ ОКНА (стабильные префиксы module_Name_hash) ==
+   Рамка/титлбар/менюбар/нижний бар у Steam именуются как `module_ClassName_HASH`
+   — меняется только HASH после `_`, префикс живёт между сборками. Бьём через
+   [class*="module_Name_"] → не ломается при апдейте (в отличие от чистых хешей
+   библиотеки). Это фундамент под кастом-раскладку (Релиз B). */
+
+/* титлбар + drag-зона → графит, нижняя акцент-нить */
+body.DesktopUI [class*="steamdesktop_TitleBar_"],
+body.DesktopUI [class*="steamdesktop_DragArea_"],
+body.DesktopUI [class*="steamdesktop_TopBar_"],
+body.DesktopUI [class*="steamdesktop_SuperNavBar_"] {
+  background-color: rgb(var(--x4-bg2-rgb)) !important;
+  border-bottom: 1px solid rgba(var(--x4-accent-rgb), .22) !important;
+  box-shadow: none !important;
+}
+
+/* меню-бар (Steam / Вид / Друзья / Игры / Справка) — uppercase + красный hover */
+body.DesktopUI [class*="rootmenu_RootMenuBar_"] { background: transparent !important; }
+body.DesktopUI [class*="rootmenu_RootMenuButton_"] {
+  color: rgb(var(--x4-fg-dim-rgb)) !important;
+  text-transform: uppercase !important; letter-spacing: .6px !important;
+  font-family: 'Saira Semi Condensed','Saira',sans-serif !important;
+  border-radius: 3px !important; transition: color .15s ease, background .15s ease !important;
+}
+body.DesktopUI [class*="rootmenu_RootMenuButton_"]:hover {
+  color: #fff !important; background: rgba(var(--x4-accent-rgb), .14) !important;
+}
+
+/* кнопки управления окном (min/max/close) — hover красным, close — неон */
+body.DesktopUI [class*="titlebarcontrols_Button_"] {
+  border-radius: 3px !important; transition: background .15s ease !important;
+}
+body.DesktopUI [class*="titlebarcontrols_Button_"]:hover {
+  background: rgba(var(--x4-accent-rgb), .18) !important;
+}
+body.DesktopUI [class*="titlebarcontrols_Button_"]:last-child:hover {
+  background: rgb(var(--x4-accent-rgb)) !important;
+  box-shadow: 0 0 10px rgba(var(--x4-accent-rgb), .6) !important;
+}
+/* колокол-уведомления / баланс кошелька — акцент */
+body.DesktopUI [class*="titlebarcontrols_AnnouncementsButton_"]:hover,
+body.DesktopUI [class*="titlebarcontrols_WalletBalance_"]:hover { color: rgb(var(--x4-accent-2-rgb)) !important; }
+
+/* нижний бар (загрузки/статус) → графит, прогресс-заливка красная */
+body.DesktopUI [class*="bottombar_BottomBarContainer_"] {
+  background-color: rgb(var(--x4-bg2-rgb)) !important;
+  border-top: 1px solid rgba(var(--x4-accent-rgb), .18) !important;
+}
+body.DesktopUI [class*="bottombar_Icon_"] svg { color: rgb(var(--x4-accent-rgb)) !important; fill: rgb(var(--x4-accent-rgb)) !important; }
+body.DesktopUI [class*="bottombar_Queue_"] [class*="Progress"],
+body.DesktopUI [class*="downloadpage_"] [class*="Progress"] { background-color: rgb(var(--x4-accent-rgb)) !important; }
+
+/* стрелки супернавигации (назад/вперёд) — акцент-hover */
+body.DesktopUI [class*="supernav_Arrow_"]:hover { color: rgb(var(--x4-accent-2-rgb)) !important; }
+
+/* поиск/URL-бар в шапке → инпут-стиль */
+body.DesktopUI [class*="steamdesktop_URLBarReplacement_"],
+body.DesktopUI [class*="gamelistbar_SearchInput_"] {
+  background: rgb(var(--x4-bg3-rgb)) !important;
+  border: 1px solid rgba(var(--x4-line-rgb), .12) !important; border-radius: 3px !important;
+}
