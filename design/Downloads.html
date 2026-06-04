@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>190x4 — Загрузки</title>
+<link rel="stylesheet" href="theme.css">
+<link rel="stylesheet" href="chrome.css">
+<style>
+  html,body{ margin:0; background:#000; }
+  .dl{ flex:1; overflow-y:auto; min-height:0; }
+  .dl-wrap{ max-width:1480px; margin:0 auto; padding:24px 28px 50px; }
+
+  /* active card */
+  .dl-active{ border:var(--hair) solid var(--line); border-radius:var(--r-lg); overflow:hidden; background:var(--bg-1);
+    box-shadow:var(--sh-1); position:relative; }
+  .dl-active__hero{ height:240px; position:relative; }
+  .dl-active__heroart{ position:absolute; inset:0; background:
+    radial-gradient(80% 120% at 20% 30%, #3a2a2e, #11151d 70%); }
+  .dl-active__veil{ position:absolute; inset:0; background:linear-gradient(90deg, rgba(7,9,13,.9), rgba(7,9,13,.2) 45%, rgba(7,9,13,.85)); }
+  .dl-title{ position:absolute; left:34px; top:64px; font-family:var(--f-cond); font-weight:700; font-size:56px;
+    letter-spacing:4px; color:#fff; text-shadow:0 4px 24px #000; white-space:nowrap; }
+  .dl-gear{ position:absolute; top:18px; right:18px; }
+
+  .dl-readout{ position:absolute; top:24px; right:70px; display:flex; gap:26px; }
+  .dl-stat{ text-align:right; }
+  .dl-stat .k{ display:flex; align-items:center; gap:6px; justify-content:flex-end; font-family:var(--f-cond);
+    font-size:10.5px; letter-spacing:1.2px; text-transform:uppercase; color:var(--text-lo); }
+  .dl-stat .k .bars{ display:flex; gap:2px; align-items:flex-end; }
+  .dl-stat .k .bars i{ width:3px; background:var(--accent); display:block; box-shadow:var(--accent-glow); }
+  .dl-stat .v{ font-family:var(--f-cond); font-weight:700; font-size:20px; color:#fff; margin-top:3px; }
+  .dl-stat .v small{ font-size:12px; color:var(--text-lo); font-weight:500; }
+
+  .dl-graph{ position:absolute; right:70px; top:96px; width:330px; height:64px; border:var(--hair) solid var(--line);
+    border-radius:var(--r-sm); background:rgba(7,9,13,.45); overflow:hidden; }
+  .dl-graph svg{ display:block; width:100%; height:100%; }
+
+  .dl-progress{ position:absolute; left:0; right:0; bottom:0; padding:18px 34px 22px;
+    background:linear-gradient(0deg, rgba(7,9,13,.95), transparent); }
+  .dl-prog-meta{ display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; }
+  .dl-prog-meta .st{ color:var(--text-hi); font-size:14px; }
+  .dl-prog-meta .st b{ color:var(--accent); }
+  .dl-prog-meta .rt{ color:var(--text-lo); font-size:13px; }
+  .dl-prog-bottom{ display:flex; align-items:center; gap:16px; }
+  .dl-prog-bottom .x4-prog{ flex:1; height:10px; }
+  .dl-pause{ width:46px; height:46px; border-radius:var(--r-md); border:var(--hair) solid var(--accent-line);
+    background:linear-gradient(180deg,#ff3a44,var(--accent-dim)); color:#fff; display:flex; align-items:center; justify-content:center;
+    cursor:pointer; box-shadow:var(--accent-glow); flex:none; }
+  .dl-pct{ font-family:var(--f-cond); font-weight:700; font-size:22px; color:#fff; min-width:54px; text-align:right; }
+
+  /* queue sections */
+  .dl-secthead{ display:flex; align-items:center; gap:14px; margin:30px 0 12px; }
+  .dl-secthead h3{ margin:0; font-family:var(--f-cond); font-weight:600; font-size:16px; letter-spacing:1.5px;
+    text-transform:uppercase; color:var(--text-hi); }
+  .dl-secthead .n{ color:var(--text-dis); font-weight:500; font-size:14px; }
+  .dl-secthead .ln{ flex:1; height:1px; background:var(--line); }
+  .dl-secthead .meta{ color:var(--text-lo); font-size:12.5px; }
+  .dl-empty{ color:var(--text-dis); font-size:14px; padding:6px 2px; }
+
+  .dl-row{ display:flex; align-items:center; gap:16px; padding:14px 16px; background:var(--bg-1);
+    border:var(--hair) solid var(--line); border-radius:var(--r-md); }
+  .dl-row__art{ width:108px; height:50px; border-radius:var(--r-sm); flex:none; position:relative; }
+  .dl-row__num{ position:absolute; left:6px; bottom:6px; width:18px; height:18px; border-radius:50%; background:rgba(7,9,13,.8);
+    border:var(--hair) solid var(--line-2); display:flex; align-items:center; justify-content:center; font-size:10px; color:var(--text-md); }
+  .dl-row__name{ color:var(--text-hi); font-weight:600; font-size:15px; }
+  .dl-row__sub{ display:flex; align-items:center; gap:12px; color:var(--text-lo); font-size:12.5px; margin-top:4px; }
+  .dl-row__sub .chg{ display:flex; align-items:center; gap:5px; color:var(--accent); cursor:pointer; }
+  .dl-row__when{ font-family:var(--f-cond); font-weight:600; letter-spacing:1px; color:var(--text-md); font-size:13px; }
+</style>
+</head>
+<body>
+<div class="x4-fit">
+<div class="x4-app">
+  <div data-chrome data-active="library"></div>
+  <div class="x4-app__body" style="flex-direction:column">
+    <div class="dl x4-scroll">
+      <div class="dl-wrap">
+
+        <!-- ACTIVE -->
+        <div class="dl-active x4-scan">
+          <div class="dl-active__hero x4-hex">
+            <div class="dl-active__heroart"></div>
+            <div class="dl-active__veil"></div>
+            <div class="dl-title">DOTA 2</div>
+            <button class="x4-iconbtn dl-gear"><i data-ic="gear"></i></button>
+
+            <div class="dl-readout">
+              <div class="dl-stat"><div class="k"><span class="bars"><i style="height:5px"></i><i style="height:8px"></i><i style="height:11px"></i></span> Сеть</div>
+                <div class="v">0 <small>байт/с</small></div></div>
+              <div class="dl-stat"><div class="k"><span class="bars"><i style="height:11px"></i><i style="height:8px"></i><i style="height:5px"></i></span> Макс.</div>
+                <div class="v">2,7 <small>Мбайт/с</small></div></div>
+              <div class="dl-stat"><div class="k"><i data-ic="disk" style="width:11px;height:11px;color:var(--accent)"></i> Исп. диска</div>
+                <div class="v">0 <small>байт/с</small></div></div>
+            </div>
+
+            <div class="dl-graph">
+              <svg viewBox="0 0 330 64" preserveAspectRatio="none">
+                <defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0" stop-color="rgba(255,37,48,.5)"/><stop offset="1" stop-color="rgba(255,37,48,0)"/>
+                </linearGradient></defs>
+                <g stroke="rgba(255,255,255,.05)"><line x1="0" y1="16" x2="330" y2="16"/><line x1="0" y1="32" x2="330" y2="32"/><line x1="0" y1="48" x2="330" y2="48"/></g>
+                <path d="M0,52 L20,40 L40,46 L60,22 L80,30 L100,12 L120,26 L140,18 L160,34 L180,20 L200,28 L220,14 L240,30 L260,24 L280,38 L300,30 L330,44 L330,64 L0,64 Z" fill="url(#g)"/>
+                <path d="M0,52 L20,40 L40,46 L60,22 L80,30 L100,12 L120,26 L140,18 L160,34 L180,20 L200,28 L220,14 L240,30 L260,24 L280,38 L300,30 L330,44" fill="none" stroke="var(--accent)" stroke-width="1.6" style="filter:drop-shadow(0 0 4px rgba(255,37,48,.7))"/>
+              </svg>
+            </div>
+
+            <div class="dl-progress">
+              <div class="dl-prog-meta">
+                <div class="st">Обновление файлов · <b>Контент из мастерской</b></div>
+                <div class="rt">Осталось примерно 00:00</div>
+              </div>
+              <div class="dl-prog-bottom">
+                <div class="x4-prog"><div class="x4-prog__bar" style="width:84%"></div></div>
+                <div class="dl-pct">84%</div>
+                <button class="dl-pause"><i data-ic="pause"></i></button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- NEXT -->
+        <div class="dl-secthead"><h3>Далее <span class="n">(0)</span></h3><span class="ln"></span>
+          <span class="meta">Автообновления включены</span></div>
+        <div class="dl-empty">В очереди нет загрузок</div>
+
+        <!-- SCHEDULED -->
+        <div class="dl-secthead"><h3>Запланировано <span class="n">(1)</span></h3><span class="ln"></span></div>
+        <div class="dl-row">
+          <div class="dl-row__art x4-art x4-hex"><span class="dl-row__num">3</span></div>
+          <div style="flex:1">
+            <div class="dl-row__name">Phasmophobia</div>
+            <div class="dl-row__sub">415,0 МБ <span class="chg"><i data-ic="list" style="width:13px;height:13px"></i> Список изменений</span></div>
+          </div>
+          <div class="dl-row__when">Завтра 7:44</div>
+          <button class="x4-iconbtn"><i data-ic="download"></i></button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <div data-footer></div>
+</div>
+</div>
+
+<script src="fit.js"></script>
+<script src="icons.js"></script>
+<script src="chrome.js"></script>
+</body>
+</html>

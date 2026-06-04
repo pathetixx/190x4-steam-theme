@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>190x4 — Друзья</title>
+<link rel="stylesheet" href="theme.css">
+<link rel="stylesheet" href="chrome.css">
+<style>
+  html,body{ margin:0; background:#000; display:flex; align-items:center; justify-content:center; }
+  .fr{ width:384px; height:788px; }
+  .fr__head{ display:flex; align-items:center; gap:12px; padding:14px 10px 14px 14px;
+    background:linear-gradient(180deg,#10141c,#0a0d12); border-bottom:var(--hair) solid var(--line); }
+  .fr__head .av{ width:46px; height:46px; }
+  .fr__me .nm{ display:flex; align-items:center; gap:6px; color:var(--text-hi); font-weight:600; font-size:15px; }
+  .fr__me .nm i{ width:14px; height:14px; color:var(--text-lo); }
+  .fr__me .stt{ display:flex; align-items:center; gap:7px; color:var(--status-online); font-size:12.5px; margin-top:3px; }
+
+  .fr__bar{ display:flex; align-items:center; gap:8px; padding:8px 10px; background:var(--bg-1);
+    border-bottom:var(--hair) solid var(--line); }
+  .fr__bar .lbl{ font-family:var(--f-cond); font-weight:600; letter-spacing:1.5px; font-size:11.5px; color:var(--text-lo);
+    text-transform:uppercase; flex:1; }
+
+  .fr__list{ flex:1; overflow-y:auto; min-height:0; padding:4px 0; }
+  .fr-grp{ font-family:var(--f-cond); font-weight:600; letter-spacing:1px; font-size:11.5px; text-transform:uppercase;
+    color:var(--text-lo); padding:14px 14px 6px; display:flex; align-items:center; gap:8px; }
+  .fr-grp .gi{ width:18px; height:18px; border-radius:3px; background:linear-gradient(135deg,#2a3140,#141922); flex:none;
+    box-shadow:inset 0 0 0 1px var(--accent-line); }
+  .fr-grp .n{ color:var(--text-dis); }
+  .fr-grp.plain{ border-top:var(--hair) solid var(--line); margin-top:6px; }
+
+  .fr-friend{ display:flex; align-items:center; gap:11px; padding:7px 14px; cursor:pointer; border-left:2px solid transparent;
+    transition:background .1s; }
+  .fr-friend:hover{ background:rgba(255,255,255,.035); }
+  .fr-friend.ingame:hover{ background:linear-gradient(90deg,var(--accent-soft),transparent); border-left-color:var(--accent); }
+  .fr-friend .av{ width:34px; height:34px; flex:none; }
+  .fr-friend .nm{ color:var(--text-hi); font-size:14px; font-weight:500; line-height:1.1; }
+  .fr-friend.off .nm{ color:var(--text-lo); font-weight:400; }
+  .fr-friend .sub{ font-size:12px; margin-top:2px; line-height:1.1; }
+  .fr-friend .sub.ig{ color:var(--accent); }
+  .fr-friend .sub.on{ color:var(--status-online); }
+  .fr-friend .sub.of{ color:var(--text-dis); }
+  .fr-indent{ padding-left:30px; }
+
+  .fr__foot{ flex:none; border-top:var(--hair) solid var(--line); background:var(--bg-1); }
+  .fr__foot-bar{ display:flex; align-items:center; gap:8px; padding:10px 12px; cursor:pointer; }
+  .fr__foot-bar .lbl{ font-family:var(--f-cond); font-weight:600; letter-spacing:1px; font-size:11.5px; color:var(--text-lo);
+    text-transform:uppercase; flex:1; display:flex; align-items:center; gap:7px; }
+  .fr__foot-empty{ padding:0 16px 16px; color:var(--text-dis); font-size:12.5px; line-height:1.5; }
+  .fr__foot-empty b{ color:var(--text-lo); }
+</style>
+</head>
+<body>
+<div class="fr x4-window">
+  <div class="fr__head">
+    <span class="x4-ava x4-ava--online av"></span>
+    <div class="fr__me" style="flex:1">
+      <div class="nm">ты+я = нихуя <i data-ic="chevD"></i></div>
+      <div class="stt"><span class="x4-dot x4-dot--online"></span> В сети</div>
+    </div>
+    <div class="x4-winbtns">
+      <span class="x4-winbtn"><i data-ic="min"></i></span>
+      <span class="x4-winbtn"><i data-ic="max"></i></span>
+      <span class="x4-winbtn x4-winbtn--close"><i data-ic="close"></i></span>
+    </div>
+  </div>
+
+  <div class="fr__bar">
+    <span class="lbl">Друзья</span>
+    <button class="x4-iconbtn" style="width:30px;height:30px"><i data-ic="search"></i></button>
+    <button class="x4-iconbtn is-active" style="width:30px;height:30px"><i data-ic="addperson"></i></button>
+  </div>
+
+  <div class="fr__list x4-scroll">
+    <div class="fr-grp"><span class="gi"></span> Windrose</div>
+    <div class="fr-friend ingame fr-indent"><span class="x4-ava x4-ava--ingame av"></span>
+      <div><div class="nm">mutagenb</div><div class="sub ig">Windrose</div></div></div>
+    <div class="fr-friend ingame fr-indent"><span class="x4-ava x4-ava--ingame av"></span>
+      <div><div class="nm">Sebas</div><div class="sub ig">Windrose</div></div></div>
+
+    <div class="fr-grp"><span class="gi"></span> Team Fortress 2</div>
+    <div class="fr-friend ingame fr-indent"><span class="x4-ava x4-ava--ingame av"></span>
+      <div><div class="nm">Myst_Vearn+</div><div class="sub ig">Обычная игра: Viaduct</div></div></div>
+
+    <div class="fr-grp plain">Друзья в сети <span class="n">(2)</span></div>
+    <div class="fr-friend"><span class="x4-ava x4-ava--online av"></span>
+      <div><div class="nm">KeeJay</div><div class="sub on">В сети</div></div></div>
+    <div class="fr-friend"><span class="x4-ava x4-ava--online av"></span>
+      <div><div class="nm">pipeka</div><div class="sub on">В сети</div></div></div>
+
+    <div class="fr-grp plain">Не в сети <span class="n">(16)</span>
+      <span style="flex:1"></span><i data-ic="sliders" style="width:14px;height:14px;color:var(--text-dis)"></i></div>
+    <div id="offList"></div>
+  </div>
+
+  <div class="fr__foot">
+    <div class="fr__foot-bar"><span class="lbl"><i data-ic="chevD" style="width:13px;height:13px"></i> Групповые чаты</span>
+      <button class="x4-iconbtn is-active" style="width:28px;height:28px"><i data-ic="plus"></i></button></div>
+    <div class="fr__foot-empty">Здесь будут перечислены ваши групповые чаты.<br>
+      Вы можете <b>создать чат</b> с друзьями или <b>присоединиться</b> к групповому чату.</div>
+  </div>
+</div>
+
+<script>window.__noFit=true;</script>
+<script src="icons.js"></script>
+<script>
+const off = [
+  ['666 GESTAPO 666','В сети: 7 нед. назад'],['ВЕСЕЛЫЙ КАБАНЧИК','В сети: 6 нед. назад'],
+  ['Гойдадыр671games','В сети: 2 дн. назад'],['МарияK','В сети: более года назад'],
+  ['Пахомчик','В сети: 2 дн. назад'],['Солевой_Вездеход','В сети: 8 нед. назад'],
+  ['Термит','В сети: более года назад'],['atomgrib','В сети: 3 дн. назад']
+];
+document.getElementById('offList').innerHTML = off.map(([n,s])=>`
+  <div class="fr-friend off"><span class="x4-ava x4-ava--offline av"></span>
+    <div><div class="nm">${n}</div><div class="sub of">${s}</div></div></div>`).join('');
+if(window.__x4renderIcons) window.__x4renderIcons();
+</script>
+</body>
+</html>

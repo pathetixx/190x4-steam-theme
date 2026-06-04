@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>190x4 — Библиотека</title>
+<link rel="stylesheet" href="theme.css">
+<link rel="stylesheet" href="chrome.css">
+<style>
+  html,body{ margin:0; background:#000; }
+  /* ---- sidebar ---- */
+  .lib-side{ width:300px; flex:none; background:var(--bg-1); border-right:var(--hair) solid var(--line);
+    display:flex; flex-direction:column; min-height:0; }
+  .lib-side__top{ padding:12px 12px 10px; display:flex; flex-direction:column; gap:9px;
+    border-bottom:var(--hair) solid var(--line); }
+  .lib-side__row1{ display:flex; gap:8px; align-items:center; }
+  .lib-dd{ flex:1; display:flex; align-items:center; justify-content:space-between; height:32px; padding:0 10px;
+    background:var(--bg-3); border:var(--hair) solid var(--line-2); border-radius:var(--r-md);
+    color:var(--text-md); font-size:13px; cursor:pointer; }
+  .lib-dd i{ width:14px; height:14px; color:var(--text-lo); }
+  .lib-sorts{ display:flex; gap:3px; }
+  .lib-list{ flex:1; overflow-y:auto; padding:6px 0 14px; min-height:0; }
+  .lib-collhead{ display:flex; align-items:center; gap:7px; padding:12px 14px 6px; cursor:pointer;
+    font-family:var(--f-cond); font-weight:600; font-size:11.5px; letter-spacing:1.4px; text-transform:uppercase;
+    color:var(--text-lo); }
+  .lib-collhead .n{ color:var(--text-dis); font-weight:500; }
+  .lib-collhead i{ width:12px; height:12px; }
+  .lib-game{ display:flex; align-items:center; gap:10px; padding:5px 14px 5px 18px; cursor:pointer;
+    border-left:2px solid transparent; color:var(--text-md); font-size:13px; transition:background .1s,color .1s; }
+  .lib-game:hover{ background:rgba(255,255,255,.035); color:var(--text-hi); }
+  .lib-game.on{ background:linear-gradient(90deg,var(--accent-soft),transparent); border-left-color:var(--accent); color:#fff; }
+  .lib-game .ico{ width:16px; height:16px; border-radius:2px; flex:none;
+    background:linear-gradient(135deg,#2a3140,#141922); box-shadow:inset 0 0 0 1px rgba(255,255,255,.05); }
+  .lib-game.on .ico{ box-shadow:inset 0 0 0 1px var(--accent-line), var(--accent-glow); }
+  .lib-game.fav .ico{ background:linear-gradient(135deg,#3a2330,#181016); }
+  .lib-game .nm{ overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .lib-game.bold .nm{ font-weight:600; color:var(--text-hi); }
+
+  /* ---- main ---- */
+  .lib-main{ flex:1; overflow-y:auto; min-height:0; padding:18px 26px 30px; background:
+    radial-gradient(120% 60% at 100% 0%, rgba(255,37,48,.05), transparent 50%); }
+  .lib-secthead{ display:flex; align-items:center; gap:12px; margin:6px 2px 14px; }
+  .lib-secthead h2{ margin:0; font-family:var(--f-cond); font-weight:600; font-size:15px; letter-spacing:2px;
+    text-transform:uppercase; color:var(--text-hi); display:flex; align-items:center; gap:9px; }
+  .lib-secthead h2 .tick{ width:5px; height:15px; background:var(--accent); box-shadow:var(--accent-glow); }
+  .lib-secthead .spacer{ flex:1; height:1px; background:var(--line); }
+  .caro-arr{ display:flex; gap:4px; }
+
+  /* news shelf */
+  .news-shelf{ display:grid; grid-auto-flow:column; grid-auto-columns:288px; gap:14px; overflow:hidden; padding-bottom:4px; }
+  .news-card{ display:flex; flex-direction:column; gap:8px; cursor:pointer; }
+  .news-card .art{ height:140px; border-radius:var(--r-md); border:var(--hair) solid var(--line); position:relative; }
+  .news-card:hover .art{ border-color:var(--accent-line); box-shadow:var(--accent-glow); }
+  .news-when{ font-family:var(--f-cond); font-size:11px; letter-spacing:.8px; text-transform:uppercase; color:var(--accent); }
+  .news-title{ font-size:14px; color:var(--text-hi); line-height:1.25; font-weight:500;
+    display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+  .news-tag{ display:flex; align-items:center; gap:7px; color:var(--text-lo); font-size:12px; }
+  .news-tag .gi{ width:16px; height:16px; border-radius:2px; background:linear-gradient(135deg,#2a3140,#141922); flex:none; }
+  .art-hero{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+    font-family:var(--f-cond); font-weight:700; letter-spacing:1px; color:rgba(255,255,255,.18); font-size:20px; }
+
+  .lib-addsec{ display:flex; align-items:center; gap:12px; margin:22px 0 18px; color:var(--text-dis); }
+  .lib-addsec .ln{ flex:1; height:1px; background:var(--line); }
+  .lib-addsec button{ display:flex; align-items:center; gap:7px; background:none; border:0; cursor:pointer;
+    color:var(--text-lo); font-family:var(--f-ui); font-size:13px; }
+  .lib-addsec button:hover{ color:var(--accent); }
+
+  /* favorites grid */
+  .fav-sort{ display:flex; align-items:center; gap:8px; color:var(--text-lo); font-size:12px; }
+  .fav-sort .sel{ display:flex; align-items:center; gap:6px; height:28px; padding:0 10px; background:var(--bg-3);
+    border:var(--hair) solid var(--line-2); border-radius:var(--r-sm); color:var(--text-md); }
+  .cap-grid{ display:grid; grid-template-columns:repeat(5, 1fr); gap:18px; max-width:1180px; }
+  .cap{ aspect-ratio:3/4.3; border-radius:var(--r-md); position:relative; cursor:pointer;
+    border:var(--hair) solid var(--line); overflow:hidden; transition:transform .18s var(--ease), box-shadow .18s var(--ease), border-color .18s var(--ease); }
+  .cap:hover{ transform:translateY(-4px); border-color:var(--accent-line); box-shadow:var(--sh-2), var(--accent-glow); }
+  .cap__art{ position:absolute; inset:0; }
+  .cap__grad{ position:absolute; inset:0; background:linear-gradient(180deg, transparent 35%, rgba(7,9,13,.85)); }
+  .cap__name{ position:absolute; left:14px; right:14px; bottom:34px; font-family:var(--f-cond); font-weight:700;
+    font-size:21px; line-height:1; letter-spacing:.5px; color:#fff; text-transform:uppercase; text-shadow:0 2px 10px #000; }
+  .cap__sub{ position:absolute; left:14px; bottom:16px; font-size:11px; color:var(--text-lo); letter-spacing:.5px; }
+  .cap__count{ position:absolute; left:11px; top:11px; width:24px; height:24px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:600; color:var(--text-hi);
+    background:rgba(7,9,13,.78); border:var(--hair) solid var(--accent-line); box-shadow:var(--accent-glow); }
+  .cap__friends{ position:absolute; right:10px; bottom:10px; display:flex; gap:3px; }
+  .cap__friends span{ width:18px; height:18px; border-radius:2px; background:#222; box-shadow:0 0 0 1px var(--status-online); }
+</style>
+</head>
+<body>
+<div class="x4-fit">
+<div class="x4-app">
+  <div data-chrome data-active="library"></div>
+  <div class="x4-app__body">
+
+    <!-- SIDEBAR -->
+    <aside class="lib-side">
+      <div class="lib-side__top">
+        <div class="lib-side__row1">
+          <div class="x4-search" style="flex:1"><i class="ic" data-ic="search"></i>
+            <input class="x4-input" placeholder="Библиотека"></div>
+          <button class="x4-iconbtn"><i data-ic="grid"></i></button>
+        </div>
+        <div class="lib-side__row1">
+          <div class="lib-dd"><span>Игры и Программы</span><i data-ic="chevD"></i></div>
+          <div class="lib-sorts">
+            <button class="x4-iconbtn x4-btn--sm" style="width:30px;height:30px"><i data-ic="filter"></i></button>
+            <button class="x4-iconbtn" style="width:30px;height:30px"><i data-ic="clock"></i></button>
+            <button class="x4-iconbtn" style="width:30px;height:30px"><i data-ic="play"></i></button>
+          </div>
+        </div>
+        <div class="x4-search"><i class="ic" data-ic="search"></i>
+          <input class="x4-input" placeholder="Поиск по библиотеке"></div>
+      </div>
+      <div class="lib-list x4-scroll" id="libList"></div>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="lib-main x4-scroll">
+      <div class="lib-secthead">
+        <h2><span class="tick"></span>Что нового <i data-ic="gear" style="width:14px;height:14px;color:var(--text-lo)"></i></h2>
+        <span class="spacer"></span>
+        <div class="caro-arr">
+          <button class="x4-iconbtn"><i data-ic="chevL"></i></button>
+          <button class="x4-iconbtn"><i data-ic="chevR"></i></button>
+        </div>
+      </div>
+
+      <div class="news-shelf" id="newsShelf"></div>
+
+      <div class="lib-addsec">
+        <span class="ln"></span>
+        <button><i data-ic="plus"></i> Добавить новый раздел</button>
+        <span class="ln"></span>
+      </div>
+
+      <div class="lib-secthead">
+        <h2><span class="tick"></span>Избранное <span style="color:var(--text-dis);font-weight:500">(5)</span></h2>
+        <span class="spacer"></span>
+        <div class="fav-sort">Сортировка
+          <span class="sel">По алфавиту <i data-ic="chevD" style="width:12px;height:12px"></i></span>
+        </div>
+      </div>
+
+      <div class="cap-grid" id="capGrid"></div>
+    </main>
+
+  </div>
+  <div data-footer></div>
+</div>
+</div>
+
+<script src="fit.js"></script>
+<script src="icons.js"></script>
+<script src="chrome.js"></script>
+<script>
+// ---- game list ----
+const fav = [
+  ['Ведьмак 3: Дикая Охота',1],['Cyberpunk 2077',1],['Dota 2 — Проверка',1],
+  ['Resident Evil Requiem',1,'on'],['Windrose',1]
+];
+const games = ['100 hidden cats','100 hidden cats 2','Альтушка для скуфа','Отряд самоубийц: Конец Лиги справедливости',
+'Симулятор Чушпана','Хогвартс. Наследие','A Dance of Fire and Ice','A Way Out','Achievement printer',
+'Afterfall InSanity Extended Edition','Agent Awesome','Among Us','Anomaly Warzone Earth','Atomic Heart',
+'Audiosurf','Ballance','Ballistic Protection','Banana','Barro GT','Batman: Arkham Asylum GOTY',
+'Batman: Arkham City GOTY','Batman™: Arkham Knight','Battlefield™ 1','Beyond: Two Souls','Black Desert (Retired)',
+'Borderlands GOTY','Bright Memory: Infinite','BRINK','Call of Duty®: Modern Warfare® 3','Castlevania: Lords of Shadow',
+'Chaos on Deponia','Clicker Heroes','Counter-Strike 2','DARK SOULS III','Darkest Dungeon®','Day of Defeat: Source',
+'Deadlock','Destiny 2','Detroit: Become Human','Devil May Cry 5','Disco Elysium','DOOM','Dying Light',
+'Far Cry 6','FlatOut 2'];
+
+const libList = document.getElementById('libList');
+function gameRow(name, cls){
+  return `<div class="lib-game ${cls||''}"><span class="ico"></span><span class="nm">${name}</span></div>`;
+}
+let html = `<div class="lib-collhead"><i data-ic="chevD"></i>Избранное <span class="n">(5)</span></div>`;
+fav.forEach(([n,_,on])=> html += gameRow(n,'fav bold '+(on||'')));
+html += `<div class="lib-collhead"><i data-ic="chevD"></i>Без категории <span class="n">(293)</span></div>`;
+games.forEach(n=> html += gameRow(n, n==='Destiny 2'||n==='Atomic Heart' ? 'bold':'') );
+libList.innerHTML = html;
+
+// ---- news shelf ----
+const news = [
+  ['Вчера','Большие бонусы для всех ролей в Red Dead Online','Red Dead Redemption 2','ROLE BONUSES'],
+  ['На этой неделе','Обзор Девстрима №196','Warframe','WARFRAME'],
+  ['Сегодня','Опрос сообщества — Поделитесь с нами своим мнением','PUBG: BATTLEGROUNDS','ОПРОС'],
+  ['На этой неделе','Опрос по DLC#4!','Atomic Heart','ATOMIC HEART'],
+  ['Вчера','Phasmophobia v0.17.1.4 — Patch Notes','Phasmophobia','PHASMOPHOBIA'],
+  ['Сегодня','Баны недели (25 – 31 мая)','PUBG: BATTLEGROUNDS','БАНЫ НЕДЕЛИ'],
+];
+document.getElementById('newsShelf').innerHTML = news.map(([w,t,g,hero])=>`
+  <div class="news-card">
+    <div class="art x4-art x4-hex"><div class="art-hero">${hero}</div></div>
+    <div class="news-when">${w}</div>
+    <div class="news-title">${t}</div>
+    <div class="news-tag"><span class="gi"></span>${g}</div>
+  </div>`).join('');
+
+// ---- capsules ----
+const caps = [
+  ['Ведьмак','Дикая Охота',4],['Cyberpunk','2077',2],['Dota 2','',null],
+  ['Resident Evil','requiem',2],['Windrose','',2,true]
+];
+document.getElementById('capGrid').innerHTML = caps.map(([n,s,c,fr])=>`
+  <div class="cap">
+    <div class="cap__art x4-art x4-scan"></div>
+    <div class="cap__grad"></div>
+    <div class="cap__name">${n}</div>
+    ${s?`<div class="cap__sub">${s}</div>`:''}
+    ${c?`<div class="cap__count" style="display:flex">${c}</div>`:''}
+    ${fr?`<div class="cap__friends"><span></span><span></span></div>`:''}
+  </div>`).join('');
+
+if(window.__x4renderIcons) window.__x4renderIcons();
+</script>
+</body>
+</html>

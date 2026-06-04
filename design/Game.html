@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>190x4 — Страница игры</title>
+<link rel="stylesheet" href="theme.css">
+<link rel="stylesheet" href="chrome.css">
+<style>
+  html,body{ margin:0; background:#000; }
+  .gp{ flex:1; overflow-y:auto; min-height:0; position:relative; }
+
+  /* hero */
+  .gp-hero{ height:380px; position:relative; overflow:hidden; border-bottom:var(--hair) solid var(--line); }
+  .gp-hero__art{ position:absolute; inset:0; background:
+    radial-gradient(90% 130% at 75% 10%, #3a4350, #11151d 70%),
+    linear-gradient(180deg,#1a1f29,#0b0e14); }
+  .gp-hero__veil{ position:absolute; inset:0; background:
+    linear-gradient(90deg, rgba(7,9,13,.92) 0%, rgba(7,9,13,.4) 38%, transparent 60%),
+    linear-gradient(0deg, var(--bg-0) 2%, transparent 30%); }
+  .gp-hero__logo{ position:absolute; left:46px; top:96px; }
+  .gp-hero__logo .l1{ font-family:var(--f-cond); font-weight:700; font-size:62px; line-height:.9; letter-spacing:3px;
+    color:#fff; text-shadow:0 4px 30px #000; }
+  .gp-hero__logo .l2{ font-family:var(--f-cond); font-weight:400; font-style:italic; font-size:30px; letter-spacing:8px;
+    color:var(--accent); text-shadow:var(--accent-glow); margin-top:6px; }
+  .gp-hero__corner{ position:absolute; top:18px; right:18px; }
+
+  /* action strip */
+  .gp-actions{ display:flex; align-items:stretch; gap:0; padding:0 0 0 0; margin-top:-2px;
+    background:linear-gradient(180deg, rgba(13,16,22,.6), var(--bg-1)); border-bottom:var(--hair) solid var(--line);
+    position:relative; z-index:2; }
+  .gp-play-wrap{ padding:18px 24px; display:flex; align-items:center; }
+  .gp-stats{ flex:1; display:flex; align-items:center; }
+  .gp-stat{ flex:1; padding:14px 22px; border-left:var(--hair) solid var(--line); display:flex; gap:12px; align-items:center; }
+  .gp-stat .si{ width:30px; height:30px; display:flex; align-items:center; justify-content:center; color:var(--accent);
+    border:var(--hair) solid var(--accent-line); border-radius:var(--r-sm); box-shadow:inset 0 0 12px rgba(255,37,48,.12); flex:none; }
+  .gp-stat .si i{ width:16px; height:16px; }
+  .gp-stat .sk{ font-family:var(--f-cond); font-size:10.5px; letter-spacing:1.2px; text-transform:uppercase; color:var(--text-lo); }
+  .gp-stat .sv{ font-size:14px; color:var(--text-hi); font-weight:500; margin-top:2px; }
+  .gp-tools{ display:flex; align-items:center; gap:6px; padding:0 20px; border-left:var(--hair) solid var(--line); }
+
+  /* tabs */
+  .gp-tabs{ display:flex; gap:2px; padding:0 24px; background:var(--bg-1); border-bottom:var(--hair) solid var(--line); }
+
+  /* body */
+  .gp-body{ display:grid; grid-template-columns:1fr 384px; gap:26px; padding:26px 30px 50px; max-width:1640px; }
+  .gp-sect-title{ font-family:var(--f-cond); font-weight:600; font-size:12px; letter-spacing:2px; text-transform:uppercase;
+    color:var(--text-lo); display:flex; align-items:center; gap:9px; margin:0 0 14px; }
+  .gp-sect-title .tick{ width:5px; height:14px; background:var(--accent); box-shadow:var(--accent-glow); }
+  .gp-daterow{ font-family:var(--f-cond); font-weight:600; font-size:12px; letter-spacing:1.5px; color:var(--text-lo);
+    margin:24px 0 12px; display:flex; align-items:center; gap:12px; }
+  .gp-daterow::after{ content:""; flex:1; height:1px; background:var(--line); }
+
+  .gp-postbox{ display:flex; align-items:center; gap:12px; background:var(--bg-1); border:var(--hair) solid var(--line);
+    border-radius:var(--r-md); padding:12px 14px; color:var(--text-dis); }
+
+  .gp-news{ display:flex; gap:14px; background:var(--bg-1); border:var(--hair) solid var(--line); border-radius:var(--r-md);
+    padding:14px; transition:border-color .15s; }
+  .gp-news:hover{ border-color:var(--accent-line); }
+  .gp-news.small{ align-items:center; }
+  .gp-news__ico{ width:42px; height:42px; border-radius:var(--r-sm); flex:none; display:flex; align-items:center; justify-content:center;
+    background:var(--bg-3); color:var(--text-lo); }
+  .gp-news__img{ width:150px; height:84px; border-radius:var(--r-sm); flex:none; }
+  .gp-news__k{ font-family:var(--f-cond); font-size:10.5px; letter-spacing:1.2px; text-transform:uppercase; color:var(--accent); }
+  .gp-news__t{ font-size:15px; color:var(--text-hi); font-weight:600; margin:3px 0 5px; }
+  .gp-news__d{ font-size:13px; color:var(--text-lo); line-height:1.4; }
+
+  /* achievements grid */
+  .gp-achblock{ background:var(--bg-1); border:var(--hair) solid var(--line); border-radius:var(--r-md); padding:14px; }
+  .gp-achwho{ display:flex; align-items:center; gap:9px; color:var(--text-md); font-size:13px; margin-bottom:12px; }
+  .gp-achgrid{ display:grid; grid-template-columns:repeat(4,1fr); gap:10px; }
+  .gp-ach{ display:flex; gap:10px; align-items:flex-start; }
+  .gp-ach__ic{ width:42px; height:42px; border-radius:var(--r-sm); flex:none; background:linear-gradient(135deg,#2a2030,#15101a);
+    box-shadow:inset 0 0 0 1px var(--accent-line); display:flex; align-items:center; justify-content:center; color:var(--accent); }
+  .gp-ach__t{ font-size:12.5px; color:var(--text-hi); font-weight:600; line-height:1.2; }
+  .gp-ach__d{ font-size:11px; color:var(--text-lo); line-height:1.25; margin-top:2px; }
+  .gp-ach.more .gp-ach__ic{ background:var(--bg-3); box-shadow:inset 0 0 0 1px var(--line-2); color:var(--text-lo);
+    font-family:var(--f-cond); font-weight:700; font-size:15px; }
+
+  /* sidebar */
+  .gp-side > *{ margin-bottom:24px; }
+  .gp-friends{ display:flex; gap:10px; align-items:center; }
+  .gp-side-link{ font-size:12px; color:var(--text-lo); cursor:pointer; }
+  .gp-side-link:hover{ color:var(--accent); }
+  .gp-note{ background:var(--bg-3); border:var(--hair) solid var(--line); border-radius:var(--r-sm); padding:14px;
+    color:var(--text-dis); font-size:13px; min-height:48px; }
+  .gp-cards{ display:grid; grid-template-columns:repeat(5,1fr); gap:7px; }
+  .gp-trade{ aspect-ratio:3/4; border-radius:2px; border:var(--hair) solid var(--line);
+    background:linear-gradient(160deg,#1a1f29,#0b0e14); position:relative; }
+  .gp-trade.lit{ border-color:var(--accent-line); box-shadow:var(--accent-glow); }
+  .gp-trade.lit::after{ content:""; position:absolute; inset:0; background:linear-gradient(180deg,transparent 60%, var(--accent-soft)); }
+  .gp-xpcard{ display:flex; align-items:center; gap:12px; padding:12px; background:var(--bg-1);
+    border:var(--hair) solid var(--line); border-radius:var(--r-md); }
+  .gp-xpring{ width:46px; height:46px; border-radius:50%; border:2px dashed var(--accent-line); flex:none; }
+  .gp-dlc{ display:flex; align-items:center; gap:12px; padding:11px 12px; background:var(--bg-1);
+    border:var(--hair) solid var(--line); border-radius:var(--r-md); }
+  .gp-dlc__art{ width:120px; height:46px; border-radius:var(--r-sm); flex:none; }
+</style>
+</head>
+<body>
+<div class="x4-fit">
+<div class="x4-app">
+  <div data-chrome data-active="library"></div>
+  <div class="x4-app__body">
+    <div class="gp x4-scroll">
+
+      <!-- HERO -->
+      <div class="gp-hero x4-scan x4-hex">
+        <div class="gp-hero__art"></div>
+        <div class="gp-hero__veil"></div>
+        <div class="gp-hero__logo">
+          <div class="l1">RESIDENT EVIL</div>
+          <div class="l2">requiem</div>
+        </div>
+        <div class="gp-hero__corner x4-brackets" style="width:120px;height:30px"></div>
+      </div>
+
+      <!-- ACTION STRIP -->
+      <div class="gp-actions">
+        <div class="gp-play-wrap">
+          <button class="x4-btn x4-btn--primary x4-btn--lg"><i data-ic="play"></i> Играть</button>
+        </div>
+        <div class="gp-stats">
+          <div class="gp-stat"><div class="si"><i data-ic="cloud"></i></div>
+            <div><div class="sk">Облачные сохранения</div><div class="sv">Синхронизированы</div></div></div>
+          <div class="gp-stat"><div class="si"><i data-ic="clock"></i></div>
+            <div><div class="sk">Последний запуск</div><div class="sv">31 мая</div></div></div>
+          <div class="gp-stat"><div class="si"><i data-ic="play"></i></div>
+            <div><div class="sk">Вы играли</div><div class="sv">20,4 ч.</div></div></div>
+          <div class="gp-stat"><div class="si"><i data-ic="trophy"></i></div>
+            <div><div class="sk">Достижения</div><div class="sv">14 / 42</div></div></div>
+        </div>
+        <div class="gp-tools">
+          <button class="x4-iconbtn"><i data-ic="gear"></i></button>
+          <button class="x4-iconbtn"><i data-ic="info"></i></button>
+          <button class="x4-iconbtn is-active"><i data-ic="heart"></i></button>
+        </div>
+      </div>
+
+      <!-- TABS -->
+      <div class="gp-tabs">
+        <button class="x4-tab is-active">Страница в магазине</button>
+        <button class="x4-tab">Доп. контент</button>
+        <button class="x4-tab">Центр сообщества</button>
+        <button class="x4-tab">Предметы за очки</button>
+        <button class="x4-tab">Обсуждения</button>
+        <button class="x4-tab">Руководства</button>
+        <button class="x4-tab">Поддержка</button>
+      </div>
+
+      <!-- BODY -->
+      <div class="gp-body">
+        <!-- LEFT: activity -->
+        <div class="gp-main">
+          <div class="gp-sect-title"><span class="tick"></span>Активность</div>
+          <div class="gp-postbox"><i data-ic="edit"></i> Расскажите об этой игре друзьям…</div>
+
+          <div class="gp-daterow">Сегодня</div>
+          <div class="gp-news small">
+            <div class="gp-news__ico"><i data-ic="gear" data-sw="1.4"></i></div>
+            <div><div class="gp-news__k">Небольшое обновление или список изменений</div>
+              <div class="gp-news__t" style="margin:4px 0 0">Resident Evil Requiem demo: replacing incorrect version</div></div>
+          </div>
+
+          <div class="gp-daterow">8 мая</div>
+          <div class="gp-news">
+            <div class="gp-news__img x4-art x4-scan"><span class="x4-art__tag">LEON MUST DIE</span></div>
+            <div><div class="gp-news__k">Обычное обновление</div>
+              <div class="gp-news__t">Leon Must Die Forever minigame added!</div>
+              <div class="gp-news__d">A free update is available for Resident Evil Requiem, which includes various fixes and a fast-paced action minigame.</div></div>
+          </div>
+
+          <div class="gp-daterow">30 марта</div>
+          <div class="gp-achblock">
+            <div class="gp-achwho"><span class="x4-ava x4-ava--ingame" style="width:22px;height:22px"></span>
+              <b style="color:var(--text-hi)">KeeJay</b> получает достижение</div>
+            <div class="gp-achgrid" id="achGrid"></div>
+          </div>
+
+          <div class="gp-daterow">27 марта</div>
+          <div class="gp-news small">
+            <div class="gp-news__ico"><span class="x4-ava x4-ava--ingame" style="width:26px;height:26px"></span></div>
+            <div><div class="gp-news__t" style="margin:0">KeeJay получает достижение «Старый добрый метод»</div></div>
+          </div>
+        </div>
+
+        <!-- RIGHT: sidebar -->
+        <div class="gp-side">
+          <div>
+            <div class="gp-sect-title"><span class="tick"></span>Играющие друзья
+              <span style="flex:1"></span><span class="gp-side-link">Все →</span></div>
+            <div class="gp-friends">
+              <span class="x4-ava x4-ava--offline" style="width:38px;height:38px"></span>
+              <div><div style="color:var(--text-md);font-size:13px">Друзей, игравших раньше: 1</div></div>
+            </div>
+          </div>
+
+          <div>
+            <div class="gp-sect-title"><span class="tick"></span>Заметки
+              <span style="flex:1"></span><span class="gp-side-link"><i data-ic="plus" style="width:12px;height:12px"></i> Новая</span></div>
+            <div class="gp-note">Расскажите об этой игре друзьям…</div>
+          </div>
+
+          <div class="gp-xpcard">
+            <div class="gp-xpring"></div>
+            <div><div style="color:var(--text-hi);font-weight:600">B934</div>
+              <div style="color:var(--text-lo);font-size:12px">100 опыта</div></div>
+            <span style="flex:1"></span>
+            <span class="x4-badge x4-badge--accent">XP</span>
+          </div>
+
+          <div>
+            <div class="gp-sect-title"><span class="tick"></span>Коллекционные карточки
+              <span style="flex:1"></span><span class="gp-side-link">Несобранных: 5</span></div>
+            <div class="gp-cards">
+              <div class="gp-trade"></div><div class="gp-trade lit"></div><div class="gp-trade lit"></div>
+              <div class="gp-trade lit"></div><div class="gp-trade"></div>
+              <div class="gp-trade"></div><div class="gp-trade"></div><div class="gp-trade"></div>
+              <div class="gp-trade"></div><div class="gp-trade"></div>
+            </div>
+          </div>
+
+          <div>
+            <div class="gp-sect-title"><span class="tick"></span>Доп. контент</div>
+            <div class="gp-dlc">
+              <div class="gp-dlc__art x4-art x4-hex"></div>
+              <div><div style="color:var(--text-hi);font-size:13px;font-weight:600">Deluxe Weapons Pack</div>
+                <div style="color:var(--accent);font-size:13px;font-weight:600;margin-top:3px">1 490 ₸</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div data-footer></div>
+</div>
+</div>
+
+<script src="fit.js"></script>
+<script src="icons.js"></script>
+<script src="chrome.js"></script>
+<script>
+const ach = [
+  ['trophy','Старый добрый метод','Использовать красящую ленту, чтобы сохранить игру.'],
+  ['lock','Скрытое достижение','Продолжайте играть, чтобы открыть это достижение.'],
+  ['box','Коллекционер','Посмотреть все модели.'],
+  ['star','Ценитель искусства','Посмотреть все наброски.'],
+  ['shield','Надежда и Реквием','Завершить основной сюжет, высвободив Элпис.'],
+  ['user','Агент-новобранец','Завершить основной сюжет в режиме «Лёгкий» или сложнее.'],
+  ['flame','Перспективный агент','Завершить основной сюжет в режиме «Обычный».'],
+  ['more','+4','…и ещё несколько достижений']
+];
+document.getElementById('achGrid').innerHTML = ach.map(([ic,t,d])=>`
+  <div class="gp-ach ${ic==='more'?'more':''}">
+    <div class="gp-ach__ic">${ic==='more'?'+4':`<i data-ic="${ic}" data-sw="1.5"></i>`}</div>
+    <div><div class="gp-ach__t">${t}</div><div class="gp-ach__d">${d}</div></div>
+  </div>`).join('');
+if(window.__x4renderIcons) window.__x4renderIcons();
+</script>
+</body>
+</html>

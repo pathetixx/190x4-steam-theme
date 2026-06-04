@@ -1,0 +1,64 @@
+/* 190x4 — app shell layout (titlebar / nav / footer / frame) */
+
+/* full desktop frame 1920×1080 */
+.x4-app{
+  width:1920px; height:1080px; display:flex; flex-direction:column;
+  background:var(--bg-0); color:var(--text-md); font-family:var(--f-ui);
+  overflow:hidden; position:relative;
+}
+.x4-app__body{ flex:1; min-height:0; display:flex; overflow:hidden; position:relative; }
+
+/* ---- chrome ---- */
+.x4-chrome{ flex:none; background:linear-gradient(180deg,#0a0d12,#07090d);
+  border-bottom:var(--hair) solid var(--line); position:relative; z-index:20; }
+
+.x4-titlebar{ height:36px; display:flex; align-items:center; justify-content:space-between;
+  padding:0 8px 0 10px; border-bottom:var(--hair) solid var(--line); }
+.x4-tb-left{ display:flex; align-items:center; gap:16px; }
+.x4-appmenu{ display:flex; gap:2px; }
+.x4-appmenu button{ background:none; border:0; color:var(--text-lo); cursor:pointer;
+  font-family:var(--f-ui); font-size:13px; padding:5px 9px; border-radius:var(--r-sm); letter-spacing:.2px; }
+.x4-appmenu button:hover{ color:var(--text-hi); background:rgba(255,255,255,.05); }
+
+.x4-tb-right{ display:flex; align-items:center; gap:4px; }
+.x4-tb-right .x4-iconbtn{ width:30px; height:30px; position:relative; }
+.x4-notif-dot{ position:absolute; top:5px; right:6px; width:6px; height:6px; border-radius:50%;
+  background:var(--accent); box-shadow:var(--accent-glow); }
+.x4-profilechip{ display:flex; align-items:center; gap:8px; height:30px; padding:0 8px; cursor:pointer;
+  background:rgba(255,255,255,.02); border:var(--hair) solid var(--line); border-radius:var(--r-md);
+  color:var(--text-hi); font-family:var(--f-ui); margin:0 4px; transition:all .15s var(--ease); }
+.x4-profilechip:hover{ border-color:var(--accent-line); box-shadow:inset 0 0 14px rgba(255,37,48,.10); }
+.x4-profilechip .nm{ font-size:13px; font-weight:500; }
+.x4-profilechip .cv{ width:13px; height:13px; color:var(--text-lo); }
+.x4-profilechip .bal{ font-family:var(--f-cond); font-weight:600; color:var(--accent); font-size:13px;
+  padding-left:9px; margin-left:3px; border-left:var(--hair) solid var(--line); text-shadow:0 0 8px rgba(255,37,48,.4); }
+
+/* nav row */
+.x4-nav{ height:52px; display:flex; align-items:center; gap:26px; padding:0 14px; }
+.x4-nav-arrows{ display:flex; gap:2px; }
+.x4-nav-tabs{ display:flex; align-items:center; gap:30px; }
+.x4-navtab--profile{ font-size:13px; letter-spacing:1px; }
+
+/* url bar */
+.x4-urlbar{ height:28px; display:flex; align-items:center; gap:8px; padding:0 16px;
+  background:var(--bg-1); border-top:var(--hair) solid var(--line); color:var(--text-lo); }
+.x4-urlbar i{ width:14px; height:14px; }
+.x4-urlbar span{ font-family:ui-monospace,'JetBrains Mono',monospace; font-size:12px; letter-spacing:.3px; }
+
+/* footer */
+.x4-footer{ flex:none; height:34px; display:flex; align-items:center; justify-content:space-between;
+  padding:0 16px; background:linear-gradient(0deg,#0a0d12,#07090d); border-top:var(--hair) solid var(--line); }
+.x4-foot-link{ display:flex; align-items:center; gap:7px; background:none; border:0; cursor:pointer;
+  color:var(--text-lo); font-family:var(--f-ui); font-size:12.5px; padding:5px 8px; border-radius:var(--r-sm);
+  transition:color .12s var(--ease); }
+.x4-foot-link:hover{ color:var(--text-hi); }
+.x4-foot-link i{ width:14px; height:14px; }
+.x4-foot-center{ position:absolute; left:50%; transform:translateX(-50%); }
+
+/* floating window chrome (Friends / Chat) */
+.x4-window{ background:var(--bg-0); border:var(--hair) solid var(--line-2); border-radius:var(--r-lg);
+  box-shadow:var(--sh-win); overflow:hidden; display:flex; flex-direction:column; position:relative; }
+.x4-window__bar{ height:38px; flex:none; display:flex; align-items:center; justify-content:space-between;
+  padding:0 6px 0 12px; background:linear-gradient(180deg,#0d1016,#090b10); border-bottom:var(--hair) solid var(--line); }
+.x4-window__title{ display:flex; align-items:center; gap:10px; font-family:var(--f-cond); font-weight:600;
+  letter-spacing:.6px; color:var(--text-hi); font-size:13.5px; }

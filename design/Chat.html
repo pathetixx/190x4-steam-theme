@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>190x4 — Чат</title>
+<link rel="stylesheet" href="theme.css">
+<link rel="stylesheet" href="chrome.css">
+<style>
+  html,body{ margin:0; background:#000; display:flex; align-items:center; justify-content:center; }
+  .ch{ width:780px; height:580px; }
+  .ch__bar{ height:40px; flex:none; display:flex; align-items:stretch; justify-content:space-between;
+    background:linear-gradient(180deg,#10141c,#0a0d12); border-bottom:var(--hair) solid var(--line); }
+  .ch-tab{ display:flex; align-items:center; gap:9px; padding:0 12px; border-right:var(--hair) solid var(--line);
+    border-bottom:2px solid var(--accent); box-shadow:inset 0 -12px 18px rgba(255,37,48,.08); }
+  .ch-tab .av{ width:22px; height:22px; }
+  .ch-tab .nm{ font-family:var(--f-cond); font-weight:600; letter-spacing:.8px; color:var(--text-hi); font-size:13px; text-transform:uppercase; }
+  .ch-tab .x{ color:var(--text-lo); cursor:pointer; display:flex; }
+  .ch-tab .x i{ width:13px; height:13px; }
+
+  .ch__body{ flex:1; min-height:0; display:flex; flex-direction:column; position:relative; }
+  .ch-addp{ position:absolute; top:8px; right:10px; }
+  .ch-msgs{ flex:1; overflow-y:auto; min-height:0; padding:14px 18px; display:flex; flex-direction:column; gap:14px; }
+  .ch-date{ text-align:center; color:var(--text-dis); font-size:11.5px; position:relative; margin:4px 0 6px; }
+  .ch-date span{ background:var(--bg-0); padding:0 12px; position:relative; z-index:1; }
+  .ch-date::before{ content:""; position:absolute; left:0; right:0; top:50%; height:1px; background:var(--line); }
+
+  .ch-msg{ display:flex; gap:11px; align-items:flex-start; }
+  .ch-msg .av{ width:32px; height:32px; flex:none; margin-top:2px; }
+  .ch-msg__who{ display:flex; align-items:baseline; gap:9px; margin-bottom:4px; }
+  .ch-msg__who .nm{ font-weight:600; font-size:13.5px; }
+  .ch-msg__who .nm.them{ color:#c98; }
+  .ch-msg__who .nm.me{ color:#6db3e8; }
+  .ch-msg__who .tm{ color:var(--text-dis); font-size:11px; }
+  .ch-bubble{ display:inline-block; background:var(--bg-2); border:var(--hair) solid var(--line); border-radius:3px 12px 12px 12px;
+    padding:8px 13px; color:var(--text-hi); font-size:14px; line-height:1.4; max-width:440px; }
+  .ch-msg.mine{ flex-direction:row-reverse; }
+  .ch-msg.mine .ch-msg__who{ flex-direction:row-reverse; }
+  .ch-msg.mine .ch-bubble{ border-radius:12px 3px 12px 12px; background:linear-gradient(180deg, rgba(255,37,48,.14), rgba(255,37,48,.06));
+    border-color:var(--accent-line); }
+  .ch-msg.mine .ch-msg__txt{ text-align:right; }
+
+  .ch__input{ flex:none; padding:10px 12px; border-top:var(--hair) solid var(--line); background:var(--bg-1);
+    display:flex; align-items:flex-end; gap:8px; }
+  .ch-field{ flex:1; min-height:42px; background:var(--bg-3); border:var(--hair) solid var(--line-2); border-radius:var(--r-md);
+    padding:11px 14px; color:var(--text-hi); font-family:var(--f-ui); font-size:14px; }
+  .ch-field:focus{ outline:none; border-color:var(--accent-line); box-shadow:inset 0 0 0 1px rgba(255,37,48,.2); }
+  .ch-field .cursor{ color:var(--text-dis); }
+  .ch-send{ width:46px; height:42px; border-radius:var(--r-md); border:var(--hair) solid var(--accent-line);
+    background:linear-gradient(180deg,#ff3a44,var(--accent-dim)); color:#fff; display:flex; align-items:center; justify-content:center;
+    cursor:pointer; box-shadow:var(--accent-glow); flex:none; }
+  .ch-tools{ display:flex; gap:4px; }
+  .ch-tools .x4-iconbtn{ width:42px; height:42px; border:var(--hair) solid var(--line); }
+</style>
+</head>
+<body>
+<div class="ch x4-window">
+  <div class="ch__bar">
+    <div class="ch-tab">
+      <span class="x4-ava x4-ava--offline av"></span>
+      <span class="nm">Весёлый Кабан</span>
+      <span class="x"><i data-ic="close"></i></span>
+    </div>
+    <div class="x4-winbtns">
+      <span class="x4-winbtn"><i data-ic="min"></i></span>
+      <span class="x4-winbtn"><i data-ic="max"></i></span>
+      <span class="x4-winbtn x4-winbtn--close"><i data-ic="close"></i></span>
+    </div>
+  </div>
+
+  <div class="ch__body">
+    <button class="x4-iconbtn ch-addp"><i data-ic="addperson"></i></button>
+    <div class="ch-msgs x4-scroll">
+      <div class="ch-date"><span>среда, 3 июня 2026 г.</span></div>
+
+      <div class="ch-msg">
+        <span class="x4-ava x4-ava--offline av"></span>
+        <div><div class="ch-msg__who"><span class="nm them">Весёлый Кабан</span><span class="tm">21:14</span></div>
+          <div class="ch-msg__txt"><span class="ch-bubble">слышь, го катку в доту?</span></div></div>
+      </div>
+
+      <div class="ch-msg mine">
+        <span class="x4-ava x4-ava--online av"></span>
+        <div><div class="ch-msg__who"><span class="nm me">ты+я = нихуя</span><span class="tm">21:15</span></div>
+          <div class="ch-msg__txt"><span class="ch-bubble">обновление качается, 84% уже</span></div></div>
+      </div>
+
+      <div class="ch-msg">
+        <span class="x4-ava x4-ava--offline av"></span>
+        <div><div class="ch-msg__who"><span class="nm them">Весёлый Кабан</span><span class="tm">21:15</span></div>
+          <div class="ch-msg__txt"><span class="ch-bubble">Ауф 🐗</span></div></div>
+      </div>
+    </div>
+
+    <div class="ch__input">
+      <div class="ch-field"><span class="cursor">Написать сообщение…</span></div>
+      <button class="ch-send"><i data-ic="send"></i></button>
+      <div class="ch-tools">
+        <button class="x4-iconbtn"><i data-ic="emoji"></i></button>
+        <button class="x4-iconbtn"><i data-ic="attach"></i></button>
+        <button class="x4-iconbtn"><i data-ic="mic"></i></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>window.__noFit=true;</script>
+<script src="icons.js"></script>
+</body>
+</html>

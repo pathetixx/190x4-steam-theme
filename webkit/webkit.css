@@ -1,0 +1,85 @@
+/* ============================================================================
+   190x4 — STEAM THEME · webkit.css  (Steam-WebKit)
+   Инжектится в webkit-страницы магазина и сообщества:
+   *.steampowered.com, steamcommunity.com, а также in-game overlay (см. Patches).
+   Эти страницы — обычный HTML с относительно стабильными «человеческими» классами
+   (store_, apphub_, supernav_ …), правок под хеши тут меньше, чем в клиенте.
+   Эталоны: design/Store.html, design/Community.html.
+   ============================================================================ */
+
+/* imports токенов + примитивов (RootColors также инжектит colors.css глобально,
+   дубль безвреден и страхует порядок загрузки) */
+@import url("../colors.css");
+@import url("../lib/primitives.css");
+
+/* ----------  ФУНДАМЕНТ  ---------- */
+html, body, .responsive_page_frame, #global_header, .pagecontent {
+  background: var(--bg-0) !important;
+  color: var(--text-md);
+  font-family: var(--f-ui) !important;
+}
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: rgba(0,0,0,.25); }
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(var(--accent-dim), var(--accent-deep));
+  border: 2px solid transparent; background-clip: padding-box; border-radius: 6px;
+}
+::-webkit-scrollbar-thumb:hover { background: var(--accent); background-clip: padding-box; }
+::selection { background: var(--accent-soft); color: #fff; }
+
+a { color: var(--text-md); }
+a:hover { color: var(--accent); }
+
+/* ----------  ВЕРХ. НАВИГАЦИЯ (Orbitron)  ---------- */
+#global_header .supernav, #store_nav_area .tab_content {
+  font-family: var(--f-display) !important; text-transform: uppercase; letter-spacing: 1px;
+}
+#global_header .supernav:hover, #store_nav_area .tab.active {
+  color: #fff !important; text-shadow: 0 0 10px rgba(255,37,48,.35);
+}
+
+/* ----------  ПАНЕЛИ / КАРТОЧКИ  ---------- */
+.home_page_content, .apphub_HomeHeaderContent, .game_area_purchase_game,
+.block, .home_ctn .home_section { background: var(--bg-1); border: var(--hair) solid var(--line); }
+
+/* ----------  КНОПКИ  ----------
+   Зелёные дефолтные кнопки Steam (купить/играть) → красный неон бренда. */
+.btn_green_steamui, .btnv6_green_white_innerfade, .btn_addtocart,
+.apphub_OtherSiteInfo .btnv6_blue_hoverfade {
+  background: linear-gradient(180deg, #ff3a44, var(--accent-dim)) !important;
+  color: #fff !important; box-shadow: var(--accent-glow);
+  border-radius: var(--r-md);
+}
+.btn_green_steamui:hover, .btnv6_green_white_innerfade:hover {
+  box-shadow: var(--accent-glow-lg) !important; filter: brightness(1.06);
+}
+/* вторичные синие → outline */
+.btnv6_blue_hoverfade, .btn_grey_steamui {
+  background: rgba(255,255,255,.02) !important; border: var(--hair) solid var(--line-2) !important;
+  color: var(--text-hi) !important;
+}
+
+/* ----------  СКИДКИ / ЦЕНЫ → красный, не зелёный  ---------- */
+.discount_pct, .discount_block { background: var(--accent) !important; color: #fff !important; box-shadow: var(--accent-glow); }
+.discount_final_price { color: var(--accent) !important; }
+
+/* ----------  КАРТОЧКИ ИГР: hover-подъём + glow  ---------- */
+.tab_item:hover, .store_capsule:hover, .home_marketing_message:hover,
+.apphub_Card:hover {
+  transform: translateY(-3px); border-color: var(--accent-line);
+  box-shadow: var(--sh-2), var(--accent-glow);
+  transition: transform .18s var(--ease), box-shadow .18s var(--ease);
+}
+
+/* ----------  ПОЛЯ ВВОДА  ---------- */
+.gray_bevel input, #store_nav_search_term, .searchbox input {
+  background: var(--bg-3) !important; border: var(--hair) solid var(--line-2) !important;
+  color: var(--text-hi) !important; border-radius: var(--r-md);
+}
+.gray_bevel input:focus, #store_nav_search_term:focus {
+  border-color: var(--accent-line) !important;
+  box-shadow: inset 0 0 0 1px rgba(255,37,48,.25), 0 0 0 3px rgba(255,37,48,.10) !important;
+}
+
+/* TODO(devtools): добиваем витрину/обзоры/центр сообщества по
+   design/Store.html и design/Community.html пиксель-в-пиксель. */

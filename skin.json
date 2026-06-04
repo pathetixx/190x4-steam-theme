@@ -1,0 +1,49 @@
+{
+  "name": "190x4",
+  "author": "190x4",
+  "description": "Cyberpunk command-center theme — красный неон по графиту. Глубокий рескин клиента Steam.",
+  "version": "0.1.0",
+  "tags": ["Dark", "Cyberpunk", "Red", "Customizable"],
+
+  "github": { "owner": "pathetixx", "repo_name": "190x4-steam-theme" },
+
+  "RootColors": "colors.css",
+  "Steam-WebKit": "webkit/webkit.css",
+
+  "UseDefaultPatches": true,
+  "Patches": [
+    {
+      "MatchRegexString": "^Steam$",
+      "TargetCss": "libraryroot.custom.css",
+      "TargetJs": "libraryroot.custom.js"
+    },
+    {
+      "MatchRegexString": "OverlayBrowser_Browser$",
+      "TargetCss": "libraryroot.custom.css"
+    },
+    {
+      "MatchRegexString": ".friendsui-container",
+      "TargetCss": "libraryroot.custom.css"
+    },
+    {
+      "MatchRegexString": ".ModalDialogPopup",
+      "TargetCss": "libraryroot.custom.css"
+    },
+    {
+      "MatchRegexString": ".FullModalOverlay",
+      "TargetCss": "libraryroot.custom.css"
+    },
+    {
+      "MatchRegexString": "Menu$",
+      "TargetCss": "libraryroot.custom.css"
+    },
+    {
+      "MatchRegexString": "Supernav$",
+      "TargetCss": "libraryroot.custom.css"
+    },
+    {
+      "MatchRegexString": ".*SP Overlay:.*",
+      "TargetCss": "webkit/webkit.css"
+    }
+  ]
+}

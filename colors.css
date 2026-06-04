@@ -1,0 +1,83 @@
+/* ============================================================================
+   190x4 — STEAM THEME · RootColors
+   Этот файл объявлен в skin.json как "RootColors" → Millennium инжектит его :root
+   во все окна Steam и даёт юзеру крутить значения в Settings → Themes → Edit.
+   Держать ТОЛЬКО :root (палитра/токены). Никакого другого кода — иначе редактор
+   палитры Millennium ломается.
+   Источник правды: design/theme.css (§6 README). Менять цвета — только тут.
+   ============================================================================ */
+
+/* ----------  FONTS  ----------
+   Google Fonts. Для офлайн/self-host см. assets/fonts/README.md и закомментируй
+   @import, раскомментировав @font-face блоки оттуда. */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700;800&family=Saira:wght@300;400;500;600;700&family=Saira+Semi+Condensed:wght@400;500;600;700&display=swap');
+
+:root {
+  /* surfaces */
+  --bg-0:  #07090d;                 /* самый глубокий фон окна */
+  --bg-1:  #0d1016;                 /* панели */
+  --bg-2:  #11151d;                 /* приподнятые карточки / hover-фон */
+  --bg-3:  #161b25;                 /* инпуты, well */
+  --line:  rgba(255,255,255,.06);   /* hairline границы */
+  --line-2: rgba(255,255,255,.10);  /* чуть ярче */
+
+  /* brand accent — КРАСНЫЙ = успех / активно / connected / Play / online-в-игре */
+  --accent:      #ff2530;
+  --accent-dim:  #b3121b;
+  --accent-deep: #4a0a0f;
+  --accent-soft: rgba(255,37,48,.12);
+  --accent-line: rgba(255,37,48,.40);
+  --accent-glow: 0 0 12px rgba(255,37,48,.55);
+  --accent-glow-lg: 0 0 22px rgba(255,37,48,.45), 0 0 4px rgba(255,37,48,.8);
+
+  /* text */
+  --text-hi:  #e8edf4;
+  --text-md:  #b6bfcd;
+  --text-lo:  #8a93a3;
+  --text-dis: #555c6a;
+
+  /* status (зелёный — ТОЛЬКО точка «в сети») */
+  --status-online:  #38e07b;
+  --status-ingame:  var(--accent);   /* в игре = красный, по правилам бренда */
+  --status-offline: #59616f;
+  --warn: #ffb020;
+
+  /* geometry */
+  --r-sm: 2px;
+  --r-md: 3px;
+  --r-lg: 5px;
+  --hair: 1px;
+
+  /* type */
+  --f-display: 'Orbitron', sans-serif;                     /* ТОЛЬКО лого + верх. навигация */
+  --f-ui: 'Saira', sans-serif;                             /* весь UI и тело */
+  --f-cond: 'Saira Semi Condensed', 'Saira', sans-serif;   /* плотные лейблы */
+
+  /* elevation */
+  --sh-1: 0 1px 0 rgba(255,255,255,.03) inset, 0 2px 8px rgba(0,0,0,.45);
+  --sh-2: 0 18px 50px rgba(0,0,0,.65), 0 2px 0 rgba(255,255,255,.03) inset;
+  --sh-win: 0 30px 90px rgba(0,0,0,.7), 0 0 0 1px rgba(0,0,0,.6);
+
+  /* motion */
+  --ease: cubic-bezier(.2,.7,.3,1);
+
+  /* ----------  STEAM CORE VARIABLE OVERRIDES  ----------
+     Steam-клиент рисует большинство компонентов через свои CSS-переменные.
+     Переопределяя их тут (а не хеш-классы), получаем устойчивый к апдейтам слой:
+     апдейт Steam меняет имена классов, но не имена этих токенов.
+     Перепроверять имена в DevTools — Valve иногда добавляет/переименовывает. */
+  --main-bg-color: var(--bg-0);
+  --header-bg-color: var(--bg-0);
+  --gpHeaderHeight: 0px;
+
+  /* семантический акцент Steam → наш красный */
+  --SystemAccentColor: var(--accent);
+  --SystemAccentColorLight1: #ff3a44;
+  --SystemAccentColorDark1: var(--accent-dim);
+  --highlight-color: var(--accent);
+  --gpFocusRingColor: var(--accent);
+
+  /* friends/чат используют свой набор; маппим на бренд */
+  --friends-online-color: var(--status-online);
+  --friends-ingame-color: var(--accent);
+}

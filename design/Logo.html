@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>190x4 — Логотип (финал)</title>
+<link rel="stylesheet" href="theme.css">
+<link rel="stylesheet" href="chrome.css">
+<style>
+  html,body{ margin:0; background:#07090d; }
+  .lg{ max-width:1180px; margin:0 auto; padding:54px 40px 90px; color:var(--text-md); font-family:var(--f-ui); }
+  .lg-top{ display:flex; align-items:center; gap:14px; margin-bottom:6px; }
+  .lg-top .tag{ font-family:'Share Tech Mono',monospace; font-size:11px; letter-spacing:2px; color:var(--accent);
+    border:1px solid var(--accent-line); border-radius:20px; padding:5px 12px; box-shadow:var(--accent-glow); }
+  .lg-top h1{ font-family:var(--f-cond); font-weight:700; font-size:22px; letter-spacing:1.5px; color:var(--text-hi); margin:0; }
+  .lg-sub{ color:var(--text-lo); font-size:14px; max-width:620px; margin:0 0 44px; line-height:1.6; }
+
+  .lg-sec{ margin-bottom:46px; }
+  .lg-sec__h{ font-family:var(--f-cond); font-weight:700; font-size:12px; letter-spacing:3px; text-transform:uppercase;
+    color:var(--text-lo); display:flex; align-items:center; gap:12px; margin:0 0 20px; }
+  .lg-sec__h::before{ content:""; width:9px; height:15px; background:var(--accent); box-shadow:var(--accent-glow); }
+  .lg-sec__h::after{ content:""; flex:1; height:1px; background:var(--line); }
+
+  /* hero stage */
+  .lg-hero{ height:300px; border:var(--hair) solid var(--line); border-radius:var(--r-lg); position:relative;
+    display:flex; align-items:center; justify-content:center; overflow:hidden;
+    background:radial-gradient(80% 90% at 50% 40%, #11151d, #07090d 75%); }
+
+  .lg-grid2{ display:grid; grid-template-columns:1fr 1fr; gap:22px; }
+  .lg-card{ background:var(--bg-1); border:var(--hair) solid var(--line); border-radius:var(--r-lg); overflow:hidden; }
+  .lg-card__h{ padding:11px 15px; border-bottom:var(--hair) solid var(--line); font-family:'Share Tech Mono',monospace;
+    font-size:11px; letter-spacing:1px; color:var(--text-lo); text-transform:uppercase; }
+  .lg-card__body{ padding:26px; display:flex; align-items:center; justify-content:center; min-height:120px; }
+
+  /* size ladder */
+  .lg-ladder{ display:flex; align-items:flex-end; gap:38px; flex-wrap:wrap; padding:26px; }
+  .lg-ladder .col{ display:flex; flex-direction:column; align-items:center; gap:12px; }
+  .lg-ladder .px{ font-family:'Share Tech Mono',monospace; font-size:10px; color:var(--text-dis); letter-spacing:1px; }
+
+  /* titlebar demo */
+  .lg-tbdemo{ border:var(--hair) solid var(--line); border-radius:var(--r-lg); overflow:hidden; }
+  .lg-tbdemo .x4-titlebar{ border-bottom:0; }
+
+  /* spec */
+  .lg-spec{ display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+  .lg-swatch{ background:var(--bg-1); border:var(--hair) solid var(--line); border-radius:var(--r-md); overflow:hidden; }
+  .lg-swatch .chip{ height:70px; }
+  .lg-swatch .meta{ padding:11px 13px; }
+  .lg-swatch .nm{ font-family:'Share Tech Mono',monospace; font-size:12px; color:var(--text-hi); }
+  .lg-swatch .role{ color:var(--text-lo); font-size:12px; margin-top:4px; line-height:1.4; }
+
+  .lg-rules{ display:flex; flex-direction:column; gap:9px; }
+  .lg-rule{ display:flex; gap:11px; align-items:flex-start; color:var(--text-md); font-size:13.5px; line-height:1.5; }
+  .lg-rule .m{ color:var(--accent); flex:none; font-family:'Share Tech Mono',monospace; }
+  .lg-do{ color:var(--status-online); } .lg-dont{ color:#ff6b72; }
+
+  .lg-onlight{ background:#cdd3dc; }
+  .lg-onpanel{ background:var(--bg-2); }
+</style>
+</head>
+<body>
+<div class="lg">
+
+  <div class="lg-top">
+    <span class="tag">CONCEPT 06 · LOCKED</span>
+    <h1>Логотип темы — 190×4 · Glitch</h1>
+  </div>
+  <p class="lg-sub">Финальный знак. Orbitron 900, белое «190» с хроматическим RGB-расслоением (красный/циан),
+    тёмно-красное «×4». Glitch — фирменный приём, применяется <b>только к логотипу</b>.</p>
+
+  <!-- HERO -->
+  <section class="lg-sec">
+    <div class="lg-hero x4-scan x4-hex">
+      <span class="x4-logo x4-logo--display" data-t="190×4" style="font-size:72px">190<span class="x4-x">×4</span></span>
+    </div>
+  </section>
+
+  <!-- IN TITLEBAR (real) -->
+  <section class="lg-sec">
+    <h2 class="lg-sec__h">В титулбаре · реальный размер</h2>
+    <div class="lg-tbdemo">
+      <div class="x4-titlebar" style="background:linear-gradient(180deg,#0a0d12,#07090d)">
+        <div class="x4-tb-left">
+          <span class="x4-logo" data-t="190×4" style="font-size:15px">190<span class="x4-x">×4</span></span>
+          <nav class="x4-appmenu">
+            <button>Steam</button><button>Вид</button><button>Друзья</button><button>Игры</button><button>Справка</button>
+          </nav>
+        </div>
+        <div class="x4-tb-right">
+          <span style="color:var(--text-lo);font-size:12px;font-family:'Share Tech Mono',monospace">← так выглядит в углу клиента</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SIZE LADDER -->
+  <section class="lg-sec">
+    <h2 class="lg-sec__h">Размерный ряд · «×4» светлеет на мелком для читаемости</h2>
+    <div class="lg-card">
+      <div class="lg-ladder">
+        <div class="col"><span class="x4-logo x4-logo--display" data-t="190×4" style="font-size:48px">190<span class="x4-x">×4</span></span><span class="px">48 · #8c0d14</span></div>
+        <div class="col"><span class="x4-logo x4-logo--display" data-t="190×4" style="font-size:32px">190<span class="x4-x">×4</span></span><span class="px">32 · #8c0d14</span></div>
+        <div class="col"><span class="x4-logo" data-t="190×4" style="font-size:22px">190<span class="x4-x">×4</span></span><span class="px">22 · #c01622</span></div>
+        <div class="col"><span class="x4-logo" data-t="190×4" style="font-size:15px">190<span class="x4-x">×4</span></span><span class="px">15 · титулбар</span></div>
+        <div class="col"><span class="x4-logo" data-t="190×4" style="font-size:11px">190<span class="x4-x">×4</span></span><span class="px">11 · favicon</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BACKGROUNDS -->
+  <section class="lg-sec">
+    <h2 class="lg-sec__h">На разных фонах</h2>
+    <div class="lg-grid2">
+      <div class="lg-card">
+        <div class="lg-card__h">// на графите (основной)</div>
+        <div class="lg-card__body" style="background:var(--bg-0)">
+          <span class="x4-logo x4-logo--display" data-t="190×4" style="font-size:40px">190<span class="x4-x">×4</span></span>
+        </div>
+      </div>
+      <div class="lg-card">
+        <div class="lg-card__h">// на приподнятой панели</div>
+        <div class="lg-card__body lg-onpanel">
+          <span class="x4-logo x4-logo--display" data-t="190×4" style="font-size:40px">190<span class="x4-x">×4</span></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COLOR SPEC -->
+  <section class="lg-sec">
+    <h2 class="lg-sec__h">Цветовая спецификация</h2>
+    <div class="lg-spec">
+      <div class="lg-swatch"><div class="chip" style="background:#ffffff"></div>
+        <div class="meta"><div class="nm">#FFFFFF</div><div class="role">«190» — основной слой</div></div></div>
+      <div class="lg-swatch"><div class="chip" style="background:#8c0d14"></div>
+        <div class="meta"><div class="nm">#8C0D14</div><div class="role">«×4» крупно (≥28px)</div></div></div>
+      <div class="lg-swatch"><div class="chip" style="background:#c01622"></div>
+        <div class="meta"><div class="nm">#C01622</div><div class="role">«×4» мелко (&lt;28px) + glow</div></div></div>
+      <div class="lg-swatch"><div class="chip" style="background:#ff2530"></div>
+        <div class="meta"><div class="nm">#FF2530</div><div class="role">glitch-призрак (красный сдвиг)</div></div></div>
+      <div class="lg-swatch"><div class="chip" style="background:#27e0ff"></div>
+        <div class="meta"><div class="nm">#27E0FF</div><div class="role">glitch-призрак (циан-сдвиг)</div></div></div>
+      <div class="lg-swatch"><div class="chip" style="background:#07090d;box-shadow:inset 0 0 0 1px var(--line-2)"></div>
+        <div class="meta"><div class="nm">#07090D</div><div class="role">рекоменд. фон (графит)</div></div></div>
+    </div>
+  </section>
+
+  <!-- RULES -->
+  <section class="lg-sec">
+    <h2 class="lg-sec__h">Правила</h2>
+    <div class="lg-grid2">
+      <div class="lg-card"><div class="lg-card__h lg-do">✓ Можно</div>
+        <div class="lg-card__body" style="display:block;text-align:left">
+          <div class="lg-rules">
+            <div class="lg-rule"><span class="m">→</span> На тёмном графите / панелях #07090D–#11151D.</div>
+            <div class="lg-rule"><span class="m">→</span> Мельче 28px — переключать «×4» на #C01622 + glow.</div>
+            <div class="lg-rule"><span class="m">→</span> Парная мини-иконка для favicon/трея (по запросу).</div>
+            <div class="lg-rule"><span class="m">→</span> Glitch усиливать на :hover (лёгкий сдвиг призраков).</div>
+          </div>
+        </div>
+      </div>
+      <div class="lg-card"><div class="lg-card__h lg-dont">✕ Нельзя</div>
+        <div class="lg-card__body" style="display:block;text-align:left">
+          <div class="lg-rules">
+            <div class="lg-rule"><span class="m" style="color:#ff6b72">✕</span> На светлом фоне (призраки и «×4» гаснут).</div>
+            <div class="lg-rule"><span class="m" style="color:#ff6b72">✕</span> Менять Orbitron на другой шрифт.</div>
+            <div class="lg-rule"><span class="m" style="color:#ff6b72">✕</span> Красить «190» в красный — белый обязателен.</div>
+            <div class="lg-rule"><span class="m" style="color:#ff6b72">✕</span> Применять glitch к чему-либо, кроме лого.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap">
+</body>
+</html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>190x4 — Сообщество</title>
+<link rel="stylesheet" href="theme.css">
+<link rel="stylesheet" href="chrome.css">
+<style>
+  html,body{ margin:0; background:#000; }
+  .cm{ flex:1; overflow-y:auto; min-height:0; background:
+    radial-gradient(80% 50% at 50% 0%, rgba(255,37,48,.05), transparent 55%); }
+  .cm-wrap{ max-width:1100px; margin:0 auto; padding:30px 24px 50px; }
+  .cm-head h1{ margin:0; font-family:var(--f-cond); font-weight:700; font-size:30px; letter-spacing:.5px; color:var(--text-hi); }
+  .cm-head p{ margin:6px 0 24px; color:var(--text-lo); font-size:14px; }
+
+  .cm-top{ display:grid; grid-template-columns:1fr 1fr 0.9fr; gap:14px; margin-bottom:26px; }
+  .cm-find .x4-panel{ margin-bottom:14px; }
+  .cm-mini{ display:flex; align-items:center; gap:11px; padding:9px 12px; cursor:pointer; border-radius:var(--r-sm); }
+  .cm-mini:hover{ background:rgba(255,255,255,.03); }
+  .cm-mini .gi{ width:34px; height:34px; border-radius:var(--r-sm); flex:none; background:linear-gradient(135deg,#2a3140,#141922);
+    box-shadow:inset 0 0 0 1px var(--line); }
+  .cm-mini .nm{ color:var(--text-hi); font-size:13.5px; font-weight:600; }
+  .cm-mini .sub{ color:var(--text-lo); font-size:12px; margin-top:2px; }
+  .cm-mini .sub b{ color:var(--accent); font-weight:600; }
+
+  .cm-filterbar{ display:flex; align-items:center; gap:0; border-bottom:var(--hair) solid var(--line); margin-bottom:18px; }
+  .cm-sort{ margin-left:auto; display:flex; gap:0; align-items:center; padding-bottom:8px; }
+  .cm-sort .lab{ color:var(--text-lo); font-size:12.5px; margin-right:10px; }
+  .cm-seg{ display:flex; border:var(--hair) solid var(--line-2); border-radius:var(--r-sm); overflow:hidden; }
+  .cm-seg button{ background:none; border:0; color:var(--text-lo); font-family:var(--f-cond); font-weight:600; font-size:11.5px;
+    letter-spacing:.8px; text-transform:uppercase; padding:7px 13px; cursor:pointer; }
+  .cm-seg button.on{ background:var(--accent); color:#fff; box-shadow:var(--accent-glow); }
+
+  .cm-feed{ display:grid; grid-template-columns:1.5fr 1fr; gap:18px; align-items:start; }
+  .cm-review{ background:var(--bg-1); border:var(--hair) solid var(--line); border-radius:var(--r-md); padding:16px; }
+  .cm-review__meta{ font-size:11.5px; color:var(--text-lo); border-bottom:var(--hair) solid var(--line); padding-bottom:10px; margin-bottom:12px; }
+  .cm-review__rec{ display:flex; align-items:center; gap:10px; margin-bottom:12px; }
+  .cm-review__rec .tu{ width:36px; height:36px; border-radius:var(--r-sm); display:flex; align-items:center; justify-content:center;
+    color:var(--accent); border:var(--hair) solid var(--accent-line); box-shadow:inset 0 0 12px rgba(255,37,48,.12); }
+  .cm-review__rec .t{ color:var(--text-hi); font-weight:600; font-size:14px; }
+  .cm-review__rec .h{ color:var(--text-lo); font-size:12px; margin-top:1px; }
+  .cm-review__lead{ color:#6db3e8; font-size:14.5px; line-height:1.5; margin-bottom:10px; }
+  .cm-review__body{ color:var(--text-md); font-size:13.5px; line-height:1.6; }
+  .cm-review__foot{ display:flex; align-items:center; justify-content:space-between; margin-top:14px; padding-top:12px;
+    border-top:var(--hair) solid var(--line); color:var(--text-lo); font-size:12.5px; }
+  .cm-side > *{ margin-bottom:18px; }
+  .cm-shot{ border-radius:var(--r-md); overflow:hidden; border:var(--hair) solid var(--line); }
+  .cm-shot__img{ height:170px; position:relative; }
+  .cm-shot__img .nm{ position:absolute; left:50%; top:46%; transform:translate(-50%,-50%); font-family:var(--f-cond);
+    font-weight:700; font-size:26px; color:rgba(255,255,255,.6); letter-spacing:1px; }
+  .cm-shot__cap{ padding:11px 13px; color:var(--text-md); font-size:13px; }
+</style>
+</head>
+<body>
+<div class="x4-fit">
+<div class="x4-app">
+  <div data-chrome data-active="community" data-url="https://steamcommunity.com/"></div>
+  <div class="x4-app__body" style="flex-direction:column">
+    <div class="cm x4-scroll">
+      <div class="cm-wrap">
+
+        <div class="cm-head">
+          <h1>Активность сообщества</h1>
+          <p>Фанатский и официальный контент для всех игр и программ в Steam.</p>
+        </div>
+
+        <div class="cm-top">
+          <div class="x4-panel">
+            <div class="x4-panel__head"><span class="tick"></span>Недавно запущенные игры</div>
+            <div style="padding:6px">
+              <div class="cm-mini"><span class="gi"></span><div><div class="nm">Destiny 2</div><div class="sub">Новых иллюстраций: <b>11</b> на этой неделе</div></div></div>
+              <div class="cm-mini"><span class="gi"></span><div><div class="nm">Atomic Heart</div><div class="sub">Новых иллюстраций: <b>6</b> на этой неделе</div></div></div>
+              <div class="cm-mini"><span class="gi"></span><div><div class="nm">Resident Evil Requiem</div><div class="sub">Новых иллюстраций: <b>91</b> на этой неделе</div></div></div>
+            </div>
+          </div>
+          <div class="x4-panel">
+            <div class="x4-panel__head"><span class="tick"></span>Недавно просмотренные центры</div>
+            <div style="padding:6px">
+              <div class="cm-mini"><span class="gi"></span><div><div class="nm">The Mortuary Assistant</div><div class="sub">Новых видео: <b>1</b> на этой неделе</div></div></div>
+              <div class="cm-mini"><span class="gi"></span><div><div class="nm">Dark Swords</div><div class="sub">Новых работ в мастерской: <b>0</b></div></div></div>
+              <div class="cm-mini"><span class="gi"></span><div><div class="nm">Resident Evil Requiem</div><div class="sub">Новых иллюстраций: <b>91</b> на этой неделе</div></div></div>
+            </div>
+          </div>
+          <div class="cm-find">
+            <div class="x4-panel"><div class="x4-panel__head"><span class="tick"></span>Найти центры</div>
+              <div style="padding:12px"><div class="x4-search"><i class="ic" data-ic="search"></i><input class="x4-input" placeholder="Поиск по продуктам"></div></div></div>
+            <div class="x4-panel"><div class="x4-panel__head"><span class="tick"></span>Найти людей</div>
+              <div style="padding:12px"><div class="x4-search"><i class="ic" data-ic="search"></i><input class="x4-input" placeholder="Найти друзей"></div></div></div>
+          </div>
+        </div>
+
+        <div class="cm-filterbar">
+          <button class="x4-tab is-active">Все</button><button class="x4-tab">Скриншоты</button>
+          <button class="x4-tab">Иллюстрации</button><button class="x4-tab">Трансляции</button>
+          <button class="x4-tab">Видео</button><button class="x4-tab">Мастерская</button>
+          <button class="x4-tab">Новости</button><button class="x4-tab">Руководства</button>
+          <button class="x4-tab">Обзоры</button>
+          <div class="cm-sort"><span class="lab">Просмотреть</span>
+            <div class="cm-seg"><button class="on">Самые популярные</button><button>Последние</button></div></div>
+        </div>
+
+        <div class="cm-feed">
+          <div class="cm-main">
+            <div class="cm-review">
+              <div class="cm-review__meta">Пользователей, посчитавших обзор полезным: 458 · посчитавших забавным: 86</div>
+              <div class="cm-review__rec">
+                <div class="tu"><i data-ic="check"></i></div>
+                <div><div class="t">Рекомендую</div><div class="h">44.5 ч. всего · Опубликовано: 29 мая</div></div>
+              </div>
+              <div class="cm-review__lead">Пиранья Байтс попробовала откусить больше, чем может проглотить, и в итоге утонула в бизнесе. Вот такой каламбур.</div>
+              <div class="cm-review__body">Чем ближе игра к концу, тем очевиднее она разваливается и трещит по швам. Сюжет превращается в кашу, диалоги всё глупее и выглядят как черновой вариант, а квесты буквально «иди туда, убей того». Хотя обидно — в самом начале очень много интересных крючков и развилок демонстрировали, однако ближе к концу о них благополучно забыли.</div>
+              <div class="cm-review__foot"><span>ELEX II</span><span><i data-ic="people" style="width:13px;height:13px;vertical-align:-2px"></i> 0</span></div>
+            </div>
+          </div>
+
+          <div class="cm-side">
+            <div class="cm-review">
+              <div class="cm-review__meta">Пользователей, посчитавших обзор полезным: 608</div>
+              <div class="cm-review__rec">
+                <div class="tu"><i data-ic="check"></i></div>
+                <div><div class="t">Рекомендую</div><div class="h">29.5 ч. всего · 1 июня</div></div>
+              </div>
+              <div class="cm-review__body">Отличный хоррор, держит в напряжении до самого финала. Атмосфера на высоте.</div>
+              <div class="cm-review__foot"><span>Resident Evil Village</span><span><i data-ic="people" style="width:13px;height:13px;vertical-align:-2px"></i> 0</span></div>
+            </div>
+            <div class="cm-shot">
+              <div class="cm-shot__img x4-art x4-scan x4-hex"><span class="nm">SKILL TRAINING</span></div>
+              <div class="cm-shot__cap">Skill Training | Training Your Skill · <span style="color:var(--text-lo)">Counter-Strike 2</span></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <div data-footer></div>
+</div>
+</div>
+
+<script src="fit.js"></script>
+<script src="icons.js"></script>
+<script src="chrome.js"></script>
+</body>
+</html>

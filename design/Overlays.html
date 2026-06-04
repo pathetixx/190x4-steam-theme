@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>190x4 — Оверлеи и меню</title>
+<link rel="stylesheet" href="theme.css">
+<link rel="stylesheet" href="chrome.css">
+<style>
+  html,body{ margin:0; background:#000; }
+  .ov{ width:1640px; min-height:1040px; background:var(--bg-0); padding:50px 56px; position:relative; }
+  .ov-grid{ display:flex; flex-wrap:wrap; gap:56px 60px; align-items:flex-start; }
+  .ov-item{ display:flex; flex-direction:column; gap:14px; }
+  .ov-cap{ font-family:ui-monospace,'JetBrains Mono',monospace; font-size:12px; letter-spacing:1px; text-transform:uppercase;
+    color:var(--text-lo); display:flex; align-items:center; gap:8px; }
+  .ov-cap::before{ content:""; width:8px; height:8px; background:var(--accent); box-shadow:var(--accent-glow); }
+
+  /* menu primitive */
+  .x4-menu{ background:var(--bg-1); border:var(--hair) solid var(--line-2); border-radius:var(--r-md);
+    box-shadow:var(--sh-2); padding:5px; min-width:210px; }
+  .x4-menu__item{ display:flex; align-items:center; gap:11px; padding:9px 13px; border-radius:var(--r-sm); cursor:pointer;
+    color:var(--text-md); font-size:13.5px; border-left:2px solid transparent; }
+  .x4-menu__item:hover{ background:linear-gradient(90deg,var(--accent-soft),transparent); color:#fff; border-left-color:var(--accent); }
+  .x4-menu__item i{ width:15px; height:15px; color:var(--text-lo); }
+  .x4-menu__item:hover i{ color:var(--accent); }
+  .x4-menu__item.gi{ gap:11px; }
+  .x4-menu__item .ico{ width:20px; height:20px; border-radius:3px; flex:none; background:linear-gradient(135deg,#2a3140,#141922);
+    box-shadow:inset 0 0 0 1px var(--line); }
+  .x4-menu__sep{ height:1px; background:var(--line); margin:5px 4px; }
+  .x4-menu__item.danger:hover{ color:#ff6b72; }
+
+  /* status menu */
+  .x4-statusmenu{ min-width:300px; }
+  .stm-item{ padding:10px 13px; border-radius:var(--r-sm); cursor:pointer; border-left:2px solid transparent; }
+  .stm-item:hover{ background:rgba(255,255,255,.035); }
+  .stm-item.on{ background:linear-gradient(90deg,var(--accent-soft),transparent); border-left-color:var(--accent); }
+  .stm-item .row{ display:flex; align-items:center; gap:9px; color:var(--text-hi); font-size:14px; font-weight:500; }
+  .stm-item.on .row{ color:#fff; }
+  .stm-item .desc{ color:var(--text-lo); font-size:12px; margin-top:3px; margin-left:18px; line-height:1.35; }
+  .stm-check .row{ font-weight:500; }
+  .stm-box{ width:15px; height:15px; border-radius:3px; border:var(--hair) solid var(--line-2); background:var(--bg-3); flex:none; }
+
+  /* modal */
+  .x4-modal{ width:560px; background:var(--bg-1); border:var(--hair) solid var(--line-2); border-radius:var(--r-lg);
+    box-shadow:var(--sh-win); overflow:hidden; }
+  .x4-modal__bar{ height:44px; display:flex; align-items:center; justify-content:space-between; padding:0 8px 0 16px;
+    background:linear-gradient(180deg,#10141c,#0a0d12); border-bottom:var(--hair) solid var(--line); }
+  .x4-modal__title{ font-family:var(--f-cond); font-weight:600; letter-spacing:.6px; color:var(--text-hi); font-size:14px;
+    display:flex; align-items:center; gap:9px; }
+  .x4-modal__body{ padding:22px; }
+  .x4-modal__row{ display:flex; align-items:center; justify-content:space-between; padding:13px 0; border-bottom:var(--hair) solid var(--line); }
+  .x4-modal__row:last-child{ border-bottom:0; }
+  .x4-modal__row .k{ color:var(--text-hi); font-size:14px; }
+  .x4-modal__row .sub{ color:var(--text-lo); font-size:12px; margin-top:2px; }
+  .x4-modal__foot{ display:flex; justify-content:flex-end; gap:10px; padding:16px 22px; border-top:var(--hair) solid var(--line);
+    background:rgba(0,0,0,.2); }
+
+  /* toast */
+  .ov-toaststack{ display:flex; flex-direction:column; gap:14px; }
+</style>
+</head>
+<body>
+<div class="x4-fit">
+<div class="ov x4-hex">
+  <div class="ov-grid">
+
+    <!-- STATUS DROPDOWN -->
+    <div class="ov-item">
+      <div class="ov-cap">Дропдаун статуса</div>
+      <div class="x4-menu x4-statusmenu">
+        <div class="stm-item on"><div class="row"><span class="x4-dot x4-dot--online"></span> В сети</div></div>
+        <div class="stm-item"><div class="row"><span class="x4-dot x4-dot--dnd"></span> Нет на месте</div></div>
+        <div class="stm-item"><div class="row"><span class="x4-dot x4-dot--offline"></span> Невидимка</div>
+          <div class="desc">Вы будете показываться как «Не в сети», но по-прежнему сможете пользоваться чатом.</div></div>
+        <div class="stm-item"><div class="row"><span class="x4-dot x4-dot--offline"></span> Не в сети</div>
+          <div class="desc">Выйти из системы друзей и чатов.</div></div>
+        <div class="x4-menu__sep"></div>
+        <div class="stm-item stm-check"><div class="row"><span class="stm-box"></span> Не беспокоить</div>
+          <div class="desc">Отключает все уведомления в чатах.</div></div>
+        <div class="x4-menu__sep"></div>
+        <div class="x4-menu__item"><i data-ic="edit"></i> Изменить имя профиля</div>
+      </div>
+    </div>
+
+    <!-- TRAY / CONTEXT MENU -->
+    <div class="ov-item">
+      <div class="ov-cap">Трей-меню · последние игры</div>
+      <div class="x4-menu" style="min-width:248px">
+        <div class="x4-menu__item gi"><span class="ico"></span> Destiny 2</div>
+        <div class="x4-menu__item gi"><span class="ico"></span> Resident Evil Requiem</div>
+        <div class="x4-menu__item gi"><span class="ico"></span> Atomic Heart</div>
+        <div class="x4-menu__item gi"><span class="ico"></span> Triarchy Плейтест (Трайарки)</div>
+        <div class="x4-menu__item gi"><span class="ico"></span> The Mortuary Assistant</div>
+        <div class="x4-menu__sep"></div>
+        <div class="x4-menu__item"><i data-ic="store"></i> Магазин</div>
+        <div class="x4-menu__item"><i data-ic="library"></i> Библиотека</div>
+        <div class="x4-menu__item"><i data-ic="community"></i> Сообщество</div>
+        <div class="x4-menu__item"><i data-ic="people"></i> Друзья</div>
+        <div class="x4-menu__item"><i data-ic="gear"></i> Настройки</div>
+        <div class="x4-menu__sep"></div>
+        <div class="x4-menu__item"><i data-ic="monitor"></i> Big Picture</div>
+        <div class="x4-menu__item"><i data-ic="controller"></i> SteamVR</div>
+        <div class="x4-menu__sep"></div>
+        <div class="x4-menu__item danger"><i data-ic="close"></i> Выйти из Steam</div>
+      </div>
+    </div>
+
+    <!-- STEAM APP MENU -->
+    <div class="ov-item">
+      <div class="ov-cap">Меню «Steam»</div>
+      <div class="x4-menu" style="min-width:280px">
+        <div class="x4-menu__item"><i data-ic="user"></i> Войти в другой аккаунт…</div>
+        <div class="x4-menu__item"><i data-ic="back"></i> Выйти из аккаунта…</div>
+        <div class="x4-menu__item"><i data-ic="globe"></i> Перейти в автономный режим…</div>
+        <div class="x4-menu__item"><i data-ic="refresh"></i> Проверить наличие обновлений…</div>
+        <div class="x4-menu__item"><i data-ic="shield"></i> Восстановить файлы игры…</div>
+        <div class="x4-menu__sep"></div>
+        <div class="x4-menu__item"><i data-ic="gear"></i> Настройки</div>
+        <div class="x4-menu__item"><i data-ic="flame"></i> Millennium</div>
+        <div class="x4-menu__item"><i data-ic="library"></i> Менеджер библиотеки Millennium</div>
+        <div class="x4-menu__sep"></div>
+        <div class="x4-menu__item danger"><i data-ic="close"></i> Выход</div>
+      </div>
+    </div>
+
+    <!-- TOAST + MODAL column -->
+    <div class="ov-item">
+      <div class="ov-cap">Тост-уведомление</div>
+      <div class="ov-toaststack">
+        <div class="x4-toast">
+          <span class="x4-ava x4-ava--ingame" style="width:40px;height:40px"></span>
+          <div style="flex:1"><div style="color:var(--text-hi);font-weight:600;font-size:14px">KeeJay</div>
+            <div style="display:flex;align-items:center;gap:7px;color:var(--text-md);font-size:13px;margin-top:2px">
+              <i data-ic="people" style="width:13px;height:13px;color:var(--accent)"></i> Ауф</div></div>
+        </div>
+        <div class="x4-toast">
+          <span style="width:40px;height:40px;border-radius:3px;background:var(--bg-3);display:flex;align-items:center;justify-content:center;color:var(--accent);border:var(--hair) solid var(--accent-line)"><i data-ic="download"></i></span>
+          <div style="flex:1"><div style="color:var(--text-hi);font-weight:600;font-size:14px">Загрузка завершена</div>
+            <div style="color:var(--text-md);font-size:13px;margin-top:2px">DOTA 2 готова к запуску</div></div>
+        </div>
+      </div>
+
+      <div class="ov-cap" style="margin-top:30px">Модальный диалог</div>
+      <div class="x4-modal">
+        <div class="x4-modal__bar">
+          <div class="x4-modal__title"><i data-ic="gear" style="width:14px;height:14px;color:var(--accent)"></i> Свойства — Resident Evil Requiem</div>
+          <span class="x4-winbtn x4-winbtn--close"><i data-ic="close"></i></span>
+        </div>
+        <div class="x4-modal__body">
+          <div class="x4-modal__row"><div><div class="k">Автоматически обновлять эту игру</div>
+            <div class="sub">Загружать обновления при запуске Steam</div></div><span class="x4-toggle is-on"></span></div>
+          <div class="x4-modal__row"><div><div class="k">Steam Overlay в игре</div>
+            <div class="sub">Открывать оверлей по Shift+Tab</div></div><span class="x4-toggle is-on"></span></div>
+          <div class="x4-modal__row"><div><div class="k">Параметры запуска</div></div>
+            <input class="x4-input" style="width:200px" placeholder="-novid -high"></div>
+        </div>
+        <div class="x4-modal__foot">
+          <button class="x4-btn x4-btn--ghost">Отмена</button>
+          <button class="x4-btn x4-btn--primary">Сохранить</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</div>
+
+<script src="fit.js"></script>
+<script src="icons.js"></script>
+</body>
+</html>

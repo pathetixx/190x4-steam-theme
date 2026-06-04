@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>190x4 — Магазин</title>
+<link rel="stylesheet" href="theme.css">
+<link rel="stylesheet" href="chrome.css">
+<style>
+  html,body{ margin:0; background:#000; }
+  .st{ flex:1; overflow-y:auto; min-height:0; }
+  .st-subnav{ height:50px; display:flex; align-items:center; gap:6px; padding:0 22px;
+    background:var(--bg-1); border-bottom:var(--hair) solid var(--line); }
+  .st-subnav .menu{ display:flex; align-items:center; gap:4px; }
+  .st-menulink{ display:flex; align-items:center; gap:6px; height:34px; padding:0 14px; border-radius:var(--r-md);
+    color:var(--text-md); font-size:13.5px; cursor:pointer; background:none; border:0; font-family:var(--f-ui); }
+  .st-menulink:hover{ color:#fff; background:rgba(255,255,255,.04); }
+  .st-menulink i{ width:13px; height:13px; color:var(--text-lo); }
+  .st-wish{ display:flex; align-items:center; gap:7px; color:var(--text-md); font-size:13px; cursor:pointer; }
+  .st-wish i{ width:15px; height:15px; color:var(--accent); }
+
+  .st-wrap{ max-width:1320px; margin:0 auto; padding:26px 24px 50px; }
+  .st-h{ font-family:var(--f-cond); font-weight:600; font-size:14px; letter-spacing:2px; text-transform:uppercase;
+    color:var(--text-hi); display:flex; align-items:center; gap:10px; margin:0 0 14px; }
+  .st-h .tick{ width:5px; height:15px; background:var(--accent); box-shadow:var(--accent-glow); }
+  .st-h .more{ margin-left:auto; }
+
+  /* featured */
+  .feat{ display:flex; gap:14px; align-items:stretch; }
+  .feat__arrow{ width:46px; flex:none; display:flex; align-items:center; justify-content:center; }
+  .feat__card{ flex:1; display:grid; grid-template-columns:1.55fr 1fr; background:var(--bg-1);
+    border:var(--hair) solid var(--line); border-radius:var(--r-lg); overflow:hidden; box-shadow:var(--sh-1); }
+  .feat__big{ position:relative; min-height:340px; }
+  .feat__big .x4-art{ position:absolute; inset:0; }
+  .feat__side{ padding:20px; border-left:var(--hair) solid var(--line); display:flex; flex-direction:column; }
+  .feat__title{ font-family:var(--f-cond); font-weight:700; font-size:26px; color:#fff; letter-spacing:1px; }
+  .feat__shots{ display:grid; grid-template-columns:1fr 1fr; gap:8px; margin:16px 0; }
+  .feat__shots .x4-art{ height:78px; border-radius:var(--r-sm); }
+  .feat__rec{ display:flex; align-items:center; gap:10px; color:var(--text-lo); font-size:12.5px; margin-top:auto; }
+  .feat__rec .pc{ font-family:var(--f-display); font-weight:700; color:#fff; background:var(--accent-dim);
+    padding:3px 6px; border-radius:2px; font-size:11px; box-shadow:var(--accent-glow); }
+  .feat__buy{ display:flex; align-items:center; gap:10px; margin-top:14px; }
+  .price{ display:flex; align-items:center; gap:8px; background:var(--bg-3); border:var(--hair) solid var(--line);
+    border-radius:var(--r-sm); padding:5px 8px; }
+  .price .disc{ font-family:var(--f-cond); font-weight:700; color:#fff; background:var(--accent); padding:3px 6px;
+    border-radius:2px; box-shadow:var(--accent-glow); }
+  .price .old{ color:var(--text-dis); text-decoration:line-through; font-size:12px; }
+  .price .new{ color:var(--text-hi); font-weight:600; }
+  .feat-dots{ display:flex; gap:5px; justify-content:center; margin-top:14px; }
+  .feat-dots span{ width:8px; height:8px; border-radius:2px; background:var(--bg-3); border:var(--hair) solid var(--line-2); }
+  .feat-dots span.on{ background:var(--accent); box-shadow:var(--accent-glow); border-color:transparent; }
+
+  /* deals */
+  .deals{ display:flex; gap:14px; align-items:stretch; margin-bottom:8px; }
+  .deals__grid{ flex:1; display:grid; grid-template-columns:repeat(2,1fr) 1.05fr; gap:14px; }
+  .deal{ border-radius:var(--r-md); overflow:hidden; border:var(--hair) solid var(--line); background:var(--bg-1);
+    position:relative; transition:transform .15s,box-shadow .15s,border-color .15s; cursor:pointer; }
+  .deal:hover{ transform:translateY(-3px); border-color:var(--accent-line); box-shadow:var(--sh-2),var(--accent-glow); }
+  .deal__art{ height:200px; position:relative; }
+  .deal__art .nm{ position:absolute; left:14px; bottom:14px; font-family:var(--f-cond); font-weight:700; font-size:24px;
+    color:#fff; letter-spacing:1px; text-shadow:0 2px 12px #000; }
+  .deal__live{ position:absolute; top:10px; left:10px; }
+  .deal__foot{ padding:11px 13px; display:flex; align-items:center; justify-content:space-between; }
+  .deal__foot .lbl{ font-family:var(--f-cond); font-size:11px; letter-spacing:1px; text-transform:uppercase; color:var(--text-lo); }
+  .deal__foot .lbl b{ display:block; color:var(--text-hi); font-weight:600; font-size:12.5px; letter-spacing:.5px;
+    text-transform:none; margin-top:2px; }
+  .deal.mini{ display:flex; flex-direction:column; }
+  .deal.mini .deal__art{ height:118px; }
+  .deal.mini .deal__art .nm{ font-size:18px; }
+
+  /* categories */
+  .cats{ display:flex; gap:14px; align-items:stretch; }
+  .cats__row{ flex:1; display:grid; grid-template-columns:repeat(4,1fr); gap:14px; }
+  .cat{ height:150px; border-radius:var(--r-md); border:var(--hair) solid var(--line); position:relative; overflow:hidden;
+    display:flex; align-items:flex-end; justify-content:center; padding-bottom:18px; cursor:pointer;
+    transition:border-color .15s, box-shadow .15s; }
+  .cat:hover{ border-color:var(--accent-line); box-shadow:var(--accent-glow); }
+  .cat__art{ position:absolute; inset:0; }
+  .cat__label{ position:relative; font-family:var(--f-cond); font-weight:700; font-size:14px; letter-spacing:1.5px;
+    text-transform:uppercase; color:#fff; background:rgba(7,9,13,.7); border:var(--hair) solid var(--accent-line);
+    padding:8px 16px; border-radius:var(--r-sm); box-shadow:var(--accent-glow); }
+</style>
+</head>
+<body>
+<div class="x4-fit">
+<div class="x4-app">
+  <div data-chrome data-active="store" data-url="https://store.steampowered.com/"></div>
+  <div class="x4-app__body" style="flex-direction:column">
+
+    <div class="st-subnav">
+      <div class="menu">
+        <button class="st-menulink">Просмотр <i data-ic="chevD"></i></button>
+        <button class="st-menulink">Рекомендации <i data-ic="chevD"></i></button>
+        <button class="st-menulink">Категории <i data-ic="chevD"></i></button>
+        <button class="st-menulink">Способы игры <i data-ic="chevD"></i></button>
+        <button class="st-menulink">Особые разделы <i data-ic="chevD"></i></button>
+      </div>
+      <div class="x4-search" style="width:340px;margin-left:18px"><i class="ic" data-ic="search"></i>
+        <input class="x4-input" placeholder="Поиск по магазину"></div>
+      <div style="flex:1"></div>
+      <div class="st-wish"><i data-ic="star"></i> Список желаемого <b style="color:var(--text-hi)">9</b></div>
+    </div>
+
+    <div class="st x4-scroll">
+      <div class="st-wrap">
+
+        <!-- FEATURED -->
+        <div class="st-h"><span class="tick"></span>Популярное и рекомендуемое</div>
+        <div class="feat">
+          <div class="feat__arrow"><button class="x4-iconbtn" style="width:42px;height:60px"><i data-ic="chevL"></i></button></div>
+          <div class="feat__card">
+            <div class="feat__big x4-art x4-scan x4-emberglow">
+              <span class="x4-art__tag">MARATHON — HERO ART</span>
+            </div>
+            <div class="feat__side">
+              <div class="feat__title">Marathon</div>
+              <div class="feat__shots">
+                <div class="x4-art x4-hex"></div><div class="x4-art x4-hex"></div>
+                <div class="x4-art x4-hex"></div><div class="x4-art x4-hex"></div>
+              </div>
+              <div class="feat__rec"><span class="pc">PC GAMER</span> Рекомендовано: <b style="color:var(--text-hi)">PC Gamer</b></div>
+              <div class="feat__buy">
+                <span class="x4-badge x4-badge--ghost">Лидер продаж</span>
+                <div class="price"><span class="disc">-30%</span><span class="old">14 499₸</span><span class="new">10 149₸</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="feat__arrow"><button class="x4-iconbtn" style="width:42px;height:60px"><i data-ic="chevR"></i></button></div>
+        </div>
+        <div class="feat-dots"><span></span><span class="on"></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+
+        <!-- DEALS -->
+        <div class="st-h" style="margin-top:34px"><span class="tick"></span>Скидки и мероприятия
+          <span class="x4-badge x4-badge--ghost more">Больше продуктов</span></div>
+        <div class="deals">
+          <div class="feat__arrow"><button class="x4-iconbtn" style="width:42px;height:60px"><i data-ic="chevL"></i></button></div>
+          <div class="deals__grid">
+            <div class="deal">
+              <div class="deal__art x4-art x4-scan"><span class="deal__live"><span class="x4-badge x4-badge--solid"><span class="x4-dot x4-dot--ingame" style="width:6px;height:6px"></span> Трансляция</span></span>
+                <span class="nm">CLOUDHEIM</span></div>
+              <div class="deal__foot"><div class="lbl">Акция посреди недели<b>Заканчивается 8 июн в 20:00</b></div>
+                <div class="price"><span class="disc">-34%</span><span class="new">5 016₸</span></div></div>
+            </div>
+            <div class="deal">
+              <div class="deal__art x4-art x4-hex"><span class="nm">THE LAST STARSHIP</span></div>
+              <div class="deal__foot"><div class="lbl">Акция посреди недели<b>Заканчивается 8 июн в 20:00</b></div>
+                <div class="price"><span class="disc">-50%</span><span class="new">2 600₸</span></div></div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:14px">
+              <div class="deal mini">
+                <div class="deal__art x4-art x4-scan"><span class="nm">INSURGENCY</span></div>
+                <div class="deal__foot"><div class="lbl">Акция дня!</div>
+                  <div class="price"><span class="disc">-75%</span><span class="old">7 990₸</span><span class="new">1 997₸</span></div></div>
+              </div>
+              <div class="deal mini">
+                <div class="deal__art x4-art x4-hex"><span class="nm">FROSTPUNK</span></div>
+                <div class="deal__foot"><div class="lbl">Акция дня!</div>
+                  <div class="price"><span class="disc">-90%</span><span class="old">7 600₸</span><span class="new">760₸</span></div></div>
+              </div>
+            </div>
+          </div>
+          <div class="feat__arrow"><button class="x4-iconbtn" style="width:42px;height:60px"><i data-ic="chevR"></i></button></div>
+        </div>
+        <div class="feat-dots"><span class="on"></span><span></span><span></span><span></span></div>
+
+        <!-- CATEGORIES -->
+        <div class="st-h" style="margin-top:34px"><span class="tick"></span>Категории</div>
+        <div class="cats">
+          <div class="feat__arrow"><button class="x4-iconbtn" style="width:42px;height:60px"><i data-ic="chevL"></i></button></div>
+          <div class="cats__row">
+            <div class="cat"><div class="cat__art x4-art x4-hex"></div><span class="cat__label">Стратегия</span></div>
+            <div class="cat"><div class="cat__art x4-art x4-scan"></div><span class="cat__label">Выживание</span></div>
+            <div class="cat"><div class="cat__art x4-art x4-hex"></div><span class="cat__label">Глубокий сюжет</span></div>
+            <div class="cat"><div class="cat__art x4-art x4-scan"></div><span class="cat__label">Города и колонизация</span></div>
+          </div>
+          <div class="feat__arrow"><button class="x4-iconbtn" style="width:42px;height:60px"><i data-ic="chevR"></i></button></div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+  <div data-footer></div>
+</div>
+</div>
+
+<script src="fit.js"></script>
+<script src="icons.js"></script>
+<script src="chrome.js"></script>
+</body>
+</html>

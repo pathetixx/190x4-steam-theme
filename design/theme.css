@@ -1,0 +1,338 @@
+/* ============================================================================
+   190x4 — STEAM THEME (Millennium / Chromium 126)
+   Single source of truth for tokens + component primitives.
+   Drop the :root block straight into the theme; everything below is реализуемо
+   на чистом CSS под Chrome 126 (no experimental props).
+   ============================================================================ */
+
+/* ----------  FONTS  ---------- */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700;800&family=Saira:wght@300;400;500;600;700&family=Saira+Semi+Condensed:wght@400;500;600;700&display=swap');
+
+/* ----------  TOKENS  ---------- */
+:root{
+  /* surfaces */
+  --bg-0:  #07090d;            /* самый глубокий фон окна */
+  --bg-1:  #0d1016;            /* панели */
+  --bg-2:  #11151d;            /* приподнятые карточки / hover-фон */
+  --bg-3:  #161b25;            /* инпуты, well */
+  --line:  rgba(255,255,255,.06);    /* hairline границы */
+  --line-2: rgba(255,255,255,.10);   /* чуть ярче */
+
+  /* brand accent — КРАСНЫЙ = успех / активно / connected / Play / online-в-игре */
+  --accent:      #ff2530;
+  --accent-dim:  #b3121b;
+  --accent-deep: #4a0a0f;
+  --accent-soft: rgba(255,37,48,.12);
+  --accent-line: rgba(255,37,48,.40);
+  --accent-glow: 0 0 12px rgba(255,37,48,.55);
+  --accent-glow-lg: 0 0 22px rgba(255,37,48,.45), 0 0 4px rgba(255,37,48,.8);
+
+  /* text */
+  --text-hi: #e8edf4;
+  --text-md: #b6bfcd;
+  --text-lo: #8a93a3;
+  --text-dis: #555c6a;
+
+  /* status (зелёный — ТОЛЬКО точка «в сети») */
+  --status-online: #38e07b;
+  --status-ingame: var(--accent);   /* в игре = красный, по правилам бренда */
+  --status-offline: #59616f;
+  --warn: #ffb020;
+
+  /* geometry */
+  --r-sm: 2px;
+  --r-md: 3px;
+  --r-lg: 5px;
+  --hair: 1px;
+
+  /* type */
+  --f-display: 'Orbitron', sans-serif;       /* ТОЛЬКО лого + верхняя навигация */
+  --f-ui: 'Saira', sans-serif;               /* весь UI и тело */
+  --f-cond: 'Saira Semi Condensed', 'Saira', sans-serif; /* плотные лейблы */
+
+  /* elevation */
+  --sh-1: 0 1px 0 rgba(255,255,255,.03) inset, 0 2px 8px rgba(0,0,0,.45);
+  --sh-2: 0 18px 50px rgba(0,0,0,.65), 0 2px 0 rgba(255,255,255,.03) inset;
+  --sh-win: 0 30px 90px rgba(0,0,0,.7), 0 0 0 1px rgba(0,0,0,.6);
+
+  /* motion */
+  --ease: cubic-bezier(.2,.7,.3,1);
+}
+
+/* ----------  RESET / BASE  ---------- */
+*{ box-sizing:border-box; }
+.x4, .x4 *{ -webkit-font-smoothing:antialiased; }
+.x4{
+  font-family:var(--f-ui);
+  color:var(--text-md);
+  background:var(--bg-0);
+  font-size:14px;
+  line-height:1.35;
+  letter-spacing:.1px;
+}
+
+/* ----------  TEXTURES / EFFECTS  ---------- */
+/* scanlines — тонкие, для hero и пустых зон */
+.x4-scan{ position:relative; }
+.x4-scan::after{
+  content:""; position:absolute; inset:0; pointer-events:none;
+  background:repeating-linear-gradient(0deg,
+     rgba(0,0,0,0) 0px, rgba(0,0,0,0) 2px,
+     rgba(0,0,0,.16) 3px, rgba(0,0,0,0) 4px);
+  mix-blend-mode:multiply; opacity:.5;
+}
+/* hex-grid заливка для пустых зон/hero */
+.x4-hex{
+  background-image:url("data:image/svg+xml;utf8,\
+<svg xmlns='http://www.w3.org/2000/svg' width='56' height='48' viewBox='0 0 56 48'>\
+<path d='M14 0l14 8v16l-14 8L0 24V8z M42 0l14 8v16l-14 8-14-8V8z M28 24l14 8v16l-14 8-14-8V32z' \
+fill='none' stroke='rgba(255,255,255,0.035)' stroke-width='1'/></svg>");
+}
+.x4-grid{
+  background-image:
+    linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
+  background-size:32px 32px;
+}
+/* красный неоновый «дым» для hero-зон */
+.x4-emberglow{
+  background:
+    radial-gradient(120% 90% at 100% 0%, rgba(255,37,48,.16), transparent 55%),
+    radial-gradient(80% 70% at 0% 100%, rgba(179,18,27,.12), transparent 60%);
+}
+/* corner-brackets — command-center рамка */
+.x4-brackets{ position:relative; }
+.x4-brackets::before,
+.x4-brackets::after{
+  content:""; position:absolute; width:14px; height:14px; pointer-events:none;
+  border:var(--hair) solid var(--accent-line);
+}
+.x4-brackets::before{ top:-1px; left:-1px; border-right:0; border-bottom:0; }
+.x4-brackets::after{ bottom:-1px; right:-1px; border-left:0; border-top:0; }
+
+/* hairline divider with центр-метка */
+.x4-rule{ height:1px; background:var(--line); position:relative; }
+
+/* ----------  SCROLLBAR  ---------- */
+.x4-scroll{ scrollbar-width:thin; scrollbar-color:var(--accent-dim) transparent; }
+.x4-scroll::-webkit-scrollbar{ width:10px; height:10px; }
+.x4-scroll::-webkit-scrollbar-track{ background:rgba(0,0,0,.25); }
+.x4-scroll::-webkit-scrollbar-thumb{
+  background:linear-gradient(var(--accent-dim),var(--accent-deep));
+  border:2px solid transparent; background-clip:padding-box; border-radius:6px;
+}
+.x4-scroll::-webkit-scrollbar-thumb:hover{ background:var(--accent); background-clip:padding-box; }
+
+/* ============================================================================
+   COMPONENTS
+   ============================================================================ */
+
+/* ----------  ICONS (default sizing)  ---------- */
+i[data-ic]{ width:16px; height:16px; flex:none; display:inline-flex; line-height:0; }
+i[data-ic] svg{ display:block; }
+
+/* ----------  LOGO  ·  «190×4» glitch wordmark (выбранный знак, концепт 06) ----
+   Тёмно-красный «×4». Базовый = титулбар/мелкий: чуть ярче + glow для читаемости.
+   .x4-logo--display = крупный hero: глубокий #8c0d14.
+   Разметка: <span class="x4-logo" data-t="190×4">190<span class="x4-x">×4</span></span> */
+.x4-logo{
+  position:relative; display:inline-block;
+  font-family:var(--f-display); font-weight:900; letter-spacing:1px;
+  color:#fff; font-size:17px; line-height:1; white-space:nowrap;
+  text-shadow:0 1px 2px rgba(0,0,0,.5);
+}
+.x4-logo .x4-x{ color:#c01622; text-shadow:0 0 5px rgba(192,22,34,.55); }
+/* chromatic RGB-split ghosts (glitch ТОЛЬКО на лого) */
+.x4-logo::before,
+.x4-logo::after{
+  content:attr(data-t); position:absolute; left:0; top:0; pointer-events:none;
+  mix-blend-mode:screen; opacity:.9;
+}
+.x4-logo::before{ color:#ff2530; transform:translate(-1.6px,0); clip-path:inset(0 0 55% 0); }
+.x4-logo::after{ color:#27e0ff; transform:translate(1.6px,0); clip-path:inset(48% 0 0 0); }
+.x4-logo:hover::before{ transform:translate(-2.6px,-.5px); }
+.x4-logo:hover::after{ transform:translate(2.6px,.5px); }
+
+/* large hero variant — глубже и темнее «×4» */
+.x4-logo--display{ font-size:34px; letter-spacing:2px; }
+.x4-logo--display .x4-x{ color:#8c0d14; text-shadow:0 0 7px rgba(140,13,20,.5); }
+.x4-logo--display::before{ transform:translate(-2.5px,0); }
+.x4-logo--display::after{ transform:translate(2.5px,0); }
+
+/* ----------  BUTTONS  ---------- */
+.x4-btn{
+  font-family:var(--f-ui); font-weight:600; font-size:13px;
+  letter-spacing:.4px; line-height:1; cursor:pointer;
+  display:inline-flex; align-items:center; justify-content:center; gap:8px;
+  padding:0 18px; height:36px; border-radius:var(--r-md);
+  border:var(--hair) solid transparent; color:var(--text-hi);
+  background:var(--bg-2); transition:all .15s var(--ease); user-select:none;
+  text-transform:uppercase;
+}
+.x4-btn .ic{ width:15px; height:15px; display:inline-block; }
+
+/* primary — красный неон (главная «Играть») */
+.x4-btn--primary{
+  background:linear-gradient(180deg, #ff3a44, var(--accent-dim));
+  border-color:rgba(255,120,120,.5);
+  color:#fff; text-shadow:0 1px 2px rgba(0,0,0,.45);
+  box-shadow:var(--accent-glow), inset 0 1px 0 rgba(255,255,255,.25);
+}
+.x4-btn--primary:hover{ box-shadow:var(--accent-glow-lg), inset 0 1px 0 rgba(255,255,255,.3); filter:brightness(1.06); }
+.x4-btn--primary:active{ filter:brightness(.94); box-shadow:inset 0 2px 6px rgba(0,0,0,.4); }
+
+/* secondary — outline */
+.x4-btn--secondary{
+  background:rgba(255,255,255,.02); border-color:var(--line-2); color:var(--text-hi);
+}
+.x4-btn--secondary:hover{ border-color:var(--accent-line); color:#fff; box-shadow:inset 0 0 18px rgba(255,37,48,.10); }
+.x4-btn--secondary:active{ background:var(--accent-soft); }
+
+/* ghost */
+.x4-btn--ghost{ background:transparent; color:var(--text-lo); text-transform:none; letter-spacing:.2px; }
+.x4-btn--ghost:hover{ color:var(--text-hi); background:rgba(255,255,255,.04); }
+
+.x4-btn--lg{ height:48px; padding:0 30px; font-size:15px; letter-spacing:1.5px; }
+.x4-btn--sm{ height:28px; padding:0 12px; font-size:12px; }
+
+.x4-btn[disabled], .x4-btn--disabled{
+  pointer-events:none; opacity:.4; filter:grayscale(.6);
+  background:var(--bg-2); border-color:var(--line); color:var(--text-dis);
+  box-shadow:none; text-shadow:none;
+}
+
+/* icon button */
+.x4-iconbtn{
+  width:34px; height:34px; display:inline-flex; align-items:center; justify-content:center;
+  border-radius:var(--r-md); color:var(--text-lo); cursor:pointer;
+  border:var(--hair) solid transparent; background:transparent; transition:all .15s var(--ease);
+}
+.x4-iconbtn:hover{ color:var(--text-hi); background:rgba(255,255,255,.05); border-color:var(--line); }
+.x4-iconbtn.is-active{ color:var(--accent); border-color:var(--accent-line); box-shadow:inset 0 0 14px rgba(255,37,48,.15); }
+
+/* ----------  TOP NAV TABS (Orbitron)  ---------- */
+.x4-navtab{
+  font-family:var(--f-display); font-weight:600; font-size:14px; letter-spacing:1px;
+  color:var(--text-lo); text-transform:uppercase; cursor:pointer;
+  padding:6px 2px; position:relative; background:none; border:0; transition:color .15s var(--ease);
+}
+.x4-navtab:hover{ color:var(--text-md); }
+.x4-navtab.is-active{ color:#fff; text-shadow:0 0 10px rgba(255,37,48,.35); }
+.x4-navtab.is-active::after{
+  content:""; position:absolute; left:0; right:0; bottom:-9px; height:2px;
+  background:var(--accent); box-shadow:var(--accent-glow);
+}
+
+/* ----------  CARDS  ---------- */
+.x4-card{
+  background:var(--bg-1); border:var(--hair) solid var(--line); border-radius:var(--r-lg);
+  box-shadow:var(--sh-1); overflow:hidden; position:relative;
+}
+.x4-card--hover{ transition:transform .18s var(--ease), box-shadow .18s var(--ease), border-color .18s var(--ease); }
+.x4-card--hover:hover{
+  transform:translateY(-2px); border-color:var(--accent-line);
+  box-shadow:var(--sh-2), var(--accent-glow);
+}
+.x4-card__title{ font-weight:600; color:var(--text-hi); }
+
+/* panel — основная серфейс-обёртка с заголовком */
+.x4-panel{ background:var(--bg-1); border:var(--hair) solid var(--line); border-radius:var(--r-lg); }
+.x4-panel__head{
+  display:flex; align-items:center; gap:10px; padding:11px 14px;
+  border-bottom:var(--hair) solid var(--line);
+  font-family:var(--f-cond); font-weight:600; letter-spacing:1.5px; text-transform:uppercase;
+  font-size:12px; color:var(--text-lo);
+}
+.x4-panel__head .tick{ width:6px; height:14px; background:var(--accent); box-shadow:var(--accent-glow); display:inline-block; }
+
+/* ----------  INPUTS  ---------- */
+.x4-input{
+  height:34px; width:100%; padding:0 12px; color:var(--text-hi);
+  background:var(--bg-3); border:var(--hair) solid var(--line-2); border-radius:var(--r-md);
+  font-family:var(--f-ui); font-size:13px; outline:none; transition:all .15s var(--ease);
+}
+.x4-input::placeholder{ color:var(--text-dis); }
+.x4-input:hover{ border-color:rgba(255,255,255,.18); }
+.x4-input:focus{ border-color:var(--accent-line); box-shadow:inset 0 0 0 1px rgba(255,37,48,.25), 0 0 0 3px rgba(255,37,48,.10); }
+.x4-search{ position:relative; }
+.x4-search .x4-input{ padding-left:34px; }
+.x4-search .ic{ position:absolute; left:10px; top:50%; transform:translateY(-50%); color:var(--text-lo); width:16px; height:16px; }
+
+/* ----------  TABS (content)  ---------- */
+.x4-tabs{ display:flex; gap:2px; border-bottom:var(--hair) solid var(--line); }
+.x4-tab{
+  font-family:var(--f-cond); font-weight:600; letter-spacing:.6px; text-transform:uppercase; font-size:12.5px;
+  padding:11px 16px; color:var(--text-lo); cursor:pointer; position:relative; background:none; border:0;
+  transition:color .15s var(--ease);
+}
+.x4-tab:hover{ color:var(--text-md); background:rgba(255,255,255,.02); }
+.x4-tab.is-active{ color:#fff; }
+.x4-tab.is-active::after{ content:""; position:absolute; left:0; right:0; bottom:-1px; height:2px; background:var(--accent); box-shadow:var(--accent-glow); }
+
+/* ----------  LIST ROW  ---------- */
+.x4-row{
+  display:flex; align-items:center; gap:10px; padding:7px 12px; cursor:pointer;
+  border-left:2px solid transparent; color:var(--text-md); transition:background .12s var(--ease), color .12s var(--ease);
+  position:relative;
+}
+.x4-row:hover{ background:rgba(255,255,255,.035); color:var(--text-hi); }
+.x4-row.is-active{ background:linear-gradient(90deg, var(--accent-soft), transparent); border-left-color:var(--accent); color:#fff; }
+.x4-row.is-active::after{ content:""; position:absolute; left:0; top:0; bottom:0; width:1px; background:var(--accent); box-shadow:var(--accent-glow); }
+
+/* ----------  TOGGLE  ---------- */
+.x4-toggle{ width:40px; height:22px; border-radius:12px; background:var(--bg-3); border:var(--hair) solid var(--line-2);
+  position:relative; cursor:pointer; transition:all .18s var(--ease); flex:none; }
+.x4-toggle::after{ content:""; position:absolute; top:2px; left:2px; width:16px; height:16px; border-radius:50%;
+  background:var(--text-lo); transition:all .18s var(--ease); }
+.x4-toggle.is-on{ background:linear-gradient(180deg,#ff3a44,var(--accent-dim)); border-color:var(--accent-line); box-shadow:var(--accent-glow); }
+.x4-toggle.is-on::after{ left:20px; background:#fff; }
+.x4-toggle.is-disabled{ opacity:.4; pointer-events:none; }
+
+/* ----------  PROGRESS  ---------- */
+.x4-prog{ height:8px; border-radius:5px; background:var(--bg-3); border:var(--hair) solid var(--line); overflow:hidden; position:relative; }
+.x4-prog__bar{ height:100%; background:linear-gradient(90deg, var(--accent-dim), var(--accent)); box-shadow:var(--accent-glow); position:relative; }
+.x4-prog__bar::after{ content:""; position:absolute; inset:0;
+  background:repeating-linear-gradient(90deg, transparent 0 8px, rgba(255,255,255,.12) 8px 9px); }
+
+/* ----------  BADGES  ---------- */
+.x4-badge{ display:inline-flex; align-items:center; gap:5px; height:20px; padding:0 8px; border-radius:3px;
+  font-family:var(--f-cond); font-weight:600; font-size:11px; letter-spacing:.6px; text-transform:uppercase; }
+.x4-badge--accent{ background:var(--accent-soft); color:#ff6b72; border:var(--hair) solid var(--accent-line); }
+.x4-badge--solid{ background:var(--accent); color:#fff; box-shadow:var(--accent-glow); }
+.x4-badge--ghost{ background:rgba(255,255,255,.05); color:var(--text-lo); border:var(--hair) solid var(--line); }
+.x4-badge--warn{ background:rgba(255,176,32,.12); color:var(--warn); border:var(--hair) solid rgba(255,176,32,.4); }
+
+/* ----------  STATUS DOT  ---------- */
+.x4-dot{ width:9px; height:9px; border-radius:50%; flex:none; display:inline-block; }
+.x4-dot--online{ background:var(--status-online); box-shadow:0 0 8px rgba(56,224,123,.7); }   /* зелёный ТОЛЬКО тут */
+.x4-dot--ingame{ background:var(--accent); box-shadow:var(--accent-glow); }
+.x4-dot--offline{ background:var(--status-offline); }
+.x4-dot--dnd{ background:var(--warn); box-shadow:0 0 7px rgba(255,176,32,.6); }
+
+/* avatar frame по статусу */
+.x4-ava{ position:relative; border-radius:var(--r-sm); overflow:hidden; background:var(--bg-3); flex:none; }
+.x4-ava--online{ box-shadow:0 0 0 1px var(--status-online), 0 0 9px rgba(56,224,123,.4); }
+.x4-ava--ingame{ box-shadow:0 0 0 1px var(--accent), var(--accent-glow); }
+.x4-ava--offline{ box-shadow:0 0 0 1px var(--line-2); filter:saturate(.5) brightness(.8); }
+
+/* ----------  TOAST  ---------- */
+.x4-toast{
+  width:330px; background:linear-gradient(180deg, var(--bg-2), var(--bg-1));
+  border:var(--hair) solid var(--accent-line); border-radius:var(--r-md);
+  box-shadow:var(--sh-2), var(--accent-glow); display:flex; gap:11px; padding:11px; align-items:center;
+  position:relative; overflow:hidden;
+}
+.x4-toast::before{ content:""; position:absolute; left:0; top:0; bottom:0; width:3px; background:var(--accent); box-shadow:var(--accent-glow); }
+
+/* ----------  WINDOW CHROME (titlebar)  ---------- */
+.x4-winbtns{ display:flex; gap:2px; }
+.x4-winbtn{ width:42px; height:30px; display:inline-flex; align-items:center; justify-content:center; color:var(--text-lo); cursor:pointer; transition:all .12s var(--ease); }
+.x4-winbtn:hover{ color:var(--text-hi); background:rgba(255,255,255,.06); }
+.x4-winbtn--close:hover{ color:#fff; background:var(--accent-dim); }
+
+/* placeholder art (капсулы/баннеры — реальную картинку подставляет приложение) */
+.x4-art{ position:relative; background:linear-gradient(160deg, #1a1f29, #0b0e14); overflow:hidden; }
+.x4-art::before{ content:""; position:absolute; inset:0;
+  background-image:repeating-linear-gradient(135deg, rgba(255,255,255,.03) 0 2px, transparent 2px 9px); }
+.x4-art__tag{ position:absolute; left:8px; bottom:7px; font-family:'JetBrains Mono', ui-monospace, monospace;
+  font-size:10px; letter-spacing:.5px; color:var(--text-dis); text-transform:uppercase; }

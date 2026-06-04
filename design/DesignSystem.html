@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>190x4 — Дизайн-система</title>
+<link rel="stylesheet" href="theme.css">
+<style>
+  html,body{ margin:0; background:var(--bg-0); }
+  .ds{ max-width:1320px; margin:0 auto; padding:48px 40px 90px; color:var(--text-md); font-family:var(--f-ui); }
+  .ds-top{ display:flex; align-items:center; gap:20px; margin-bottom:8px; }
+  .ds-top h1{ font-family:var(--f-display); font-weight:800; font-size:30px; letter-spacing:3px; color:#fff; margin:0; }
+  .ds-sub{ color:var(--text-lo); font-size:14px; max-width:640px; margin:0 0 44px; line-height:1.55; }
+
+  .ds-sec{ margin-bottom:54px; }
+  .ds-sec__h{ font-family:var(--f-cond); font-weight:700; font-size:13px; letter-spacing:3px; text-transform:uppercase;
+    color:var(--text-lo); display:flex; align-items:center; gap:12px; margin:0 0 22px; }
+  .ds-sec__h::before{ content:""; width:10px; height:16px; background:var(--accent); box-shadow:var(--accent-glow); }
+  .ds-sec__h::after{ content:""; flex:1; height:1px; background:var(--line); }
+
+  .ds-grid{ display:grid; gap:16px; }
+  .ds-card{ background:var(--bg-1); border:var(--hair) solid var(--line); border-radius:var(--r-lg); padding:20px; }
+  .ds-lab{ font-family:ui-monospace,'JetBrains Mono',monospace; font-size:11px; letter-spacing:.5px; color:var(--text-lo);
+    text-transform:uppercase; margin-bottom:14px; }
+
+  /* palette */
+  .pal{ display:grid; grid-template-columns:repeat(6,1fr); gap:14px; }
+  .sw{ border:var(--hair) solid var(--line); border-radius:var(--r-md); overflow:hidden; }
+  .sw__chip{ height:84px; position:relative; }
+  .sw__meta{ padding:10px 11px; background:var(--bg-1); }
+  .sw__name{ font-family:ui-monospace,monospace; font-size:11.5px; color:var(--text-hi); }
+  .sw__hex{ font-family:ui-monospace,monospace; font-size:11px; color:var(--text-lo); margin-top:3px; }
+
+  pre.code{ background:#060709; border:var(--hair) solid var(--line-2); border-left:3px solid var(--accent); border-radius:var(--r-md);
+    padding:20px 22px; overflow-x:auto; font-family:ui-monospace,'JetBrains Mono',monospace; font-size:12.5px; line-height:1.65;
+    color:#c8d2df; }
+  pre.code .c{ color:#5d6675; } pre.code .v{ color:#ff7a82; } pre.code .p{ color:#7fd1ff; }
+
+  /* type */
+  .ty-row{ display:flex; align-items:baseline; gap:24px; padding:16px 0; border-bottom:var(--hair) solid var(--line); }
+  .ty-row .meta{ width:230px; flex:none; font-family:ui-monospace,monospace; font-size:11.5px; color:var(--text-lo); line-height:1.5; }
+  .ty-row .meta b{ color:var(--text-md); display:block; font-family:var(--f-ui); font-size:13px; }
+
+  .ds-flex{ display:flex; flex-wrap:wrap; gap:14px; align-items:center; }
+  .ds-col{ display:flex; flex-direction:column; gap:12px; }
+  .statelab{ font-family:ui-monospace,monospace; font-size:10.5px; color:var(--text-dis); text-transform:uppercase; letter-spacing:.5px;
+    text-align:center; margin-top:8px; }
+  .cellrow{ display:grid; grid-template-columns:repeat(4,1fr); gap:18px; }
+  .cell{ background:var(--bg-1); border:var(--hair) solid var(--line); border-radius:var(--r-md); padding:22px 16px 12px;
+    display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:90px; }
+
+  .fx{ height:120px; border-radius:var(--r-md); border:var(--hair) solid var(--line); position:relative; overflow:hidden;
+    display:flex; align-items:flex-end; padding:12px; }
+  .fx .nm{ font-family:ui-monospace,monospace; font-size:11px; color:var(--text-md); position:relative; z-index:2; }
+</style>
+</head>
+<body>
+<div class="ds">
+
+  <div class="ds-top">
+    <span class="x4-logo x4-logo--display" data-t="190×4">190<span class="x4-x">×4</span></span>
+    <h1>STEAM THEME</h1>
+  </div>
+  <p class="ds-sub">Киберпанк command-center, красный неон по графиту. Перекраска клиента Steam (Millennium · Chromium 126).
+    Токены ниже идут в тему один-в-один. Красный = успех / активно / connected / Play. Зелёный — только точка «в сети».</p>
+
+  <!-- PALETTE -->
+  <section class="ds-sec">
+    <h2 class="ds-sec__h">01 · Палитра</h2>
+    <div class="pal" style="margin-bottom:22px">
+      <div class="sw"><div class="sw__chip" style="background:#07090d"></div><div class="sw__meta"><div class="sw__name">--bg-0</div><div class="sw__hex">#07090d</div></div></div>
+      <div class="sw"><div class="sw__chip" style="background:#0d1016"></div><div class="sw__meta"><div class="sw__name">--bg-1</div><div class="sw__hex">#0d1016</div></div></div>
+      <div class="sw"><div class="sw__chip" style="background:#11151d"></div><div class="sw__meta"><div class="sw__name">--bg-2</div><div class="sw__hex">#11151d</div></div></div>
+      <div class="sw"><div class="sw__chip" style="background:#161b25"></div><div class="sw__meta"><div class="sw__name">--bg-3</div><div class="sw__hex">#161b25</div></div></div>
+      <div class="sw"><div class="sw__chip" style="background:#ff2530;box-shadow:var(--accent-glow) inset"></div><div class="sw__meta"><div class="sw__name">--accent</div><div class="sw__hex">#ff2530</div></div></div>
+      <div class="sw"><div class="sw__chip" style="background:#b3121b"></div><div class="sw__meta"><div class="sw__name">--accent-dim</div><div class="sw__hex">#b3121b</div></div></div>
+      <div class="sw"><div class="sw__chip" style="background:#e8edf4"></div><div class="sw__meta"><div class="sw__name">--text-hi</div><div class="sw__hex">#e8edf4</div></div></div>
+      <div class="sw"><div class="sw__chip" style="background:#8a93a3"></div><div class="sw__meta"><div class="sw__name">--text-lo</div><div class="sw__hex">#8a93a3</div></div></div>
+      <div class="sw"><div class="sw__chip" style="background:#38e07b;box-shadow:0 0 14px rgba(56,224,123,.5) inset"></div><div class="sw__meta"><div class="sw__name">--status-online</div><div class="sw__hex">#38e07b</div></div></div>
+      <div class="sw"><div class="sw__chip" style="background:#ffb020"></div><div class="sw__meta"><div class="sw__name">--warn</div><div class="sw__hex">#ffb020</div></div></div>
+      <div class="sw"><div class="sw__chip x4-hex" style="background:#0d1016"></div><div class="sw__meta"><div class="sw__name">--line</div><div class="sw__hex">rgba(255,255,255,.06)</div></div></div>
+      <div class="sw"><div class="sw__chip" style="background:#07090d;box-shadow:var(--accent-glow)"></div><div class="sw__meta"><div class="sw__name">--accent-glow</div><div class="sw__hex">0 0 12px / .55</div></div></div>
+    </div>
+    <pre class="code"><span class="p">:root</span>{
+  <span class="c">/* surfaces */</span>
+  --bg-0:  <span class="v">#07090d</span>;   --bg-1: <span class="v">#0d1016</span>;   --bg-2: <span class="v">#11151d</span>;   --bg-3: <span class="v">#161b25</span>;
+  --line:  <span class="v">rgba(255,255,255,.06)</span>;
+  <span class="c">/* brand accent — КРАСНЫЙ = успех / активно / connected / Play */</span>
+  --accent:      <span class="v">#ff2530</span>;
+  --accent-dim:  <span class="v">#b3121b</span>;
+  --accent-glow: <span class="v">0 0 12px rgba(255,37,48,.55)</span>;
+  <span class="c">/* text */</span>
+  --text-hi: <span class="v">#e8edf4</span>;   --text-lo: <span class="v">#8a93a3</span>;
+  <span class="c">/* status (зелёный — ТОЛЬКО точка «в сети») */</span>
+  --status-online: <span class="v">#38e07b</span>;   --warn: <span class="v">#ffb020</span>;
+}</pre>
+  </section>
+
+  <!-- TYPE -->
+  <section class="ds-sec">
+    <h2 class="ds-sec__h">02 · Типографика</h2>
+    <div class="ds-card">
+      <div class="ty-row"><div class="meta"><b>Orbitron</b>display / лого + верхняя навигация · 600–800</div>
+        <div style="font-family:var(--f-display);font-weight:700;color:#fff;font-size:34px;letter-spacing:3px">МАГАЗИН 190×4</div></div>
+      <div class="ty-row"><div class="meta"><b>Saira</b>заголовки UI · 600–700</div>
+        <div style="font-family:var(--f-ui);font-weight:700;color:var(--text-hi);font-size:30px">Активность сообщества</div></div>
+      <div class="ty-row"><div class="meta"><b>Saira</b>тело / списки · 400–500</div>
+        <div style="font-family:var(--f-ui);font-weight:400;color:var(--text-md);font-size:16px;max-width:560px">Resident Evil Requiem demo: replacing incorrect version. Облачные сохранения синхронизированы.</div></div>
+      <div class="ty-row" style="border-bottom:0"><div class="meta"><b>Saira Semi Condensed</b>плотные лейблы / капсы · 600</div>
+        <div style="font-family:var(--f-cond);font-weight:600;color:var(--text-lo);font-size:14px;letter-spacing:1.5px;text-transform:uppercase">Недавно запущенные игры</div></div>
+    </div>
+    <p style="color:var(--text-dis);font-size:12.5px;margin-top:12px;font-family:ui-monospace,monospace">⚠ Orbitron — ТОЛЬКО лого и верхняя навигация. В тексты не вставлять.</p>
+  </section>
+
+  <!-- EFFECTS -->
+  <section class="ds-sec">
+    <h2 class="ds-sec__h">03 · Текстуры и эффекты</h2>
+    <div class="ds-grid" style="grid-template-columns:repeat(4,1fr)">
+      <div class="fx x4-scan" style="background:var(--bg-1)"><span class="nm">.x4-scan · scanlines</span></div>
+      <div class="fx x4-hex" style="background:var(--bg-1)"><span class="nm">.x4-hex · hex-grid</span></div>
+      <div class="fx x4-emberglow" style="background:var(--bg-1)"><span class="nm">.x4-emberglow</span></div>
+      <div class="fx x4-brackets" style="background:var(--bg-1)"><span class="nm">.x4-brackets</span></div>
+      <div class="fx" style="background:var(--bg-1);align-items:center;justify-content:center">
+        <span class="x4-logo" data-t="190×4" style="font-size:22px">190<span class="x4-x">×4</span></span></div>
+      <div class="fx x4-grid" style="background:var(--bg-1)"><span class="nm">.x4-grid</span></div>
+      <div class="fx" style="background:var(--bg-1);align-items:center;justify-content:center">
+        <div style="width:120px" class="x4-prog"><div class="x4-prog__bar" style="width:64%"></div></div></div>
+      <div class="fx" style="background:var(--bg-1);align-items:center;justify-content:center;box-shadow:var(--accent-glow) inset">
+        <span class="nm" style="color:var(--accent)">accent-glow</span></div>
+    </div>
+  </section>
+
+  <!-- BUTTONS -->
+  <section class="ds-sec">
+    <h2 class="ds-sec__h">04 · Кнопки и состояния</h2>
+    <div class="ds-card">
+      <div class="cellrow">
+        <div class="cell"><button class="x4-btn x4-btn--primary"><i data-ic="play"></i> Играть</button><div class="statelab">primary · default</div></div>
+        <div class="cell"><button class="x4-btn x4-btn--primary" style="box-shadow:var(--accent-glow-lg);filter:brightness(1.06)"><i data-ic="play"></i> Играть</button><div class="statelab">primary · hover</div></div>
+        <div class="cell"><button class="x4-btn x4-btn--primary" style="filter:brightness(.9);box-shadow:inset 0 2px 6px rgba(0,0,0,.4)"><i data-ic="play"></i> Играть</button><div class="statelab">primary · active</div></div>
+        <div class="cell"><button class="x4-btn x4-btn--primary x4-btn--disabled"><i data-ic="play"></i> Играть</button><div class="statelab">primary · disabled</div></div>
+
+        <div class="cell"><button class="x4-btn x4-btn--secondary">Подробнее</button><div class="statelab">secondary</div></div>
+        <div class="cell"><button class="x4-btn x4-btn--secondary" style="border-color:var(--accent-line);color:#fff;box-shadow:inset 0 0 18px rgba(255,37,48,.1)">Подробнее</button><div class="statelab">secondary · hover</div></div>
+        <div class="cell"><button class="x4-btn x4-btn--ghost">Отмена</button><div class="statelab">ghost</div></div>
+        <div class="cell"><button class="x4-btn x4-btn--secondary x4-btn--disabled">Недоступно</button><div class="statelab">disabled</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FORM + CONTROLS -->
+  <section class="ds-sec">
+    <h2 class="ds-sec__h">05 · Поля, табы, тогглы, бейджи</h2>
+    <div class="ds-grid" style="grid-template-columns:1fr 1fr">
+      <div class="ds-card">
+        <div class="ds-lab">Inputs / search</div>
+        <div class="ds-col">
+          <div class="x4-search"><i class="ic" data-ic="search"></i><input class="x4-input" placeholder="Поиск по библиотеке"></div>
+          <input class="x4-input" value="-novid -high" style="color:var(--text-hi)">
+          <input class="x4-input" placeholder="Фокус" style="border-color:var(--accent-line);box-shadow:inset 0 0 0 1px rgba(255,37,48,.25),0 0 0 3px rgba(255,37,48,.1)">
+        </div>
+        <div class="ds-lab" style="margin-top:22px">Tabs</div>
+        <div class="x4-tabs"><button class="x4-tab is-active">Активность</button><button class="x4-tab">Достижения</button><button class="x4-tab">Новости</button></div>
+        <div class="ds-lab" style="margin-top:22px">Progress</div>
+        <div class="x4-prog"><div class="x4-prog__bar" style="width:84%"></div></div>
+      </div>
+      <div class="ds-card">
+        <div class="ds-lab">Toggles · on / off / disabled</div>
+        <div class="ds-flex" style="gap:24px"><span class="x4-toggle is-on"></span><span class="x4-toggle"></span><span class="x4-toggle is-disabled is-on"></span></div>
+        <div class="ds-lab" style="margin-top:22px">Badges</div>
+        <div class="ds-flex">
+          <span class="x4-badge x4-badge--solid">-75%</span>
+          <span class="x4-badge x4-badge--accent">XP</span>
+          <span class="x4-badge x4-badge--ghost">Лидер продаж</span>
+          <span class="x4-badge x4-badge--warn">Запланировано</span>
+        </div>
+        <div class="ds-lab" style="margin-top:22px">List rows · default / hover / active</div>
+        <div style="border:var(--hair) solid var(--line);border-radius:var(--r-md);overflow:hidden">
+          <div class="x4-row"><span style="width:16px;height:16px;border-radius:2px;background:#222"></span> Counter-Strike 2</div>
+          <div class="x4-row" style="background:rgba(255,255,255,.035);color:var(--text-hi)"><span style="width:16px;height:16px;border-radius:2px;background:#222"></span> Cyberpunk 2077</div>
+          <div class="x4-row is-active"><span style="width:16px;height:16px;border-radius:2px;background:#222"></span> Resident Evil Requiem</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATUS -->
+  <section class="ds-sec">
+    <h2 class="ds-sec__h">06 · Статусы присутствия</h2>
+    <div class="ds-card">
+      <div class="cellrow" style="grid-template-columns:repeat(3,1fr)">
+        <div class="cell" style="flex-direction:row;gap:12px;justify-content:flex-start;padding:18px">
+          <span class="x4-ava x4-ava--online" style="width:42px;height:42px"></span>
+          <div><div style="color:var(--text-hi);font-weight:600">KeeJay</div><div style="display:flex;align-items:center;gap:6px;color:var(--status-online);font-size:12.5px"><span class="x4-dot x4-dot--online"></span> В сети</div></div></div>
+        <div class="cell" style="flex-direction:row;gap:12px;justify-content:flex-start;padding:18px">
+          <span class="x4-ava x4-ava--ingame" style="width:42px;height:42px"></span>
+          <div><div style="color:var(--text-hi);font-weight:600">mutagenb</div><div style="display:flex;align-items:center;gap:6px;color:var(--accent);font-size:12.5px"><span class="x4-dot x4-dot--ingame"></span> В игре · Windrose</div></div></div>
+        <div class="cell" style="flex-direction:row;gap:12px;justify-content:flex-start;padding:18px">
+          <span class="x4-ava x4-ava--offline" style="width:42px;height:42px"></span>
+          <div><div style="color:var(--text-lo);font-weight:600">Термит</div><div style="display:flex;align-items:center;gap:6px;color:var(--text-dis);font-size:12.5px"><span class="x4-dot x4-dot--offline"></span> Не в сети</div></div></div>
+      </div>
+      <p style="color:var(--text-dis);font-size:12.5px;margin:16px 2px 0;font-family:ui-monospace,monospace">⚠ «В игре» = красный (правило бренда). Зелёная точка допустима только для статуса «в сети».</p>
+    </div>
+  </section>
+
+  <!-- CARD + TOAST -->
+  <section class="ds-sec">
+    <h2 class="ds-sec__h">07 · Карточки · тост</h2>
+    <div class="ds-grid" style="grid-template-columns:1fr 1fr 1fr">
+      <div class="x4-card x4-card--hover">
+        <div class="x4-art x4-scan" style="height:130px"><span class="x4-art__tag">capsule art</span></div>
+        <div style="padding:14px"><div class="x4-card__title">Resident Evil Requiem</div>
+          <div style="color:var(--text-lo);font-size:12.5px;margin-top:5px">20,4 ч. · 14/42 достижений</div></div>
+      </div>
+      <div class="x4-panel">
+        <div class="x4-panel__head"><span class="tick"></span>Панель</div>
+        <div style="padding:16px;color:var(--text-md);font-size:13.5px;line-height:1.5">Базовый surface-контейнер с hairline-границей и заголовком-таблом.</div>
+      </div>
+      <div class="x4-toast">
+        <span class="x4-ava x4-ava--ingame" style="width:40px;height:40px"></span>
+        <div style="flex:1"><div style="color:var(--text-hi);font-weight:600">KeeJay</div>
+          <div style="color:var(--text-md);font-size:13px;margin-top:2px">Ауф</div></div>
+      </div>
+    </div>
+  </section>
+
+</div>
+<script src="icons.js"></script>
+</body>
+</html>

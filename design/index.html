@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>190x4 — Steam Theme · Design Reference</title>
+<link rel="stylesheet" href="theme.css">
+<style>
+  html,body{ margin:0; background:var(--bg-0); }
+  body{ background-image:
+    radial-gradient(70% 50% at 50% -5%, rgba(255,37,48,.08), transparent 55%); background-attachment:fixed; }
+  .lb{ max-width:1500px; margin:0 auto; padding:54px 44px 100px; }
+  .lb-hero{ display:flex; align-items:flex-start; gap:26px; margin-bottom:14px; }
+  .lb-hero h1{ font-family:var(--f-display); font-weight:800; font-size:34px; letter-spacing:3px; color:#fff; margin:2px 0 0; }
+  .lb-hero .sub{ color:var(--text-lo); font-size:14.5px; max-width:680px; margin:14px 0 0; line-height:1.6; }
+  .lb-meta{ display:flex; gap:10px; margin-top:18px; flex-wrap:wrap; }
+  .lb-chip{ font-family:ui-monospace,monospace; font-size:11.5px; color:var(--text-md); background:var(--bg-1);
+    border:var(--hair) solid var(--line-2); border-radius:20px; padding:6px 13px; }
+  .lb-chip b{ color:var(--accent); }
+
+  .lb-sec{ margin-top:56px; }
+  .lb-sec__h{ font-family:var(--f-cond); font-weight:700; font-size:13px; letter-spacing:3px; text-transform:uppercase;
+    color:var(--text-lo); display:flex; align-items:center; gap:12px; margin:0 0 22px; }
+  .lb-sec__h::before{ content:""; width:10px; height:16px; background:var(--accent); box-shadow:var(--accent-glow); }
+  .lb-sec__h::after{ content:""; flex:1; height:1px; background:var(--line); }
+
+  .lb-grid{ display:grid; gap:26px; }
+  .lb-card{ background:var(--bg-1); border:var(--hair) solid var(--line); border-radius:var(--r-lg); overflow:hidden;
+    box-shadow:var(--sh-1); transition:border-color .18s, box-shadow .18s, transform .18s; display:flex; flex-direction:column; }
+  .lb-card:hover{ border-color:var(--accent-line); box-shadow:var(--sh-2), var(--accent-glow); transform:translateY(-3px); }
+  .lb-frame{ position:relative; overflow:hidden; background:#000; border-bottom:var(--hair) solid var(--line); }
+  .lb-frame iframe{ border:0; position:absolute; top:0; left:0; transform-origin:top left; pointer-events:none; }
+  .lb-frame a.cover{ position:absolute; inset:0; z-index:3; }
+  .lb-corner{ position:absolute; top:10px; right:10px; z-index:4; width:18px; height:18px; border-top:var(--hair) solid var(--accent-line);
+    border-right:var(--hair) solid var(--accent-line); }
+  .lb-cap{ display:flex; align-items:center; gap:11px; padding:13px 15px; }
+  .lb-cap .num{ font-family:ui-monospace,monospace; font-size:11px; color:var(--accent); }
+  .lb-cap .nm{ color:var(--text-hi); font-weight:600; font-size:14.5px; }
+  .lb-cap .go{ margin-left:auto; color:var(--text-lo); font-size:12px; display:flex; align-items:center; gap:5px; }
+  .lb-card:hover .lb-cap .go{ color:var(--accent); }
+</style>
+</head>
+<body>
+<div class="lb">
+
+  <div class="lb-hero">
+    <span class="x4-logo x4-logo--display" data-t="190×4" style="font-size:30px">190<span class="x4-x">×4</span></span>
+    <div>
+      <h1>STEAM THEME · DESIGN REFERENCE</h1>
+      <p class="sub">Полный визуальный редизайн десктоп-клиента Steam в стиле бренда 190×4 — киберпанк command-center,
+        красный неон по графиту. Перекраска + умеренная перекомпоновка под Millennium (Chromium 126).
+        Нажмите на любой кадр, чтобы открыть его в полном размере.</p>
+      <div class="lb-meta">
+        <span class="lb-chip">Десктоп <b>1920×1080</b></span>
+        <span class="lb-chip">Тёмная тема</span>
+        <span class="lb-chip">Шрифты <b>Orbitron</b> + <b>Saira</b></span>
+        <span class="lb-chip">Акцент <b>#ff2530</b></span>
+        <span class="lb-chip">13 экранов + дизайн-система</span>
+      </div>
+    </div>
+  </div>
+
+  <div id="sections"></div>
+
+</div>
+
+<script src="icons.js"></script>
+<script>
+const sections = [
+  ['00 · Основа', 1, [
+    ['DesignSystem.html','Дизайн-система','00',1320,1500],
+  ]],
+  ['Основные экраны', 2, [
+    ['Store.html','Магазин — главная','02',1920,1080],
+    ['Library.html','Библиотека','03',1920,1080],
+    ['Game.html','Страница игры · Resident Evil','04',1920,1080],
+    ['Downloads.html','Загрузки','05',1920,1080],
+    ['Community.html','Сообщество','07',1920,1080],
+    ['Settings.html','Настройки','06',1140,760],
+  ]],
+  ['Плавающие окна и оверлеи', 2, [
+    ['Friends.html','Окно «Друзья»','08',384,788],
+    ['Chat.html','Окно чата','09',780,580],
+    ['Overlays.html','Меню · статус · тост · модалка','10–13',1640,1040],
+  ]],
+];
+
+const host = document.getElementById('sections');
+sections.forEach(([title, cols, items])=>{
+  const sec = document.createElement('section'); sec.className='lb-sec';
+  sec.innerHTML = `<h2 class="lb-sec__h">${title}</h2>`;
+  const grid = document.createElement('div'); grid.className='lb-grid';
+  grid.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
+  items.forEach(([file,name,num,w,h])=>{
+    // display width per column ~ (1500-44*2 - gaps)/cols
+    const dispW = cols===1 ? 1320 : (cols===2 ? 690 : 460);
+    const scale = dispW / w;
+    const dispH = h * scale;
+    const card = document.createElement('div'); card.className='lb-card';
+    card.innerHTML = `
+      <div class="lb-frame" style="height:${dispH}px">
+        <span class="lb-corner"></span>
+        <iframe src="${file}" style="width:${w}px;height:${h}px;transform:scale(${scale})" scrolling="no"></iframe>
+        <a class="cover" href="${file}" target="_blank" title="Открыть ${name}"></a>
+      </div>
+      <div class="lb-cap"><span class="num">${num}</span><span class="nm">${name}</span>
+        <span class="go">Открыть <i data-ic="fwd" style="width:13px;height:13px"></i></span></div>`;
+    grid.appendChild(card);
+  });
+  sec.appendChild(grid); host.appendChild(sec);
+});
+if(window.__x4renderIcons) window.__x4renderIcons();
+</script>
+</body>
+</html>
