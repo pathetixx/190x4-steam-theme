@@ -166,3 +166,7 @@ body.DesktopUI ._1rDh5rXSFZJOqCa4UpnI4z { padding-left: 56px !important; } /* с
   color: #ff2530; border-color: rgba(255,37,48,.5); box-shadow: inset 0 0 14px rgba(255,37,48,.18);
 }
 #x4rail .x4rail-sep { flex: 1 1 auto; }
+
+/* прячем нижний бар — его кнопки переехали в рельс */
+body.DesktopUI ._3vCzSrrXZzZjVJFZNg9SGu,
+body.DesktopUI [class*="bottombar_BottomBarContainer_"] { display: none !important; }
