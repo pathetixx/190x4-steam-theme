@@ -63,7 +63,13 @@
     { k: "add",      t: "Добавить игру", f: function () { clickBottom("Добавить"); } },
     { sep: true },
     { k: "friends",  t: "Друзья",     f: function () { if (!clickBottom("Друзья")) steamUrl("steam://open/friends"); } },
-    { k: "settings", t: "Настройки",  f: function () { navTo("/settings"); steamUrl("steam://open/settings"); } }
+    { k: "settings", t: "Настройки",  f: function () {
+        // пробуем все известные пути; пустой /settings больше НЕ зовём
+        var W = window, P = window.opener || window;
+        try { (W.SteamClient || P.SteamClient).URL.ExecuteSteamURL("steam://settings"); return; } catch (e) {}
+        try { (P.SteamClient || W.SteamClient).URL.ExecuteSteamURL("steam://settings"); return; } catch (e) {}
+        try { P.MainWindowBrowserManager.ShowModalSettings(); return; } catch (e) {}
+      } }
   ];
 
   var rail = document.createElement("div");
