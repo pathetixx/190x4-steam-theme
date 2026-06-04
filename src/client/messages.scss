@@ -1,0 +1,4 @@
+// Имена в чате по статусу: в игре=красный (бренд), в сети=зелёный.
+#SpeakerName_InGame, #SpeakerName_WatchingBroadcast { color: var(--x4-accent); }
+#SpeakerName_Online { color: var(--x4-online); }
+#SpeakerName_Default { color: var(--x4-fg); }

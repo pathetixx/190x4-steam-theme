@@ -1,0 +1,3 @@
+// Слайдеры: ручка + засечки -> акцент.
+#SliderHandle, #VerticalLineSliderHandle, #ParenSliderHandle { background-color: var(--x4-accent); box-shadow: var(--x4-glow); }
+#SliderTrack { background-color: var(--x4-bg-3); }

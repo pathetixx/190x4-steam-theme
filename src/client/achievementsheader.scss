@@ -1,0 +1,6 @@
+@use "mixins" as *;
+#Container { background-color: var(--x4-bg-1); }
+#Title { @include caps(1px); color: var(--x4-fg); }
+#Progress, #Ribbon { background-color: var(--x4-accent); }
+#BigStat, #TextValue { color: var(--x4-accent); }
+#Label { color: var(--x4-fg-dim); text-transform: uppercase; letter-spacing: .6px; }

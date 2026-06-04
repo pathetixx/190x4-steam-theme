@@ -1,0 +1,4 @@
+#WriteReviewContainer { background-color: var(--x4-bg-1); border: 1px solid var(--x4-line); }
+#ReviewThumbButton.Selected, #Selected { background-color: var(--x4-accent); color: #fff; box-shadow: var(--x4-glow); }
+#ReviewTextArea { background-color: var(--x4-bg-3); color: var(--x4-fg); border: 1px solid rgba(255,255,255,.1); }
+#Header { text-transform: uppercase; letter-spacing: .6px; color: var(--x4-fg); }

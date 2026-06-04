@@ -1,0 +1,4 @@
+// Строки настроек/диалогов (Field): фон-панель, hover/focus -> акцент.
+#Field { background-color: transparent; }
+#HighlightOnFocus.Clickable:hover, #Clickable:hover { background-color: var(--x4-accent-soft); }
+#WithBottomSeparator, #WithBottomSeparatorStandard, #WithBottomSeparatorThick { border-bottom-color: rgba(255,255,255,.06); }

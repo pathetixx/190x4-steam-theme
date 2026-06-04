@@ -184,6 +184,71 @@ body.DesktopUI {
   font-family: var(--x4-f-ui);
 }
 
+/* == achievementsheader.css == */
+body.DesktopUI ._2iGYYePQN5QQzHWNLybmd4 {
+  background-color: var(--x4-bg-1) !important;
+}
+
+body.DesktopUI ._3wNylaCAUJ8XtRM6mu2C0k {
+  text-transform: uppercase !important;
+  letter-spacing: 1px !important;
+  font-weight: 600 !important;
+  font-family: var(--x4-f-cond) !important;
+  color: var(--x4-fg) !important;
+}
+
+body.DesktopUI ._3CaVUwIuq04vtlXl8IK-p1, body.DesktopUI .BhQwnfut-s9IR38Ou2632 {
+  background-color: var(--x4-accent) !important;
+}
+
+body.DesktopUI .p8Yjzm26BVbMEn7DyoeiQ, body.DesktopUI ._3SUIg58IByHm04owJ81NVL {
+  color: var(--x4-accent) !important;
+}
+
+body.DesktopUI ._17zZlCuxyWWUil57ZLDOXp {
+  color: var(--x4-fg-dim) !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.6px !important;
+}
+
+/* == achievementslist.css == */
+body.DesktopUI .sBzFsmZCBEIihNfZuAcwT {
+  background-color: var(--x4-accent) !important;
+}
+
+body.DesktopUI ._17dhGq-FsL8xZBes7dOOlN {
+  color: var(--x4-fg) !important;
+}
+
+body.DesktopUI ._1nrpc2FmVCRkgyTSL0vNtL, body.DesktopUI .VQbek1VTyOX04qHmTsssW {
+  color: var(--x4-accent) !important;
+}
+
+body.DesktopUI .IM0uEBPVo6MDEDQLGzeZr {
+  text-transform: uppercase !important;
+  letter-spacing: 0.8px !important;
+  color: var(--x4-fg) !important;
+}
+
+/* == achievementspage.css == */
+body.DesktopUI ._1yeKJ1p6RXyLv44DK2kXZX {
+  background-color: var(--x4-accent) !important;
+}
+
+body.DesktopUI ._1hCng1RGOB0Usr_3Uz2ZXg {
+  color: var(--x4-fg) !important;
+}
+
+body.DesktopUI ._1yti27186lVbvr0FzvldCj, body.DesktopUI ._1rEINS_x88uR8c9xJLSb0 {
+  color: var(--x4-accent) !important;
+}
+
+body.DesktopUI ._2DloxrGwBEsNnLaD81WJk1 {
+  text-transform: uppercase !important;
+  letter-spacing: 0.8px !important;
+  color: var(--x4-fg) !important;
+}
+
 /* == allcollections.css == */
 body.DesktopUI ._2Th-vimU76KOpmdy45yu52 {
   position: relative !important;
@@ -379,6 +444,40 @@ body.DesktopUI ._1TdaAqMFadi0UTqilrkelR:hover, body.DesktopUI ._2foCkpRXhqq0UGVE
   color: var(--x4-accent-2) !important;
 }
 
+/* == chatentry.css == */
+body.DesktopUI ._113iuw_HlE_qSgt9cGWCSv {
+  background-color: var(--x4-bg-3) !important;
+  color: var(--x4-fg) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+body.DesktopUI .RVIs84dAE6wHcjH9tkinc {
+  color: var(--x4-accent) !important;
+}
+
+body.DesktopUI .RVIs84dAE6wHcjH9tkinc:hover, body.DesktopUI .Aupswi7-c-w3XwNO5cp2i:hover, body.DesktopUI ._3zOBeq5W4cNK3lRz_7aroW:hover {
+  color: var(--x4-accent-2) !important;
+}
+
+/* == chattabs.css == */
+body.DesktopUI ._2XZq-_f6npaQdAgeRzKIkz {
+  color: var(--x4-fg-dim) !important;
+}
+
+body.DesktopUI ._2XZq-_f6npaQdAgeRzKIkz.Active, body.DesktopUI .Yd-DsWkYiFiYwpci--Yk_ {
+  color: var(--x4-fg) !important;
+  box-shadow: inset 0 -2px 0 var(--x4-accent) !important;
+}
+
+body.DesktopUI ._1JXI4j2_xSpVK1YjyEuebr:hover {
+  color: var(--x4-accent) !important;
+}
+
+body.DesktopUI .iHmdjz0raIqI3L2AuQjU4 {
+  color: var(--x4-fg) !important;
+  border-bottom: 1px solid var(--x4-accent-line) !important;
+}
+
 /* == collectionview.css == */
 body.DesktopUI ._2rqTSCLSSEycEiuCS_OkpX {
   position: relative !important;
@@ -408,6 +507,16 @@ body.DesktopUI ._2oJt3qYLAqr6xMjnpmBFLN {
 
 body.DesktopUI ._3Xgxj6vaGiKSEal2iaSrYl {
   color: var(--x4-accent) !important;
+}
+
+/* == commentthread.css == */
+body.DesktopUI ._515RL2DZmyqkYq3yOP_m7, body.DesktopUI ._34ZDOJFxOtspOltAZYWy-O {
+  background-color: var(--x4-bg-1) !important;
+  border: 1px solid var(--x4-line) !important;
+}
+
+body.DesktopUI ._1DwcIwxQ_JgjtF66k_Wfus:hover, body.DesktopUI ._2y_jV3a-8SoXT8hX3HDFHq:hover, body.DesktopUI ._19xW0U-1UdRPoyUthA6nFx:hover {
+  color: var(--x4-accent-2) !important;
 }
 
 /* == contextmenu.css == */
@@ -516,6 +625,21 @@ body.DesktopUI .wLQrwye_1FusReFo2MyGF:hover, body.DesktopUI ._3oavRVhIS9tC3vBsFT
   color: var(--x4-accent-2) !important;
 }
 
+/* == dropdown.css == */
+body.DesktopUI ._30wJO3MC4x-I1OWpy1TAeE {
+  background-color: var(--x4-bg-3) !important;
+  border: 1px solid var(--x4-accent-line) !important;
+}
+
+body.DesktopUI ._2oAiZidGyUxL-hfupFDQ2m:hover {
+  background-color: var(--x4-accent-soft) !important;
+  color: #fff !important;
+}
+
+body.DesktopUI ._1Sa12sphmVOOs0on58tDn7 {
+  background-color: rgba(255, 255, 255, 0.08) !important;
+}
+
 /* == gamelistbar.css == */
 /* Сайдбар библиотеки: фон-градиент -> графит.*/
 body.DesktopUI ._3x1HklzyDs4TEjACrRO2tB {
@@ -581,6 +705,31 @@ body.DesktopUI ._2mZ8LlvoUiyeEUtIWuTri {
 
 body.DesktopUI ._1PxXcZNpN0cCxbnjEoTdYT {
   background-color: rgba(255, 37, 48, 0.18) !important;
+}
+
+/* == gamepaddialog.css == */
+/* Строки настроек/диалогов (Field): фон-панель, hover/focus -> акцент.*/
+body.DesktopUI .eKmEXJCm_lgme24Fp_HWt {
+  background-color: transparent !important;
+}
+
+body.DesktopUI ._2HFrmMgB38Ike5w4rVxzEX.Clickable:hover, body.DesktopUI ._2HuzvKQ2QMUJ-JJOeApaF1:hover {
+  background-color: var(--x4-accent-soft) !important;
+}
+
+body.DesktopUI ._3YKpU6T7dSIjGegCiQgg3h, body.DesktopUI .GxgIyq8R5xTOeu4ftGrgX, body.DesktopUI ._39x36zDuDr8Z0Z_UnJkY4S {
+  border-bottom-color: rgba(255, 255, 255, 0.06) !important;
+}
+
+/* == gamepadslider.css == */
+/* Слайдеры: ручка + засечки -> акцент.*/
+body.DesktopUI ._11PBfip2UlKlY3vWSz8PA4, body.DesktopUI ._3zRgrkiwoIp-ZN16HnZU91, body.DesktopUI ._2Yg4-kduvl1qxess3iLQyL {
+  background-color: var(--x4-accent) !important;
+  box-shadow: var(--x4-glow) !important;
+}
+
+body.DesktopUI ._2_vG6TwMW2XtyLlTEaODH9 {
+  background-color: var(--x4-bg-3) !important;
 }
 
 /* == library.css == */
@@ -678,6 +827,76 @@ body.DesktopUI ._21GPYlKBCLsHQpTsHw_RL_ {
   background-color: rgba(255, 255, 255, 0.08) !important;
 }
 
+/* == messages.css == */
+/* Имена в чате по статусу: в игре=красный (бренд), в сети=зелёный.*/
+body.DesktopUI ._1KPraihJAKiBwLJWmOlju2, body.DesktopUI ._3BwaMxcd1CI9bmfnLJc7lo {
+  color: var(--x4-accent) !important;
+}
+
+body.DesktopUI ._2m5YDddCyVhilOuWH-bTC1 {
+  color: var(--x4-online) !important;
+}
+
+body.DesktopUI ._1G1ACDfp4yn4cUO1xY7_d3 {
+  color: var(--x4-fg) !important;
+}
+
+/* == pagedsettings.css == */
+/* Окно настроек: сайдбар страниц + контент.*/
+body.DesktopUI ._2sssIwe0duyIrFvat2oXzH, body.DesktopUI .CFTLX2wIKOK3hNV-fS7_V, body.DesktopUI .OX7USkJ5dDP_icD00Gal6 {
+  background-color: var(--x4-bg-0) !important;
+}
+
+body.DesktopUI ._2kwFFHckg8jvnwJfg9-la8, body.DesktopUI ._18QCu-7MTzd51UpVbYysDy {
+  background-color: var(--x4-bg-1) !important;
+}
+
+body.DesktopUI ._2rjVTGz8aLvqOdz5v2gq5C {
+  text-transform: uppercase !important;
+  letter-spacing: 1px !important;
+  font-weight: 600 !important;
+  font-family: var(--x4-f-cond) !important;
+  color: var(--x4-fg) !important;
+}
+
+body.DesktopUI ._1-vlriAtKYDViAEunue4VO {
+  border-radius: 3px !important;
+}
+
+body.DesktopUI ._1-vlriAtKYDViAEunue4VO.Active, body.DesktopUI ._2DpXjzK3WWsOtUWUrcuOG7 {
+  background-color: var(--x4-accent-soft) !important;
+  box-shadow: inset 3px 0 0 var(--x4-accent) !important;
+  color: var(--x4-fg) !important;
+}
+
+body.DesktopUI ._1-vlriAtKYDViAEunue4VO:hover {
+  background-color: rgba(255, 255, 255, 0.04) !important;
+}
+
+body.DesktopUI ._2PPbMrzl8PKBwpkjYs9b0i {
+  color: var(--x4-fg) !important;
+}
+
+/* == radio.css == */
+body.DesktopUI .HijmccPB1BKyhOwhX1EVl {
+  border-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+body.DesktopUI ._3-_jME_xsuvgT3Dvq4bw_q {
+  background-color: var(--x4-accent) !important;
+  border-color: var(--x4-accent) !important;
+  box-shadow: var(--x4-glow) !important;
+}
+
+/* == reactions.css == */
+body.DesktopUI .UA15KlVbtDSJkqSpIAMIN:hover, body.DesktopUI ._2FJUPOjT7afeB0125mqdQt:hover {
+  border-color: var(--x4-accent-line) !important;
+}
+
+body.DesktopUI .a2_2ffGgB_f8RBwW8D8Rj {
+  color: var(--x4-accent) !important;
+}
+
 /* == rootmenu.css == */
 /* Лого 190x4 на месте слота Steam + кнопки меню-бара.*/
 body.DesktopUI .bSKGlAJG2UVWTsntEJY2v {
@@ -728,10 +947,72 @@ body.DesktopUI ._2UyOBeiSdBayaFdRa39N2O:hover {
   background: var(--x4-accent-soft) !important;
 }
 
+/* == settings.css == */
+body.DesktopUI ._3few7361SOf4k_YuKCmM62, body.DesktopUI ._5FicoanuNlrOvwQ3dkOVm {
+  background-color: var(--x4-bg-1) !important;
+}
+
+body.DesktopUI ._2rK4YqGvSzXLj1bPZL8xMJ {
+  position: relative !important;
+}
+body.DesktopUI ._2rK4YqGvSzXLj1bPZL8xMJ::before {
+  content: "" !important;
+  position: absolute !important;
+  left: 0 !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  width: 3px !important;
+  height: 13px !important;
+  background: var(--x4-accent) !important;
+  box-shadow: var(--x4-glow) !important;
+}
+body.DesktopUI ._2rK4YqGvSzXLj1bPZL8xMJ {
+  padding-left: 12px !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.6px !important;
+  font-weight: 600 !important;
+  font-family: var(--x4-f-cond) !important;
+  color: var(--x4-fg) !important;
+}
+
+body.DesktopUI .RmxP90Yut4EIwychIEg51, body.DesktopUI ._2nfitwrjDUBo3Ia5BTtw50 {
+  color: var(--x4-accent) !important;
+}
+
+body.DesktopUI ._3epr8QYWw_FqFgMx38YEEm:hover {
+  color: var(--x4-accent-2) !important;
+}
+
 /* == smartscrollcontainer.css == */
 /* Hero-зона страницы игры: радиальный акцент-градиент вместо плоского.*/
 body.DesktopUI ._3lDczhulqraStjCitLYJ1K {
   background-image: radial-gradient(100% 100% at 45% 35%, rgba(255, 37, 48, 0.07), var(--x4-bg-0) 70%) !important;
+}
+
+/* == sortingdropdowncontrolbutton.css == */
+body.DesktopUI ._2ddeJfhiG4hmAfqvi1FL6X:hover, body.DesktopUI ._17SQWViInfB-hmYYLoK4Yw:hover {
+  color: var(--x4-accent-2) !important;
+}
+
+body.DesktopUI .jewgwEvvtdAvjtgVEX2Mh {
+  color: var(--x4-accent) !important;
+}
+
+/* == soundtrackcontrols.css == */
+body.DesktopUI .EfZA8Q4_udQ9i5BEy1ZlO, body.DesktopUI ._3DLyrg7YP5cNP9HKda62qd {
+  background-color: var(--x4-bg-1) !important;
+}
+
+body.DesktopUI .P_NVQ7KUOfqYaa_SwWOpS {
+  background-color: var(--x4-accent) !important;
+}
+
+body.DesktopUI ._1iFnR7cGRa1kepep433pGx:hover, body.DesktopUI ._229M1hvMbUOQZIp3Z4T2ZO:hover {
+  color: var(--x4-accent-2) !important;
+}
+
+body.DesktopUI .I1AqdA0Q7RqYECTKSzsXc {
+  color: var(--x4-fg) !important;
 }
 
 /* == steamdesktop.css == */
@@ -755,6 +1036,32 @@ body.DesktopUI ._2CmrnGY-Amtd83ScJkFvx2, body.DesktopUI .UkR3sY319PuaUNuUWks2K {
   border-radius: 3px !important;
 }
 
+/* == steamdesktopoverlay.css == */
+/* Игровой оверлей (Shift+Tab): графит + красные акценты.*/
+body.DesktopUI ._3b_pllMxcr_an1aQ5goWvB, body.DesktopUI .fi6UDkxJq66MLo2z9wabQ {
+  background-color: var(--x4-bg-0) !important;
+}
+
+body.DesktopUI .mh8m9p4PBg_Qrev1bfTzc, body.DesktopUI .BoygotvcKo4DC4dSix8G3 {
+  color: var(--x4-fg) !important;
+}
+
+body.DesktopUI .mh8m9p4PBg_Qrev1bfTzc:hover {
+  color: var(--x4-accent-2) !important;
+}
+
+body.DesktopUI ._1Eg0mEYas891oNozw58Ztj, body.DesktopUI ._2gQ69IwRa_DeSORPxG5wu0 {
+  color: var(--x4-accent) !important;
+}
+
+body.DesktopUI ._3mi5HRDMAPghEFc-zYaLdB {
+  text-transform: uppercase !important;
+  letter-spacing: 0.6px !important;
+  font-weight: 600 !important;
+  font-family: var(--x4-f-cond) !important;
+  color: var(--x4-fg) !important;
+}
+
 /* == supernav.css == */
 /* Верхняя навигация (Магазин/Библиотека/Сообщество): uppercase + красный акцент.*/
 body.DesktopUI ._19axKcqYRuaJ8vdYKYmtTQ {
@@ -773,6 +1080,17 @@ body.DesktopUI ._25lBLzuVeYAUG279up4xP8:hover {
   color: var(--x4-accent-2) !important;
 }
 
+/* == throbber.css == */
+/* Спиннеры -> акцентный красный.*/
+body.DesktopUI ._3sQFkavAEPhliH6DiFmHRH, body.DesktopUI ._2K0LzwjOXDopMHoqY_v_CO {
+  stroke: var(--x4-accent) !important;
+  color: var(--x4-accent) !important;
+}
+
+body.DesktopUI ._21nVi2jNuF_prxLY1mAaKK {
+  color: var(--x4-fg-dim) !important;
+}
+
 /* == titlebarcontrols.css == */
 /* Колокол/баланс/кнопки окна управления.*/
 body.DesktopUI ._5wILZhsLODVwGfcJ0hKmJ:hover, body.DesktopUI ._2jphjrSifC6orDT4g_7Wd:hover {
@@ -788,9 +1106,62 @@ body.DesktopUI ._1oEwirQksXfZ-3RWWslbAR {
   color: var(--x4-accent) !important;
 }
 
+/* == toggle.css == */
+/* Тогглы: вкл -> красный неон.*/
+body.DesktopUI ._2Fw7gGOSCr7y9elv8iszxw {
+  background-color: var(--x4-bg-3) !important;
+}
+
+body.DesktopUI ._317lekDG36odwSaDLtFQgd {
+  background-color: var(--x4-accent) !important;
+  box-shadow: var(--x4-glow) !important;
+}
+
+body.DesktopUI ._1Dhs8IG9_tJWb3XP9ccN9M {
+  color: var(--x4-fg) !important;
+}
+
+/* == tooltip.css == */
+body.DesktopUI ._2FxbHJzYoH024ko7zqcJOf, body.DesktopUI ._3XGRklQrZMakU2xaYB0cLD {
+  background-color: var(--x4-bg-1) !important;
+  border: 1px solid var(--x4-accent-line) !important;
+  color: var(--x4-fg) !important;
+  border-radius: 3px !important;
+}
+
+body.DesktopUI ._1LhVfNukndDa_XWzq0vdg1 {
+  color: var(--x4-accent) !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.5px !important;
+}
+
 /* == updatealert.css == */
 /* Update-алерт (был сине-акцентный) -> красный.*/
 body.DesktopUI ._2iJsgdTIX9Tj23rWnB7Q-c {
   background-color: var(--x4-accent) !important;
   color: #fff !important;
+}
+
+/* == writereview.css == */
+body.DesktopUI ._10bN3WMeG0xP9KCqsxx7ea {
+  background-color: var(--x4-bg-1) !important;
+  border: 1px solid var(--x4-line) !important;
+}
+
+body.DesktopUI ._1kCN0pAntrcGCSmcc-vYdk.Selected, body.DesktopUI .Z3L6KGVxi4ZjGUzbYUjBC {
+  background-color: var(--x4-accent) !important;
+  color: #fff !important;
+  box-shadow: var(--x4-glow) !important;
+}
+
+body.DesktopUI ._392iEmqj65Eac9ealm4Pmi {
+  background-color: var(--x4-bg-3) !important;
+  color: var(--x4-fg) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+body.DesktopUI ._27mfPohuGzwxwaotA5Pk9 {
+  text-transform: uppercase !important;
+  letter-spacing: 0.6px !important;
+  color: var(--x4-fg) !important;
 }

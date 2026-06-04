@@ -1,0 +1,5 @@
+@use "mixins" as *;
+#SettingsModal, #SettingsTitleBar { background-color: var(--x4-bg-1); }
+#SettingsDialogSubHeader { @include tick; padding-left: 12px; @include caps(.6px); color: var(--x4-fg); }
+#SettingsLink, #SettingsDialogLink { color: var(--x4-accent); }
+#SettingsDialogButton:hover { color: var(--x4-accent-2); }

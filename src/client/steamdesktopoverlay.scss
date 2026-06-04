@@ -1,0 +1,7 @@
+@use "mixins" as *;
+// Игровой оверлей (Shift+Tab): графит + красные акценты.
+#Wrapper, #TopSection { background-color: var(--x4-bg-0); }
+#BackToGameBtn, #ExitGameBtn { color: var(--x4-fg); }
+#BackToGameBtn:hover { color: var(--x4-accent-2); }
+#PingReduced, #CurrentTime { color: var(--x4-accent); }
+#GameName { @include caps(.6px); color: var(--x4-fg); }

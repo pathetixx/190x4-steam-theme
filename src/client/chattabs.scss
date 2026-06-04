@@ -1,0 +1,4 @@
+#ChatTab { color: var(--x4-fg-dim); }
+#ChatTab.Active, #Active { color: var(--x4-fg); box-shadow: inset 0 -2px 0 var(--x4-accent); }
+#CloseButton:hover { color: var(--x4-accent); }
+#chatRoomGroupHeader { color: var(--x4-fg); border-bottom: 1px solid var(--x4-accent-line); }

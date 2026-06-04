@@ -1,0 +1,11 @@
+@use "mixins" as *;
+// Окно настроек: сайдбар страниц + контент.
+#PagedSettingsDialog, #PagedSettingsDialog_PageContent, #PagedSettingDialog_ContentColumn { background-color: var(--x4-bg-0); }
+#PagedSettingsDialog_PageListColumn, #PagedSettingsDialog_PageList { background-color: var(--x4-bg-1); }
+#PagedSettingsDialog_Title { @include caps(1px); color: var(--x4-fg); }
+#PagedSettingsDialog_PageListItem { border-radius: 3px; }
+#PagedSettingsDialog_PageListItem.Active, #Active {
+  background-color: var(--x4-accent-soft); box-shadow: inset 3px 0 0 var(--x4-accent); color: var(--x4-fg);
+}
+#PagedSettingsDialog_PageListItem:hover { background-color: rgba(255,255,255,.04); }
+#PageListItem_Title { color: var(--x4-fg); }
