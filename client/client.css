@@ -1,12 +1,11 @@
 /* ============================================================================
-   190x4 — STEAM THEME · client.css
-   Инжектится в главное окно Steam (^Steam$) + друзья/чат/модалки/меню.
-   Два слоя:
-     §1 ФУНДАМЕНТ — без привязки к классам (фон, шрифт, скроллбар, focus). Работает
-        сразу на любой сборке.
-     §2 МЕТКИ — стилизуем data-x4="...", которые вешает client/resolver.js, резолвя
-        стабильные имена Steam в текущие хеши. Финальный набор имён — из дампа
-        реестра (tools/dump-classmap.js).
+   190x4 — STEAM THEME · client.css  (CSS-ONLY, no runtime JS)
+   Инжектится во ВСЕ окна Steam (".*"), включая SharedJSContext, где живёт UI.
+   §1 ФУНДАМЕНТ — без классов (фон, шрифт, скроллбар, focus, акцент-переменные).
+   §2 ЦЕЛИ — реальные хеш-классы из дампа реестра (classmap, build 1780352834,
+      2026-06-04). Хеши Steam меняются на апдейтах — рефреш через tools/2-dump.ps1
+      и пересборку этого файла. НИКАКОГО рантайм-резолвера: его eager require()
+      по всем webpack-модулям ронял Steam на старте.
    Цвета — из theme/colors.css.
    ============================================================================ */
 
@@ -23,87 +22,57 @@ body { background: var(--x4-bg-0) !important; color: var(--x4-text-md); font-fam
 ::selection { background: var(--x4-accent-soft); color: #fff; }
 :focus-visible { outline-color: var(--x4-accent) !important; }
 
-/* §2 ================================================================ МЕТКИ */
+/* §2 ============================================ ЦЕЛИ (реальные хеш-классы) */
 
-/* titlebar */
-[data-x4="titlebar"] {
+/* titlebar (TitleBar) */
+._2HQkJiiv6Bt1JagAPfUpnV {
   background: var(--x4-bg-0) !important;
   border-bottom: 1px solid var(--x4-line);
 }
 
-/* верхняя навигация (Orbitron, активный = красное подчёркивание) */
-[data-x4="nav-tab"] {
-  font-family: var(--x4-f-display) !important;
-  text-transform: uppercase; letter-spacing: 1px; color: var(--x4-text-lo);
-}
-[data-x4="nav-tab"]:hover { color: var(--x4-text-md); }
-[data-x4="nav-tab"][data-x4~="nav-active"],
-[data-x4="nav-active"] {
+/* активная вкладка верхней навигации (ActiveTab) — красное подчёркивание */
+.oIVg-eNHeYCNPq0blN3Dk {
   color: #fff !important; text-shadow: 0 0 10px rgba(255,37,48,.35);
   box-shadow: inset 0 -2px 0 var(--x4-accent), 0 2px 12px -4px var(--x4-accent);
 }
 
-/* сайдбар библиотеки */
-[data-x4="sidebar"] { background: var(--x4-bg-1) !important; }
+/* сайдбар-список библиотеки (GameList) */
+._1e6tjguQEHdYIehM9aRmO5 { background: var(--x4-bg-1) !important; }
 
-/* строка игры в списке */
-[data-x4="game-row"]:hover { background: rgba(255,255,255,.035); color: var(--x4-text-hi); }
+/* строка игры в списке (GameListEntryContainer) — hover */
+._1vO6BoiVslZgs1kqDGdUs8:hover { background: rgba(255,255,255,.04); }
 
-/* капсула игры: hover-подъём + красный glow */
-[data-x4="game-cover"] { transition: transform .18s var(--x4-ease), box-shadow .18s var(--x4-ease); }
-[data-x4="game-cover"]:hover {
+/* капсула-обложка (CapsuleImage) — hover-подъём + красный glow */
+._2eQ4mkpf4IzUp1e9NnM2Wr {
+  transition: transform .18s var(--x4-ease), box-shadow .18s var(--x4-ease);
+}
+._2eQ4mkpf4IzUp1e9NnM2Wr:hover {
   transform: translateY(-4px);
   box-shadow: var(--x4-glow), 0 0 0 1px var(--x4-accent-line);
 }
 
-/* hero страницы игры — лёгкий красный ember */
-[data-x4="app-header"] { position: relative; }
-[data-x4="app-header"]::after {
-  content: ""; position: absolute; inset: 0; pointer-events: none;
-  background:
-    radial-gradient(120% 90% at 100% 0%, rgba(255,37,48,.16), transparent 55%),
-    radial-gradient(80% 70% at 0% 100%, rgba(179,18,27,.12), transparent 60%);
-}
-
-/* КНОПКА «ИГРАТЬ» / primary — красный неон */
-[data-x4="play-button"],
-[data-x4="primary-btn"] {
+/* КНОПКА «ИГРАТЬ» (PlayButton) — красный неон */
+.sQZ70orTPi-ELUlaS-ywR {
   background: linear-gradient(180deg, var(--x4-accent-2), var(--x4-accent-dim)) !important;
   border: 1px solid rgba(255,120,120,.5) !important;
-  color: #fff !important; text-transform: uppercase; letter-spacing: 1px;
+  color: #fff !important; letter-spacing: 1px;
   text-shadow: 0 1px 2px rgba(0,0,0,.45);
   box-shadow: var(--x4-glow), inset 0 1px 0 rgba(255,255,255,.25) !important;
-  border-radius: var(--x4-r-md);
+  border-radius: var(--x4-r-md) !important;
 }
-[data-x4="play-button"]:hover,
-[data-x4="primary-btn"]:hover {
+.sQZ70orTPi-ELUlaS-ywR:hover {
   box-shadow: var(--x4-glow-lg), inset 0 1px 0 rgba(255,255,255,.3) !important;
   filter: brightness(1.06);
 }
 
-/* прогресс загрузки/установки — красный градиент */
-[data-x4="progress"] {
+/* прогресс загрузки/установки (ProgressBar) — красный градиент */
+._2VCd-2F_zasXcshwdbxHXo {
   background: linear-gradient(90deg, var(--x4-accent-dim), var(--x4-accent)) !important;
   box-shadow: var(--x4-glow);
 }
 
-/* тоггл включён — красный */
-[data-x4="toggle-on"] {
+/* тоггл включён (ToggleOn) — красный */
+.IRQmSFtn3V-ntcKzv-fxE {
   background: linear-gradient(180deg, var(--x4-accent-2), var(--x4-accent-dim)) !important;
   box-shadow: var(--x4-glow);
 }
-
-/* §3 ========================================================== ЛОГОТИП-ВОРДМАРК */
-.x4-logo {
-  position: relative; display: inline-flex; align-items: center; align-self: center;
-  margin: 0 12px; font-family: var(--x4-f-display); font-weight: 900; letter-spacing: 1px;
-  color: #fff; font-size: 15px; line-height: 1; white-space: nowrap; z-index: 9999;
-  text-shadow: 0 1px 2px rgba(0,0,0,.5);
-}
-.x4-logo .x4-x { color: #c01622; text-shadow: 0 0 5px rgba(192,22,34,.55); }
-.x4-logo::before, .x4-logo::after {
-  content: attr(data-t); position: absolute; left: 0; top: 50%; transform: translateY(-50%);
-  pointer-events: none; mix-blend-mode: screen; opacity: .9;
-}
-.x4-logo::before { color: #ff2530; transform: translate(-1.6px,-50%); clip-path: inset(0 0 55% 0); }
-.x4-logo::after  { color: #27e0ff; transform: translate(1.6px,-50%);  clip-path: inset(48% 0 0 0); }

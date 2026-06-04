@@ -1,8 +1,8 @@
 {
   "name": "190x4",
   "author": "190x4",
-  "description": "Cyberpunk command-center theme — красный неон по графиту. Глубокий рескин Steam.",
-  "version": "0.4.0",
+  "description": "Cyberpunk command-center theme - red neon over graphite. Deep Steam reskin.",
+  "version": "0.5.1",
 
   "github": { "owner": "pathetixx", "repo_name": "190x4-steam-theme" },
   "tags": ["Dark", "Cyberpunk", "Red", "Customizable"],
@@ -10,19 +10,9 @@
   "RootColors": "theme/colors.css",
   "Steam-WebKit": "webkit/store.css",
 
-  "UseDefaultPatches": true,
   "Patches": [
-    {
-      "MatchRegexString": "^Steam$",
-      "TargetCss": "client/client.css",
-      "TargetJs": "client/resolver.js"
-    },
-    { "MatchRegexString": "OverlayBrowser_Browser$", "TargetCss": "client/client.css" },
-    { "MatchRegexString": ".friendsui-container", "TargetCss": "client/client.css", "TargetJs": "client/resolver.js" },
-    { "MatchRegexString": ".ModalDialogPopup", "TargetCss": "client/client.css" },
-    { "MatchRegexString": ".FullModalOverlay", "TargetCss": "client/client.css" },
-    { "MatchRegexString": "Menu$", "TargetCss": "client/client.css" },
-    { "MatchRegexString": "Supernav$", "TargetCss": "client/client.css" },
+    { "MatchRegexString": ".*", "TargetCss": "theme/colors.css" },
+    { "MatchRegexString": ".*", "TargetCss": "client/client.css" },
     { "MatchRegexString": ".*SP Overlay:.*", "TargetCss": "webkit/store.css" }
   ]
 }
