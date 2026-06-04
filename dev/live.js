@@ -10,7 +10,7 @@
   if (window.__x4railObs) { window.__x4railObs.disconnect(); window.__x4railObs = null; }
 
   var O = window.opener || window;
-  var SC = window.SteamClient || O.SteamClient;
+  var SC = O.SteamClient || window.SteamClient; // у opener есть URL/Settings/Overlay
 
   function nativeNav(label) {
     var b = [].slice.call(document.querySelectorAll("._19axKcqYRuaJ8vdYKYmtTQ"));
@@ -63,13 +63,7 @@
     { k: "add",      t: "Добавить игру", f: function () { clickBottom("Добавить"); } },
     { sep: true },
     { k: "friends",  t: "Друзья",     f: function () { if (!clickBottom("Друзья")) steamUrl("steam://open/friends"); } },
-    { k: "settings", t: "Настройки",  f: function () {
-        // пробуем все известные пути; пустой /settings больше НЕ зовём
-        var W = window, P = window.opener || window;
-        try { (W.SteamClient || P.SteamClient).URL.ExecuteSteamURL("steam://settings"); return; } catch (e) {}
-        try { (P.SteamClient || W.SteamClient).URL.ExecuteSteamURL("steam://settings"); return; } catch (e) {}
-        try { P.MainWindowBrowserManager.ShowModalSettings(); return; } catch (e) {}
-      } }
+    { k: "settings", t: "Настройки",  f: function () { steamUrl("steam://open/settings"); } }
   ];
 
   var rail = document.createElement("div");
