@@ -2,11 +2,11 @@
 
 # 190×4
 
-**Киберпанк command-center тема для клиента Steam — красный неон по графиту.**
+**Киберпанк command-center колорвей для клиента Steam — красный неон по графиту.**
 
-Тёмный высококонтрастный рескин на [Millennium](https://github.com/SteamClientHomebrew/Millennium).
+Тёмная тема для [Millennium](https://github.com/SteamClientHomebrew/Millennium).
 
-`Windows` · `Linux` · клиент Steam (CEF / Chromium 126)
+`Windows` · `Linux` · клиент Steam
 
 [English version →](README.md)
 
@@ -24,70 +24,52 @@
 |---|---|
 | ![Магазин](design/screenshots/01-store.png) | ![Дизайн-система](design/screenshots/10-design-system.png) |
 
-> Это эталонные рендеры. **Фундамент** темы (фон, шрифты, акцент, скроллбары, focus)
-> применяется сразу; per-screen раскладка доводится в DevTools — см. ниже.
+> Рендеры в `design/` — это **целевая айдентика** (долгосрочная кастомная раскладка).
+> Текущий релиз — 190×4 **колорвей**, см. «Как устроено» ниже.
 
 ---
 
-## Особенности
+## Как устроено
 
-- **Красный = успех.** Инверсия семантики: кнопка «Играть», активные табы, прогресс загрузки,
-  индикаторы connected/в игре — красный неон. Зелёный — **только** точка «в сети».
-- **Orbitron** для логотипа и верхней навигации; **Saira** — для всего остального.
-- Glitch-вордмарк **190×4** (RGB-расслоение) на месте нативного «STEAM» в титулбаре.
-- Графитовые поверхности, hairline-границы, острые углы 2–5px, неоновый glow вместо мягких теней.
-- **Устойчивый к апдейтам core:** recolor идёт через CSS-переменные Steam, а не через хеш-классы —
-  обновления клиента не сбивают базовую палитру.
-- Полностью настраиваемые цвета через редактор Millennium (`Settings → Themes → Edit`).
+Клиент Steam рисуется **хешированными** CSS-классами, которые меняются на каждой сборке,
+поэтому перекрасить его «вслепую» нельзя. Тема накладывает палитру 190×4 на **движок
+селекторов [SpaceTheme](https://github.com/SpaceTheme/Steam)** (MIT) — актуальную
+поддерживаемую карту этих классов. Все цвета берутся из одного файла палитры
+(`src/css/root.css`); остальное — структурный CSS SpaceTheme.
+
+Правила бренда в палитре:
+- **Красный `#ff2530` = акцент / Play / выбранное / connected** (синий Steam перекрашен в красный).
+- **Зелёный `#38e07b` — только статус «в сети».**
+- Графитовые поверхности, острые углы 3px.
 
 ---
 
 ## Установка
 
-Millennium должен быть уже установлен ([инструкция](https://docs.steambrew.app/users/installing)).
+Millennium должен быть установлен ([инструкция](https://docs.steambrew.app/users/installing)).
 
-1. Скопировать папку в каталог тем Millennium:
+1. Скачать zip релиза, распаковать папку `190x4/` в:
    ```
    <Steam>/millennium/themes/190x4/
    ```
    На Windows обычно `C:\Program Files (x86)\Steam\millennium\themes\190x4\`.
-   Папку `design/` можно не копировать — она для разработки.
-2. В Steam открыть меню **Millennium → Themes**, выбрать **190x4**, перезапустить Steam.
-3. Цвета правятся в **Settings → Themes → Edit** (значения из `colors.css`).
+2. В Steam открыть **Millennium → Themes**, выбрать **190x4**, перезапустить Steam.
+3. Опции (раскладка, сайдбар, шрифты, радиус) — в настройках темы Millennium; цвета —
+   правкой `src/css/root.css`.
 
 ---
 
-## Структура
+## Кастомизация
 
-| Файл | Роль |
-|---|---|
-| `skin.json` | Манифест: `Patches` по regex заголовка окна, `RootColors`, `Steam-WebKit` |
-| `colors.css` | **RootColors** — палитра/токены + оверрайды core-переменных Steam (правит юзер) |
-| `lib/primitives.css` | Примитивы `.x4-*` (кнопки, поля, тогглы, бейджи, лого, текстуры) |
-| `libraryroot.custom.css` | Главное окно (`^Steam$`) + друзья/чат/модалки/меню |
-| `libraryroot.custom.js` | Инъекция лого-вордмарка `190×4` |
-| `webkit/webkit.css` | Магазин и сообщество (`*.steampowered.com`, `steamcommunity.com`) |
-| `design/` | Визуальные референсы (HTML-макеты, `theme.css`, скрины) — не инжектится |
-
-**Фундамент** в каждом CSS работает независимо от сборки Steam. **Per-screen** блоки заякорены
-на «дружелюбные» класс-префиксы Steam (`[class*="appdetailsplaysection_PlayButton"]`) и помечены
-`TODO(devtools)` для пиксельной доводки по референсам.
+- **Цвета:** переменные `--st-*` в `src/css/root.css` (значения `R, G, B`).
+- **Раскладка/поведение:** в настройках темы Millennium доступны тогглы SpaceTheme
+  (позиция сайдбара, what's-new, баннер, шрифты и т.д.).
+- `design/` — кастомные референс-макеты 190×4 (HTML + скрины), ориентир на будущее.
 
 ---
 
-## Доводка / вклад
+## Кредиты
 
-1. Включить **developer mode** в Millennium (или подключиться к CEF debugger на `localhost:8080`).
-2. Снять реальный класс нужного элемента.
-3. Найти `§`-блок в `libraryroot.custom.css` / `webkit.css`, заменить заякоренный `[class*="…"]`
-   на проверенный селектор, снять пометку `TODO(devtools)`.
-4. Сверить с `design/<Screen>.html` и `design/screenshots/NN-*.png` пиксель-в-пиксель.
-   Цвет-семантику не нарушать: красный = успех/Play/connected; зелёный = только точка «в сети».
-5. Открыть `design/index.html` в браузере — лукбук всех экранов.
-
----
-
-## Шрифты
-
-Orbitron, Saira и Saira Semi Condensed грузятся с Google Fonts через `@import` в `colors.css`.
-Для офлайн/self-host — см. [`assets/fonts/README.md`](assets/fonts/README.md).
+- Движок селекторов и структурный CSS: **[SpaceTheme/Steam](https://github.com/SpaceTheme/Steam)**
+  (SpaceEnergy, MIT) — см. [`LICENSE`](LICENSE). Этот проект — палитра/колорвей 190×4 поверх него.
+- Фреймворк: **[Millennium](https://github.com/SteamClientHomebrew/Millennium)**.

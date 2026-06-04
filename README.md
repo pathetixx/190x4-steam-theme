@@ -2,11 +2,11 @@
 
 # 190×4
 
-**Cyberpunk command-center theme for the Steam Client — red neon over graphite.**
+**Cyberpunk command-center colorway for the Steam Client — red neon over graphite.**
 
-A dark, high-contrast reskin built for [Millennium](https://github.com/SteamClientHomebrew/Millennium).
+A dark [Millennium](https://github.com/SteamClientHomebrew/Millennium) theme.
 
-`Windows` · `Linux` · Steam Client (CEF / Chromium 126)
+`Windows` · `Linux` · Steam Client
 
 [Русская версия →](README.ru.md)
 
@@ -24,21 +24,23 @@ A dark, high-contrast reskin built for [Millennium](https://github.com/SteamClie
 |---|---|
 | ![Store](design/screenshots/01-store.png) | ![Design system](design/screenshots/10-design-system.png) |
 
-> These are the reference renders. The theme's **foundation** (background, fonts, accent,
-> scrollbars, focus) applies immediately; per-screen layout is refined in DevTools — see below.
+> These renders in `design/` are the **target identity** (the long-term bespoke layout).
+> The current release is a 190×4 **colorway** — see *How it works* below.
 
 ---
 
-## Features
+## How it works
 
-- **Red = success.** Inverted semantics: the Play button, active tabs, download progress,
-  connected/in-game indicators are all neon red. Green is reserved **only** for the online dot.
-- **Orbitron** for the logo and top navigation; **Saira** for everything else.
-- Glitch (RGB-split) **190×4** wordmark replacing the native "STEAM" titlebar text.
-- Graphite surfaces, hairline borders, sharp 2–5px corners, neon glow instead of soft shadows.
-- **Update-resilient core:** recoloring is driven through Steam's CSS custom properties, not
-  hashed class names — so client updates don't wipe the base palette.
-- Fully color-customizable via Millennium's theme editor (`Settings → Themes → Edit`).
+The Steam client is rendered with fully **hashed** CSS class names that change with
+every Steam build, so a recolor can't be authored blind. This theme therefore runs the
+190×4 palette on top of the **[SpaceTheme](https://github.com/SpaceTheme/Steam)** selector
+engine (MIT) — a current, maintained map of those classes. All colors come from a single
+palette file (`src/css/root.css`); everything else is SpaceTheme's structural CSS.
+
+Brand rules applied in the palette:
+- **Red `#ff2530` = accent / Play / selected / connected** (Steam's blue is remapped to red).
+- **Green `#38e07b` — online status only.**
+- Graphite surfaces, sharp 3px corners.
 
 ---
 
@@ -46,48 +48,30 @@ A dark, high-contrast reskin built for [Millennium](https://github.com/SteamClie
 
 Millennium must already be installed ([guide](https://docs.steambrew.app/users/installing)).
 
-1. Copy this folder into the Millennium themes directory:
+1. Download the release zip and extract the `190x4/` folder into:
    ```
    <Steam>/millennium/themes/190x4/
    ```
    On Windows that's usually `C:\Program Files (x86)\Steam\millennium\themes\190x4\`.
-   The `design/` folder is for development only and can be omitted.
-2. In Steam, open the **Millennium → Themes** menu, select **190x4**, and restart Steam.
-3. Tweak colors in **Settings → Themes → Edit** (values defined in `colors.css`).
+2. In Steam, open **Millennium → Themes**, select **190x4**, and restart Steam.
+3. Tweak options (layout toggles, sidebar, fonts, border radius) in the Millennium theme
+   settings; recolor by editing `src/css/root.css`.
 
 ---
 
-## Structure
+## Customizing
 
-| File | Role |
-|---|---|
-| `skin.json` | Manifest: window-title `Patches`, `RootColors`, `Steam-WebKit` |
-| `colors.css` | **RootColors** — palette/tokens + Steam core-variable overrides (user-editable) |
-| `lib/primitives.css` | `.x4-*` component primitives (buttons, inputs, toggles, badges, logo, textures) |
-| `libraryroot.custom.css` | Main client window (`^Steam$`) + friends/chat/modals/menus |
-| `libraryroot.custom.js` | Injects the `190×4` logo wordmark |
-| `webkit/webkit.css` | Store & Community pages (`*.steampowered.com`, `steamcommunity.com`) |
-| `design/` | Visual references (HTML mockups, `theme.css` source of truth, screenshots) — not injected |
-
-The **foundation** layer in each CSS file works regardless of the Steam build. **Per-screen**
-blocks are anchored to Steam's friendly class prefixes (`[class*="appdetailsplaysection_PlayButton"]`)
-and marked `TODO(devtools)` for pixel-level tuning against the references.
+- **Colors:** edit the `--st-*` variables in `src/css/root.css` (values are `R, G, B`).
+- **Layout/behavior:** the Millennium theme settings expose SpaceTheme's option toggles
+  (sidebar position, what's-new, banner, fonts, etc.).
+- `design/` holds the bespoke 190×4 reference mockups (HTML + screenshots) — the design
+  north-star for future passes.
 
 ---
 
-## Customizing / contributing
+## Credits
 
-1. Enable **developer mode** in Millennium (or attach to the CEF debugger on `localhost:8080`).
-2. Inspect the real class of the element you want to style.
-3. Find the matching `§` block in `libraryroot.custom.css` / `webkit.css`, replace the anchored
-   `[class*="…"]` selector with the verified one, and drop the `TODO(devtools)` marker.
-4. Match it against `design/<Screen>.html` and `design/screenshots/NN-*.png` pixel-for-pixel.
-   Keep the color semantics: red = success/Play/connected; green = online dot only.
-5. Open `design/index.html` in a browser for a lookbook of every screen.
-
----
-
-## Fonts
-
-Orbitron, Saira and Saira Semi Condensed are loaded from Google Fonts via `@import` in
-`colors.css`. For offline / self-hosting, see [`assets/fonts/README.md`](assets/fonts/README.md).
+- Selector engine & structural CSS: **[SpaceTheme/Steam](https://github.com/SpaceTheme/Steam)**
+  by SpaceEnergy, MIT — see [`LICENSE`](LICENSE). This project is a 190×4 palette/colorway
+  on top of it.
+- Framework: **[Millennium](https://github.com/SteamClientHomebrew/Millennium)**.
