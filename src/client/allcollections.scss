@@ -1,0 +1,4 @@
+@use "mixins" as *;
+#Header { @include tick; padding-left: 12px; }
+#Label { @include caps; color: var(--x4-fg); }
+#CollectionLabel { @include caps(.4px); }

@@ -1,0 +1,4 @@
+@use "mixins" as *;
+// Карточки новостей: красный ярлык категории (Вчера/Сегодня), uppercase имени игры.
+#EventSummaryType { color: var(--x4-accent); @include caps(.6px); }
+#GameName, #Event_Title { @include caps(.4px); color: var(--x4-fg); }

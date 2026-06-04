@@ -37,3 +37,11 @@
 .ContextMenuButton:hover, .contextMenuItem:hover { background-color: var(--x4-accent-soft); color: #fff; }
 
 .title-area-highlight { background-image: linear-gradient(to right, rgba(255,37,48,.5), transparent); }
+
+/* Фирменная красная вертикальная кромка на правом крае окна клиента
+   (scope-плагин -> body.DesktopUI::after, только клиент). */
+body::after {
+  content: ""; position: fixed; top: 0; right: 0; bottom: 0; width: 2px;
+  background: linear-gradient(180deg, var(--x4-accent), var(--x4-accent-dim));
+  box-shadow: 0 0 10px rgba(255,37,48,.5); pointer-events: none; z-index: 9999;
+}

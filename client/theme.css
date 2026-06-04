@@ -1,6 +1,9 @@
 /* 190x4 Steam theme - GENERATED from src/client/*.scss via steam-theming-utils.
    DO NOT EDIT directly; edit the SCSS sources and run "npm run build". */
 
+/* == _mixins.css == */
+/* Сигнатурные примитивы (sass-миксины разворачиваются ДО резолва селекторов).*/
+
 /* == _stable.css == */
 /* Стабильные НЕхешированные классы Steam (диалоги/настройки/легаси контекст-меню,*/
 /* скролл/выделение). Не в module-карте -> файл в ignore, селекторы литеральные.*/
@@ -110,6 +113,21 @@ body.DesktopUI .title-area-highlight {
   background-image: linear-gradient(to right, rgba(255, 37, 48, 0.5), transparent) !important;
 }
 
+/* Фирменная красная вертикальная кромка на правом крае окна клиента
+   (scope-плагин -> body.DesktopUI::after, только клиент). */
+body.DesktopUI::after {
+  content: "" !important;
+  position: fixed !important;
+  top: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  width: 2px !important;
+  background: linear-gradient(180deg, var(--x4-accent), var(--x4-accent-dim)) !important;
+  box-shadow: 0 0 10px rgba(255, 37, 48, 0.5) !important;
+  pointer-events: none !important;
+  z-index: 9999 !important;
+}
+
 /* == _tokens.css == */
 /* 190x4 - дизайн-токены (источник правды: design/theme.css). Файл в ignore*/
 /* steam-theming-utils -> селекторы не трогаются, остаётся чистый :root.*/
@@ -164,6 +182,40 @@ body.DesktopUI {
 
 body.DesktopUI {
   font-family: var(--x4-f-ui);
+}
+
+/* == allcollections.css == */
+body.DesktopUI ._2Th-vimU76KOpmdy45yu52 {
+  position: relative !important;
+}
+body.DesktopUI ._2Th-vimU76KOpmdy45yu52::before {
+  content: "" !important;
+  position: absolute !important;
+  left: 0 !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  width: 3px !important;
+  height: 13px !important;
+  background: var(--x4-accent) !important;
+  box-shadow: var(--x4-glow) !important;
+}
+body.DesktopUI ._2Th-vimU76KOpmdy45yu52 {
+  padding-left: 12px !important;
+}
+
+body.DesktopUI ._3ONu7-h8EhRcUI72YoSVbD {
+  text-transform: uppercase !important;
+  letter-spacing: 1px !important;
+  font-weight: 600 !important;
+  font-family: var(--x4-f-cond) !important;
+  color: var(--x4-fg) !important;
+}
+
+body.DesktopUI ._1J1LQ0vGtpM3n0xw7XwQM6 {
+  text-transform: uppercase !important;
+  letter-spacing: 0.4px !important;
+  font-weight: 600 !important;
+  font-family: var(--x4-f-cond) !important;
 }
 
 /* == appactionbutton.css == */
@@ -253,6 +305,34 @@ body.DesktopUI ._1SQ30LQnUhED7sXI79rmas, body.DesktopUI ._3i0kopAostOz2IDi9HqmeN
   color: var(--x4-fg) !important;
 }
 
+/* == appgrid.css == */
+/* Заголовки секций грид-коллекций (Избранное/Без категории).*/
+body.DesktopUI ._3bWISeqP3H2j6YJnFwVEwu {
+  position: relative !important;
+}
+body.DesktopUI ._3bWISeqP3H2j6YJnFwVEwu::before {
+  content: "" !important;
+  position: absolute !important;
+  left: 0 !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  width: 3px !important;
+  height: 13px !important;
+  background: var(--x4-accent) !important;
+  box-shadow: var(--x4-glow) !important;
+}
+body.DesktopUI ._3bWISeqP3H2j6YJnFwVEwu {
+  padding-left: 12px !important;
+}
+
+body.DesktopUI ._2hvQbTq62AjXQS4tZqVepi {
+  text-transform: uppercase !important;
+  letter-spacing: 1px !important;
+  font-weight: 600 !important;
+  font-family: var(--x4-f-cond) !important;
+  color: var(--x4-fg) !important;
+}
+
 /* == appportrait.css == */
 body.DesktopUI ._13w3SEbKLJRUhSyoGQZze8 {
   transition: transform 0.18s ease, box-shadow 0.18s ease !important;
@@ -261,6 +341,22 @@ body.DesktopUI ._13w3SEbKLJRUhSyoGQZze8 {
 body.DesktopUI ._13w3SEbKLJRUhSyoGQZze8:hover {
   transform: translateY(-3px) !important;
   box-shadow: var(--x4-glow), 0 0 0 1px var(--x4-accent-line) !important;
+}
+
+/* Имя игры на капсуле -> uppercase Saira Condensed (эталон 02-library).*/
+body.DesktopUI ._1CmuxC6KBmGPJ77aSRQfEq, body.DesktopUI ._1tO8pfL08v-v_lzvm0fKH1 {
+  text-transform: uppercase !important;
+  letter-spacing: 0.6px !important;
+  font-weight: 600 !important;
+  font-family: var(--x4-f-cond) !important;
+  color: var(--x4-fg) !important;
+}
+
+/* Красные бейджи-счётчики уведомлений/обновлений (НЕ трогаем MCGreen/MCOrange).*/
+body.DesktopUI ._24AOihrHnuZ2TR1qlZSg4-, body.DesktopUI ._3ezYo41AlVbEsm7a4T5foZ, body.DesktopUI ._3zxPLsbnU5LuorR0_EPCEC {
+  background-color: var(--x4-accent) !important;
+  color: #fff !important;
+  box-shadow: var(--x4-glow) !important;
 }
 
 /* == bottombar.css == */
@@ -281,6 +377,37 @@ body.DesktopUI ._1KrJ3sFAqPBN9mfpaNTU5F svg {
 
 body.DesktopUI ._1TdaAqMFadi0UTqilrkelR:hover, body.DesktopUI ._2foCkpRXhqq0UGVE50BWqj:hover {
   color: var(--x4-accent-2) !important;
+}
+
+/* == collectionview.css == */
+body.DesktopUI ._2rqTSCLSSEycEiuCS_OkpX {
+  position: relative !important;
+}
+body.DesktopUI ._2rqTSCLSSEycEiuCS_OkpX::before {
+  content: "" !important;
+  position: absolute !important;
+  left: 0 !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  width: 3px !important;
+  height: 13px !important;
+  background: var(--x4-accent) !important;
+  box-shadow: var(--x4-glow) !important;
+}
+body.DesktopUI ._2rqTSCLSSEycEiuCS_OkpX {
+  padding-left: 12px !important;
+}
+
+body.DesktopUI ._2oJt3qYLAqr6xMjnpmBFLN {
+  text-transform: uppercase !important;
+  letter-spacing: 1px !important;
+  font-weight: 600 !important;
+  font-family: var(--x4-f-cond) !important;
+  color: var(--x4-fg) !important;
+}
+
+body.DesktopUI ._3Xgxj6vaGiKSEal2iaSrYl {
+  color: var(--x4-accent) !important;
 }
 
 /* == contextmenu.css == */
@@ -393,6 +520,76 @@ body.DesktopUI ._3xRRJfD2xy95i9NhJxLTp0, body.DesktopUI ._3BFcmjAaMyP6GTPwc0VyWi
 
 body.DesktopUI ._34CqrAnD-hs0Fl08rfvoF5 {
   background-image: linear-gradient(rgba(255, 37, 48, 0.06), transparent) !important;
+}
+
+/* == libraryhome.css == */
+/* Секции библиотеки-дома (ЧТО НОВОГО и т.п.): красная риска + uppercase.*/
+body.DesktopUI ._1QOqxv1IVU4TSd_6unnCY0 {
+  position: relative !important;
+}
+body.DesktopUI ._1QOqxv1IVU4TSd_6unnCY0::before {
+  content: "" !important;
+  position: absolute !important;
+  left: 0 !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  width: 3px !important;
+  height: 13px !important;
+  background: var(--x4-accent) !important;
+  box-shadow: var(--x4-glow) !important;
+}
+body.DesktopUI ._1QOqxv1IVU4TSd_6unnCY0 {
+  padding-left: 12px !important;
+}
+
+body.DesktopUI ._1p4KV0LZCs0tnDlcOahdCN {
+  text-transform: uppercase !important;
+  letter-spacing: 1px !important;
+  font-weight: 600 !important;
+  font-family: var(--x4-f-cond) !important;
+  color: var(--x4-fg) !important;
+}
+
+/* == libraryhomenewupdates.css == */
+/* Карточки новостей: красный ярлык категории (Вчера/Сегодня), uppercase имени игры.*/
+body.DesktopUI ._1vIlyxb5BAwKPUkOfO94qZ {
+  color: var(--x4-accent) !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.6px !important;
+  font-weight: 600 !important;
+  font-family: var(--x4-f-cond) !important;
+}
+
+body.DesktopUI ._28IqrZIgxpqkUQyhdaLDUN, body.DesktopUI ._1Gu1U2_kcg3AWLrXQgX5S6 {
+  text-transform: uppercase !important;
+  letter-spacing: 0.4px !important;
+  font-weight: 600 !important;
+  font-family: var(--x4-f-cond) !important;
+  color: var(--x4-fg) !important;
+}
+
+/* == libraryhomeshowcases.css == */
+/* Шоукейсы (ИЗБРАННОЕ): риска + uppercase заголовка.*/
+body.DesktopUI ._23SnllqT_AqZ1C_QHcNQ4Z {
+  position: relative !important;
+}
+body.DesktopUI ._23SnllqT_AqZ1C_QHcNQ4Z::before {
+  content: "" !important;
+  position: absolute !important;
+  left: 0 !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  width: 3px !important;
+  height: 13px !important;
+  background: var(--x4-accent) !important;
+  box-shadow: var(--x4-glow) !important;
+}
+body.DesktopUI ._23SnllqT_AqZ1C_QHcNQ4Z {
+  padding-left: 12px !important;
+}
+
+body.DesktopUI ._23SnllqT_AqZ1C_QHcNQ4Z .Hbe3LLzP-c2kpERi6rU4n, body.DesktopUI .Hbe3LLzP-c2kpERi6rU4n {
+  color: var(--x4-accent) !important;
 }
 
 /* == main.css == */

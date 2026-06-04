@@ -1,0 +1,4 @@
+@use "mixins" as *;
+#Header { @include tick; padding-left: 12px; }
+#CollectionName { @include caps; color: var(--x4-fg); }
+#SectionCount { color: var(--x4-accent); }

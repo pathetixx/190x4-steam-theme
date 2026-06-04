@@ -1,0 +1,12 @@
+// Сигнатурные примитивы (sass-миксины разворачиваются ДО резолва селекторов).
+@mixin tick($h: 13px) {
+  position: relative;
+  &::before {
+    content: ""; position: absolute; left: 0; top: 50%; transform: translateY(-50%);
+    width: 3px; height: $h; background: var(--x4-accent); box-shadow: var(--x4-glow);
+  }
+}
+@mixin caps($ls: 1px) {
+  text-transform: uppercase; letter-spacing: $ls; font-weight: 600;
+  font-family: var(--x4-f-cond);
+}

@@ -1,0 +1,4 @@
+@use "mixins" as *;
+// Шоукейсы (ИЗБРАННОЕ): риска + uppercase заголовка.
+#ShowcaseHeader { @include tick; padding-left: 12px; }
+#ShowcaseHeader #Count, #Count { color: var(--x4-accent); }

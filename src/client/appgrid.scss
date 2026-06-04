@@ -1,0 +1,4 @@
+@use "mixins" as *;
+// Заголовки секций грид-коллекций (Избранное/Без категории).
+#AppGridSectionHeader { @include tick; padding-left: 12px; }
+#AppGridSectionLabel { @include caps; color: var(--x4-fg); }

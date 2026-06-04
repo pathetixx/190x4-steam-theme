@@ -1,0 +1,4 @@
+@use "mixins" as *;
+// Секции библиотеки-дома (ЧТО НОВОГО и т.п.): красная риска + uppercase.
+#Header { @include tick; padding-left: 12px; }
+#Name { @include caps; color: var(--x4-fg); }
