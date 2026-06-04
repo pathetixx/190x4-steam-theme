@@ -1,14 +1,15 @@
 /* ============================================================================
    190x4 — STEAM THEME · client/theme.css
-   Архитектура проверенной темы Adwaita-for-Steam (переживает обновления Steam):
-     · инжект через ".*" во ВСЕ окна (а не ^Steam$ — он не доходит до библиотеки)
-     · скоуп body.DesktopUI — стабильный некешированный класс главного окна
-     · СТАБИЛЬНЫЕ селекторы [class*="module_Element_"] вместо голых хешей —
-       в DOM классы Steam идут как `gamelistentry_Container_<hash>`, и хеш-суффикс
-       меняется между сборками, а префикс — нет. Хеши из webpack-реестра в DOM
-       чистыми не появляются, поэтому отсюда выпилены.
-   Палитра — rgb-тройки в colors/root.css (RootColors), редактируется в
-   Settings → Themes → Edit. :root-фолбэк продублирован ниже.
+   Стратегия (выведена из рабочих тем Adwaita + win95-themes, проверенных на
+   железе юзера):
+     · инжект через ".*" во ВСЕ окна, скоуп body.DesktopUI (главное окно) и
+       .friendsui-container (чат) — стабильные НЕхешированные классы на <body>.
+     · ФУНДАМЕНТ строим на СТАБИЛЬНЫХ классах Steam, которые Valve НЕ обфусцирует:
+       body, .DialogButton (+.Primary), .DialogBody/.DialogInput/.DialogHeader,
+       .ContextMenuPopupBody и т.п. Именно ими красятся настройки/диалоги/меню.
+     · Контент библиотеки (фоны окна, кнопка Играть, список игр) — хеши из дампа
+       реестра с машины юзера (build 1780352834); рефреш через tools/2-dump.ps1.
+   Палитра — rgb-тройки (RootColors colors/root.css, правится в редакторе тем).
    ============================================================================ */
 
 :root {
@@ -16,132 +17,139 @@
   --x4-accent-2-rgb: 255, 58, 68;
   --x4-accent-dim-rgb: 179, 18, 27;
   --x4-accent-fg-rgb: 255, 255, 255;
-  --x4-window-bg-rgb: 7, 9, 13;
-  --x4-headerbar-bg-rgb: 13, 16, 22;
-  --x4-sidebar-bg-rgb: 11, 14, 20;
-  --x4-view-bg-rgb: 17, 21, 29;
+  --x4-bg-rgb: 7, 9, 13;        /* окно */
+  --x4-bg2-rgb: 13, 16, 22;     /* панели / кнопки / меню */
+  --x4-bg3-rgb: 17, 21, 29;     /* инпуты / приподнятое */
   --x4-fg-rgb: 232, 237, 244;
   --x4-fg-dim-rgb: 138, 147, 163;
+  --x4-line-rgb: 255, 255, 255; /* линии — с малой альфой */
 }
 
-/* §1 ===================================================== СКРОЛЛБАР (red) */
+/* §1 ============================================================== БАЗА ОКНА */
+body.DesktopUI {
+  background-color: rgb(var(--x4-bg-rgb)) !important;
+  color: rgb(var(--x4-fg-rgb)) !important;
+}
+
+/* §2 ========================================== СКРОЛЛ / ВЫДЕЛЕНИЕ / ФОКУС */
 body.DesktopUI ::-webkit-scrollbar { width: 10px !important; height: 10px !important; }
 body.DesktopUI ::-webkit-scrollbar-track { background: rgba(0,0,0,.25) !important; }
 body.DesktopUI ::-webkit-scrollbar-thumb {
   background: rgba(var(--x4-accent-rgb), .55) !important;
-  border: 2px solid transparent !important; background-clip: padding-box !important;
-  border-radius: 6px !important;
+  border: 2px solid transparent !important; background-clip: padding-box !important; border-radius: 6px !important;
 }
 body.DesktopUI :hover::-webkit-scrollbar-thumb { background: rgb(var(--x4-accent-rgb)) !important; background-clip: padding-box !important; }
 body.DesktopUI ::selection { background: rgba(var(--x4-accent-rgb), .30) !important; color: #fff !important; }
-
-/* §2 ============================================ ФОНЫ ОКНА / БАРОВ / БИБЛИОТЕКИ */
-body.DesktopUI div[class*="steamdesktop_ContentFrame_"] { background: rgb(var(--x4-window-bg-rgb)) !important; }
-body.DesktopUI div[class*="steamdesktop_TopBar_"] { background: rgb(var(--x4-headerbar-bg-rgb)) !important; box-shadow: none !important; }
-body.DesktopUI div[class*="steamdesktop_SuperNavBar_"] { background: rgb(var(--x4-headerbar-bg-rgb)) !important; }
-body.DesktopUI div[class*="library_Container_"] { background: rgb(var(--x4-window-bg-rgb)) !important; }
-body.DesktopUI div[class*="gamelist_Container_"],
-body.DesktopUI div[class*="gamelistbar_Container_"] { background: rgb(var(--x4-sidebar-bg-rgb)) !important; }
-
-/* §3 ============================================ ВЕРХНЯЯ НАВИГАЦИЯ (Store/Library) */
-body.DesktopUI [class*="supernav_Selected_"] { color: rgb(var(--x4-accent-rgb)) !important; }
-body.DesktopUI [class*="supernav_MenuButton_"]:hover { color: rgb(var(--x4-accent-2-rgb)) !important; }
-
-/* §4 ===================================================== СПИСОК ИГР (sidebar) */
-body.DesktopUI div[class*="gamelistentry_Container_"] { border-radius: 3px !important; }
-body.DesktopUI div[class*="gamelistentry_Container_"]:hover { background: rgba(var(--x4-fg-rgb), .06) !important; }
-/* выбранная игра — красная подсветка + полоса */
-body.DesktopUI div[class*="gamelistentry_Container_"][class*="gamelistentry_Selected_"],
-body.DesktopUI div[class*="gamelistentry_Selected_"] > div[class*="gamelistentry_Container_"] {
-  background: rgba(var(--x4-accent-rgb), .16) !important;
-  box-shadow: inset 2px 0 0 rgb(var(--x4-accent-rgb)) !important;
-}
-/* обновляется / синхронизируется — акцентный текст */
-body.DesktopUI div[class*="gamelistentry_Container_"][class*="gamelistentry_Updating_"],
-body.DesktopUI div[class*="gamelistentry_Container_"][class*="gamelistentry_Synchronizing_"] { color: rgb(var(--x4-accent-rgb)) !important; }
-/* заголовок секции — выбран */
-body.DesktopUI div[class*="gamelistsectionheader_Container_"][class*="gamelistsectionheader_Selected_"] {
-  background: rgba(var(--x4-accent-rgb), .14) !important;
-}
-
-/* §5 ===================================================== КНОПКА «ИГРАТЬ» (red neon) */
-body.DesktopUI div[class*="library_AppDetailsMain_"] div[class*="appactionbutton_PlayButtonContainer_"],
-body.DesktopUI div[class*="library_AppDetailsMain_"] div[class*="appactionbutton_PlayButtonContainer_"][class*="appactionbutton_Green_"] {
-  background: linear-gradient(180deg, rgb(var(--x4-accent-2-rgb)), rgb(var(--x4-accent-dim-rgb))) !important;
-  color: rgb(var(--x4-accent-fg-rgb)) !important;
-  box-shadow: 0 0 12px rgba(var(--x4-accent-rgb), .55), inset 0 1px 0 rgba(255,255,255,.22) !important;
-}
-body.DesktopUI div[class*="library_AppDetailsMain_"] div[class*="appactionbutton_PlayButtonContainer_"][class*="appactionbutton_Green_"] div[class*="appactionbutton_ButtonText_"],
-body.DesktopUI div[class*="library_AppDetailsMain_"] div[class*="appactionbutton_PlayButtonContainer_"][class*="appactionbutton_Green_"] > div[class*="appactionbutton_ButtonChild_"] svg {
-  color: rgb(var(--x4-accent-fg-rgb)) !important; fill: rgb(var(--x4-accent-fg-rgb)) !important;
-}
-body.DesktopUI div[class*="library_AppDetailsMain_"] div[class*="appactionbutton_PlayButtonContainer_"]:hover {
-  filter: brightness(1.08);
-  box-shadow: 0 0 22px rgba(var(--x4-accent-rgb), .5), 0 0 4px rgba(var(--x4-accent-rgb), .8), inset 0 1px 0 rgba(255,255,255,.28) !important;
-}
-
-/* §6 ===================================================== FOCUS */
 body.DesktopUI :focus-visible { outline-color: rgb(var(--x4-accent-rgb)) !important; }
 
-/* §7 ====================== ТОЧНЫЕ ХЕШИ ТЕКУЩЕЙ СБОРКИ (build 1780352834) =====
-   У этой сборки Steam классы в DOM — ГОЛЫЕ хеши без префиксов module_Element_,
-   поэтому [class*="..."] из §2–5 не попадает. Хеши взяты из дампа реестра именно
-   с машины юзателя (имена уникальны → высокая надёжность). Рефреш при апдейте
-   Steam через tools/2-dump.ps1. Префиксы выше оставлены как фолбэк для будущих
-   сборок/других машин. */
-
-/* --- фоны окна / баров --- */
-body.DesktopUI ._1rDh5rXSFZJOqCa4UpnI4z { background: rgb(var(--x4-window-bg-rgb)) !important; }      /* ContentFrame */
-body.DesktopUI ._3WJCt_OkjPA6npxOtguSt5 { background: rgb(var(--x4-window-bg-rgb)) !important; }      /* Library */
-body.DesktopUI .SEmVpmXrYVl3OxL1sDFTg   { background: rgb(var(--x4-headerbar-bg-rgb)) !important; box-shadow: none !important; }  /* TopBar */
-body.DesktopUI ._3Z3ohQ8-1NKnCZkbS6fvy  { background: rgb(var(--x4-headerbar-bg-rgb)) !important; }   /* SuperNavBar */
-
-/* --- сайдбар: список игр --- */
-body.DesktopUI ._1e6tjguQEHdYIehM9aRmO5 { background: rgb(var(--x4-sidebar-bg-rgb)) !important; }     /* GameList (sidebar) */
-body.DesktopUI ._1vO6BoiVslZgs1kqDGdUs8 { border-radius: 3px !important; }                            /* GameListEntryContainer */
-body.DesktopUI ._1vO6BoiVslZgs1kqDGdUs8:hover { background: rgba(var(--x4-fg-rgb), .06) !important; }
-/* выбранная игра — красная подсветка + полоса (Highlighted / Highlight на строке) */
-body.DesktopUI ._1vO6BoiVslZgs1kqDGdUs8._kSxSmxSNK3KLrF5sqSmI,
-body.DesktopUI ._1vO6BoiVslZgs1kqDGdUs8._35ztZulp_gETT1gOElpfvK,
-body.DesktopUI ._1vO6BoiVslZgs1kqDGdUs8 ._kSxSmxSNK3KLrF5sqSmI,
-body.DesktopUI ._1vO6BoiVslZgs1kqDGdUs8 ._35ztZulp_gETT1gOElpfvK {
-  background: rgba(var(--x4-accent-rgb), .16) !important;
-  box-shadow: inset 2px 0 0 rgb(var(--x4-accent-rgb)) !important;
+/* §3 ============================ СТАБИЛЬНЫЕ КЛАССЫ (диалоги / настройки / меню) */
+/* генерик-кнопка Steam */
+body.DesktopUI :where(.DialogButton) {
+  appearance: none !important; background-image: none !important;
+  background-color: rgb(var(--x4-bg3-rgb)) !important;
+  color: rgb(var(--x4-fg-rgb)) !important;
+  border: 1px solid rgba(var(--x4-line-rgb), .12) !important;
+  box-shadow: none !important; border-radius: 3px !important;
+  transition: background .15s ease, box-shadow .15s ease, border-color .15s ease !important;
 }
+body.DesktopUI :where(.DialogButton):hover {
+  background-color: rgba(var(--x4-accent-rgb), .12) !important;
+  border-color: rgba(var(--x4-accent-rgb), .6) !important;
+}
+body.DesktopUI :where(.DialogButton):active { box-shadow: inset 0 2px 6px rgba(0,0,0,.5) !important; }
+/* главная кнопка — красный неон */
+body.DesktopUI :where(.DialogButton).Primary {
+  background: linear-gradient(180deg, rgb(var(--x4-accent-2-rgb)), rgb(var(--x4-accent-dim-rgb))) !important;
+  border-color: rgba(255,120,120,.5) !important; color: #fff !important;
+  box-shadow: 0 0 12px rgba(var(--x4-accent-rgb), .5), inset 0 1px 0 rgba(255,255,255,.22) !important;
+}
+body.DesktopUI :where(.DialogButton).Primary:hover { filter: brightness(1.08); box-shadow: 0 0 20px rgba(var(--x4-accent-rgb), .55), inset 0 1px 0 rgba(255,255,255,.28) !important; }
 
-/* --- КНОПКА «ИГРАТЬ» --- контейнер даёт неон, внутренняя зелёная кнопка → красный */
-body.DesktopUI ._1FnJ6dPuknQFQ2RTpKTI16 {            /* PlayButtonContainer — неон-обводка */
+/* панели / тела диалогов */
+body.DesktopUI .DialogBody,
+body.DesktopUI .DialogContent,
+body.DesktopUI .DialogInnerBody,
+body.DesktopUI .DialogControlsSection,
+body.DesktopUI .DialogContentTransition { background-color: rgb(var(--x4-bg2-rgb)) !important; color: rgb(var(--x4-fg-rgb)) !important; }
+/* заголовки */
+body.DesktopUI .DialogHeader,
+body.DesktopUI .DialogControlsSectionHeader { border-bottom: 1px solid rgba(var(--x4-accent-rgb), .4) !important; color: rgb(var(--x4-fg-rgb)) !important; }
+
+/* поля ввода / дропдауны */
+body.DesktopUI .DialogInput,
+body.DesktopUI .DialogInput_Wrapper,
+body.DesktopUI .DialogTextInputBase,
+body.DesktopUI .DialogDropDown,
+body.DesktopUI .DialogDropDown_CurrentDisplay {
+  background-color: rgb(var(--x4-bg3-rgb)) !important;
+  color: rgb(var(--x4-fg-rgb)) !important;
+  border: 1px solid rgba(var(--x4-line-rgb), .12) !important;
+}
+body.DesktopUI .DialogInput:focus,
+body.DesktopUI .DialogTextInputBase:focus-within { border-color: rgb(var(--x4-accent-rgb)) !important; box-shadow: 0 0 0 1px rgba(var(--x4-accent-rgb), .5) !important; }
+
+/* слайдеры / чекбоксы / тогглы — акцент */
+body.DesktopUI .DialogSlider_Slider .DialogSlider_Grabber { background: rgb(var(--x4-accent-rgb)) !important; }
+body.DesktopUI .DialogCheckbox:checked,
+body.DesktopUI .DialogRoundCheckboxField_Control[class*="Checked"] { background: rgb(var(--x4-accent-rgb)) !important; }
+
+/* контекст-меню */
+body.DesktopUI .ContextMenuPopupBody,
+body.DesktopUI .contextMenuContents {
+  background-color: rgb(var(--x4-bg2-rgb)) !important;
+  border: 1px solid rgba(var(--x4-accent-rgb), .3) !important;
+  color: rgb(var(--x4-fg-rgb)) !important;
+}
+body.DesktopUI .ContextMenuButton:hover,
+body.DesktopUI .contextMenuItem:hover { background-color: rgba(var(--x4-accent-rgb), .18) !important; color: #fff !important; }
+
+/* §4 ===================== БИБЛИОТЕКА (хеши build 1780352834 + префикс-фолбэк) */
+/* фоны окна / баров */
+body.DesktopUI ._1rDh5rXSFZJOqCa4UpnI4z,
+body.DesktopUI ._3WJCt_OkjPA6npxOtguSt5,
+body.DesktopUI div[class*="steamdesktop_ContentFrame_"],
+body.DesktopUI div[class*="library_Container_"] { background-color: rgb(var(--x4-bg-rgb)) !important; }
+body.DesktopUI .SEmVpmXrYVl3OxL1sDFTg,
+body.DesktopUI ._3Z3ohQ8-1NKnCZkbS6fvy,
+body.DesktopUI div[class*="steamdesktop_TopBar_"],
+body.DesktopUI div[class*="steamdesktop_SuperNavBar_"] { background-color: rgb(var(--x4-bg2-rgb)) !important; box-shadow: none !important; }
+
+/* список игр */
+body.DesktopUI ._1e6tjguQEHdYIehM9aRmO5,
+body.DesktopUI div[class*="gamelist_Container_"] { background-color: rgb(var(--x4-bg2-rgb)) !important; }
+body.DesktopUI ._1vO6BoiVslZgs1kqDGdUs8:hover,
+body.DesktopUI div[class*="gamelistentry_Container_"]:hover { background: rgba(var(--x4-fg-rgb), .06) !important; }
+
+/* КНОПКА «ИГРАТЬ»: контейнер — неон, внутренняя зелёная заливка — красный */
+body.DesktopUI ._1FnJ6dPuknQFQ2RTpKTI16,
+body.DesktopUI div[class*="appactionbutton_PlayButtonContainer_"] {
   border-radius: 3px !important;
   box-shadow: 0 0 12px rgba(var(--x4-accent-rgb), .55), inset 0 1px 0 rgba(255,255,255,.22) !important;
 }
-body.DesktopUI ._1FnJ6dPuknQFQ2RTpKTI16:hover {
-  box-shadow: 0 0 22px rgba(var(--x4-accent-rgb), .5), 0 0 4px rgba(var(--x4-accent-rgb), .8), inset 0 1px 0 rgba(255,255,255,.28) !important;
-}
-/* собственно зелёная заливка: Green / GreenButton / AppActionButton / PlayButton → красный градиент */
 body.DesktopUI .MAz4a5CbYdLofX51lonjn,
 body.DesktopUI ._23fSnYfnMQqkgm3ROkJhrO,
 body.DesktopUI .QsZdWtHTlIK9KIKbscNTt,
-body.DesktopUI .sQZ70orTPi-ELUlaS-ywR {
+body.DesktopUI .sQZ70orTPi-ELUlaS-ywR,
+body.DesktopUI div[class*="appactionbutton_PlayButtonContainer_"][class*="appactionbutton_Green_"] {
   background: linear-gradient(180deg, rgb(var(--x4-accent-2-rgb)), rgb(var(--x4-accent-dim-rgb))) !important;
   background-image: linear-gradient(180deg, rgb(var(--x4-accent-2-rgb)), rgb(var(--x4-accent-dim-rgb))) !important;
   background-color: rgb(var(--x4-accent-dim-rgb)) !important;
   color: rgb(var(--x4-accent-fg-rgb)) !important;
 }
-body.DesktopUI .MAz4a5CbYdLofX51lonjn:hover,
-body.DesktopUI ._23fSnYfnMQqkgm3ROkJhrO:hover { filter: brightness(1.08); }
-/* текст и иконка на кнопке — белые */
-body.DesktopUI ._1FnJ6dPuknQFQ2RTpKTI16 ._1dEbu0C0zFAzFYAP2K3d9z,
-body.DesktopUI ._1FnJ6dPuknQFQ2RTpKTI16 ._14LCw9xDY_zO1iEK07vkRg svg {
-  color: rgb(var(--x4-accent-fg-rgb)) !important; fill: rgb(var(--x4-accent-fg-rgb)) !important;
-}
 
-/* --- капсула-обложка игры (hover glow) --- */
-body.DesktopUI ._13w3SEbKLJRUhSyoGQZze8 { transition: transform .18s ease, box-shadow .18s ease; }   /* Capsule */
+/* капсула-обложка — hover glow */
+body.DesktopUI ._13w3SEbKLJRUhSyoGQZze8 { transition: transform .18s ease, box-shadow .18s ease; }
 body.DesktopUI ._13w3SEbKLJRUhSyoGQZze8:hover {
   transform: translateY(-3px);
   box-shadow: 0 0 14px rgba(var(--x4-accent-rgb), .5), 0 0 0 1px rgba(var(--x4-accent-rgb), .4) !important;
 }
 
-/* --- акцентные ховеры верхней навигации (MenuButton / SteamPageHeaderTopLink) --- */
+/* акцентные ховеры верхней навигации */
 body.DesktopUI ._3qDWQGB0rtwM3qpXTb11Q-:hover,
 body.DesktopUI ._3UTzw3N80nelbkfxvveH0o:hover { color: rgb(var(--x4-accent-2-rgb)) !important; }
+
+/* §5 ============================================================ ЧАТ / ДРУЗЬЯ */
+.friendsui-container ::-webkit-scrollbar-thumb { background: rgba(var(--x4-accent-rgb), .55) !important; }
+.friendsui-container .chatHeader,
+.friendsui-container .chatRoomGroupHeader { border-bottom: 1px solid rgba(var(--x4-accent-rgb), .35) !important; }
+.friendsui-container .friend:hover { background: rgba(var(--x4-accent-rgb), .12) !important; }
