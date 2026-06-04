@@ -61,22 +61,25 @@
   // ---- 2. Карта целей: СТАБИЛЬНОЕ имя класса Steam → наша метка data-x4 ----
   // ВАЖНО: финальный список имён берём из дампа реестра на твоей сборке
   // (tools/dump-classmap.js → x4.dump()). Ниже — стартовый набор; пополняется.
+  // Имена сверены с дампом реестра боевой сборки (classmap, 22156 классов,
+  // 2026-06-04). Берём только настоящие CSS-классы (значение = хеш), i18n-ключи
+  // с тем же именем отброшены. Порядок = приоритет (findClass берёт первое).
   const TARGETS = [
     // titlebar / навигация
-    { tag: "titlebar",   names: ["TitleBar", "titlebar", "WindowDraggableRegion"] },
-    { tag: "nav-tab",    names: ["SteamPageTab", "TabFocusable", "navtab"] },
-    { tag: "nav-active", names: ["Selected", "active"] },
+    { tag: "titlebar",   names: ["TitleBar", "Draggable", "WindowControls"] },
+    { tag: "nav-tab",    names: ["SteamPageHeaderTopLink", "TabRow", "Tab"] },
+    { tag: "nav-active", names: ["ActiveTab", "Selected"] },
     // библиотека
-    { tag: "sidebar",    names: ["GamesListInnerContainer", "LibraryContainer", "ScrollPanel"] },
-    { tag: "game-row",   names: ["GameListEntry", "RowContainer", "Entry"] },
-    { tag: "game-cover", names: ["LibraryAssetImage", "Capsule", "GameTileImage"] },
+    { tag: "sidebar",    names: ["GameList", "LeftColumn", "LeftCol"] },
+    { tag: "game-row",   names: ["GameListEntryContainer", "GameListEntryName", "GameListEntryLabels"] },
+    { tag: "game-cover", names: ["CapsuleImage", "AssetImage", "Capsule"] },
     // страница игры
-    { tag: "play-button", names: ["PlayButton", "AppActionButton", "GreenButton"] },
-    { tag: "app-header",  names: ["AppDetailsHeader", "Header", "TopCapsule"] },
-    { tag: "progress",    names: ["ProgressBar", "Bar", "Filled"] },
+    { tag: "play-button", names: ["PlayButton"] },
+    { tag: "app-header",  names: ["Header", "TopCapsule"] },
+    { tag: "progress",    names: ["ProgressBar", "Bar"] },
     // контролы
-    { tag: "toggle-on",   names: ["On", "ToggleOn"] },
-    { tag: "primary-btn", names: ["Primary", "DialogButtonPrimary"] },
+    { tag: "toggle-on",   names: ["ToggleOn", "On"] },
+    { tag: "primary-btn", names: ["DialogButton", "Button"] },
   ];
 
   // развернуть TARGETS в карту {currentHash: tag}
