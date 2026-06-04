@@ -82,3 +82,43 @@ body.DesktopUI div[class*="library_AppDetailsMain_"] div[class*="appactionbutton
 
 /* §6 ===================================================== FOCUS */
 body.DesktopUI :focus-visible { outline-color: rgb(var(--x4-accent-rgb)) !important; }
+
+/* §7 ====================== ТОЧНЫЕ ХЕШИ ТЕКУЩЕЙ СБОРКИ (build 1780352834) =====
+   У этой сборки Steam классы в DOM — ГОЛЫЕ хеши без префиксов module_Element_,
+   поэтому [class*="..."] из §2–5 не попадает. Хеши взяты из дампа реестра именно
+   с машины юзателя (имена уникальны → высокая надёжность). Рефреш при апдейте
+   Steam через tools/2-dump.ps1. Префиксы выше оставлены как фолбэк для будущих
+   сборок/других машин. */
+
+/* фоны окна / баров */
+body.DesktopUI ._1rDh5rXSFZJOqCa4UpnI4z { background: rgb(var(--x4-window-bg-rgb)) !important; }      /* ContentFrame */
+body.DesktopUI ._3WJCt_OkjPA6npxOtguSt5 { background: rgb(var(--x4-window-bg-rgb)) !important; }      /* Library */
+body.DesktopUI .SEmVpmXrYVl3OxL1sDFTg   { background: rgb(var(--x4-headerbar-bg-rgb)) !important; box-shadow: none !important; }  /* TopBar */
+body.DesktopUI ._3Z3ohQ8-1NKnCZkbS6fvy  { background: rgb(var(--x4-headerbar-bg-rgb)) !important; }   /* SuperNavBar */
+
+/* список игр */
+body.DesktopUI ._1vO6BoiVslZgs1kqDGdUs8 { border-radius: 3px !important; }                            /* GameListEntryContainer */
+body.DesktopUI ._1vO6BoiVslZgs1kqDGdUs8:hover { background: rgba(var(--x4-fg-rgb), .06) !important; }
+
+/* КНОПКА «ИГРАТЬ» — красный неон поверх зелёной (PlayButtonContainer + AppActionButton + PlayButton) */
+body.DesktopUI ._1FnJ6dPuknQFQ2RTpKTI16,
+body.DesktopUI .QsZdWtHTlIK9KIKbscNTt,
+body.DesktopUI .sQZ70orTPi-ELUlaS-ywR {
+  background: linear-gradient(180deg, rgb(var(--x4-accent-2-rgb)), rgb(var(--x4-accent-dim-rgb))) !important;
+  color: rgb(var(--x4-accent-fg-rgb)) !important;
+  box-shadow: 0 0 12px rgba(var(--x4-accent-rgb), .55), inset 0 1px 0 rgba(255,255,255,.22) !important;
+}
+body.DesktopUI ._1FnJ6dPuknQFQ2RTpKTI16:hover,
+body.DesktopUI .QsZdWtHTlIK9KIKbscNTt:hover {
+  filter: brightness(1.08);
+  box-shadow: 0 0 22px rgba(var(--x4-accent-rgb), .5), 0 0 4px rgba(var(--x4-accent-rgb), .8), inset 0 1px 0 rgba(255,255,255,.28) !important;
+}
+/* текст и иконка на кнопке — белые */
+body.DesktopUI ._1FnJ6dPuknQFQ2RTpKTI16 ._1dEbu0C0zFAzFYAP2K3d9z,
+body.DesktopUI ._1FnJ6dPuknQFQ2RTpKTI16 ._14LCw9xDY_zO1iEK07vkRg svg {
+  color: rgb(var(--x4-accent-fg-rgb)) !important; fill: rgb(var(--x4-accent-fg-rgb)) !important;
+}
+
+/* акцентные ховеры верхней навигации (MenuButton / SteamPageHeaderTopLink) */
+body.DesktopUI ._3qDWQGB0rtwM3qpXTb11Q-:hover,
+body.DesktopUI ._3UTzw3N80nelbkfxvveH0o:hover { color: rgb(var(--x4-accent-2-rgb)) !important; }
