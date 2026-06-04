@@ -64,8 +64,15 @@ body.DesktopUI ::-webkit-scrollbar-thumb:hover { background: var(--x4-acc) !impo
    KILL BLUE — по живому сканеру (точные классы этой сборки)
    ============================================================================ */
 
-/* активный таб нав (Магазин/Библиотека/Сообщество) */
-body.DesktopUI ._19axKcqYRuaJ8vdYKYmtTQ { color: var(--x4-acc) !important; }
+/* активный таб нав (Магазин/Библиотека/Сообщество) + красное подчёркивание */
+body.DesktopUI ._19axKcqYRuaJ8vdYKYmtTQ {
+  color: var(--x4-acc) !important;
+  border-bottom-color: var(--x4-acc) !important;
+}
+body.DesktopUI ._19axKcqYRuaJ8vdYKYmtTQ::after,
+body.DesktopUI ._19axKcqYRuaJ8vdYKYmtTQ::before {
+  background-color: var(--x4-acc) !important;
+}
 
 /* бейдж уведомлений */
 body.DesktopUI ._5wILZhsLODVwGfcJ0hKmJ {
