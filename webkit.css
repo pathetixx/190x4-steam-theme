@@ -73,6 +73,25 @@ a:hover { color: var(--x4-accent); }
   background: var(--x4-accent) !important; color: #fff !important;
 }
 
+/* добиваем сине-серые панели сообщества/магазина → графит */
+.apphub_background, .responsive_page_template_content, .game_page_background,
+.profile_content, .maincontent {
+  background-color: var(--x4-bg-0) !important;
+}
+.apphub_Card, .apphub_CardContentMain, .apphub_EventAnnouncement,
+.apphub_HomeHeaderContent, .commentthread_comment, .commentthread_entry_quotebox,
+.game_area_purchase_game, .game_area_purchase_game_wrapper, .game_area_dlc_bubble,
+.glance_ctn, .game_area_description, .sys_req, .game_area_news {
+  background-color: var(--x4-bg-1) !important; border: 1px solid var(--x4-line) !important;
+}
+
+/* остаточные зелёные кнопки магазина (В корзину/Купить) → красный неон */
+.btn_addtocart, .btn_green_white_innerfade, .btngreen_med, .btn_medium_green,
+a.btn_green_steamui, .game_purchase_action .btn_green_steamui {
+  background: linear-gradient(180deg, var(--x4-accent-2), var(--x4-accent-dim)) !important;
+  color: #fff !important; box-shadow: var(--x4-glow);
+}
+
 /* зелёные/синие кнопки Steam → красный неон */
 .btn_green_steamui, .btnv6_green_white_innerfade, .btn_addtocart {
   background: linear-gradient(180deg, var(--x4-accent-2), var(--x4-accent-dim)) !important;

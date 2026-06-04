@@ -1,0 +1,5 @@
+// График загрузки: бары/линии -> акцент, панель -> графит.
+#DownloadGraphWrapper, #StatsPanel, #RightPanel { background-color: var(--x4-bg-1); }
+#GraphBarDownload { background-color: var(--x4-accent); }
+#GraphLine, #Figure { color: var(--x4-accent); }
+#HeroGradient { background-image: linear-gradient(transparent, var(--x4-bg-0)); }

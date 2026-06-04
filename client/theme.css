@@ -434,16 +434,86 @@ body.DesktopUI ._2Bb4JC5n6anf32WgmTfeMP {
   letter-spacing: 0.6px !important;
 }
 
+/* == downloadgraph.css == */
+/* График загрузки: бары/линии -> акцент, панель -> графит.*/
+body.DesktopUI ._3GBFL10vEfhI28U95WaqMj, body.DesktopUI ._3mdnpmV9S9u27eB5JFwFNk, body.DesktopUI .XBpGPypbcfTGJF7HAs_ {
+  background-color: var(--x4-bg-1) !important;
+}
+
+body.DesktopUI .OS07NfYlp6v-Eh5oQ7dwn {
+  background-color: var(--x4-accent) !important;
+}
+
+body.DesktopUI ._3H2JWLH8rucdSC1XVZ7Xdk, body.DesktopUI .eXF8xL2LUtzeWMbK-FSRz {
+  color: var(--x4-accent) !important;
+}
+
+body.DesktopUI .edQzwM57P-T5K3eDGkyvZ {
+  background-image: linear-gradient(transparent, var(--x4-bg-0)) !important;
+}
+
 /* == downloads.css == */
-/* Страница загрузок: Play/Green/TopBar -> красный/панель.*/
+/* Страница загрузок: главный контейнер (был сине-серый) -> графит.*/
+body.DesktopUI ._1bq4x9pa4-9RLY-dXWUZTp, body.DesktopUI ._1ugNiylO2vKXhirsGocAxa, body.DesktopUI ._21P7c4MWmsU2QSZeL-uyZo, body.DesktopUI ._2KB3yVOsiRCK9qK6mwKl9c, body.DesktopUI ._35QWxvFqvZc4LQDczGCHcq, body.DesktopUI ._1zv2D9H37p5yuOJNsCemS3 {
+  background-color: var(--x4-bg-0) !important;
+}
+
+body.DesktopUI ._373v1eWNyaPKhgnea9FZSt, body.DesktopUI ._2t4iM2UfdSVa7UiCcjDLsk, body.DesktopUI .SEmVpmXrYVl3OxL1sDFTg {
+  background-color: var(--x4-bg-1) !important;
+}
+
+body.DesktopUI ._1VNuYHM6BPBOJspC6zPf5r, body.DesktopUI ._2sCvZTD6ZTZz3p9_ekH_gI {
+  background-color: var(--x4-bg-1) !important;
+}
+
+body.DesktopUI ._1VNuYHM6BPBOJspC6zPf5r:hover, body.DesktopUI ._3B3J2qtE6ozU_VXMMN2L51 {
+  background-color: var(--x4-bg-2) !important;
+}
+
+/* Заголовки секций (Активные/Завершённые/Далее) -> риска + uppercase.*/
+body.DesktopUI .qq2xItSXjpCsNrcxyPJtO {
+  position: relative !important;
+}
+body.DesktopUI .qq2xItSXjpCsNrcxyPJtO::before {
+  content: "" !important;
+  position: absolute !important;
+  left: 0 !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  width: 3px !important;
+  height: 13px !important;
+  background: var(--x4-accent) !important;
+  box-shadow: var(--x4-glow) !important;
+}
+body.DesktopUI .qq2xItSXjpCsNrcxyPJtO {
+  padding-left: 12px !important;
+}
+
+body.DesktopUI .qq2xItSXjpCsNrcxyPJtO .TK9wvF55dyA6RcOclozC8, body.DesktopUI .TK9wvF55dyA6RcOclozC8 {
+  text-transform: uppercase !important;
+  letter-spacing: 0.8px !important;
+  font-weight: 600 !important;
+  font-family: var(--x4-f-cond) !important;
+  color: var(--x4-fg) !important;
+}
+
+body.DesktopUI ._1CGnw50aAma6AYKF51Qzsm {
+  color: var(--x4-accent) !important;
+}
+
+/* Прогресс -> красный; Play/Green -> красный неон.*/
+body.DesktopUI ._1vMU1vG5ZtLihr3mfXUymR, body.DesktopUI ._22WcrscaQSqK56PQKgf5YG, body.DesktopUI .FuJLsEk_Umr68UjGanMno, body.DesktopUI .MSCfUF8cD2uIicYPlotLj {
+  background-color: var(--x4-accent) !important;
+}
+
 body.DesktopUI .MAz4a5CbYdLofX51lonjn, body.DesktopUI .sQZ70orTPi-ELUlaS-ywR {
   background-image: linear-gradient(180deg, var(--x4-accent-2), var(--x4-accent-dim)) !important;
   background-color: var(--x4-accent-dim) !important;
   color: #fff !important;
 }
 
-body.DesktopUI .SEmVpmXrYVl3OxL1sDFTg {
-  background-color: var(--x4-bg-1) !important;
+body.DesktopUI .wLQrwye_1FusReFo2MyGF:hover, body.DesktopUI ._3oavRVhIS9tC3vBsFT4Ggi:hover {
+  color: var(--x4-accent-2) !important;
 }
 
 /* == gamelistbar.css == */

@@ -1,3 +1,18 @@
-// Страница загрузок: Play/Green/TopBar -> красный/панель.
+@use "mixins" as *;
+// Страница загрузок: главный контейнер (был сине-серый) -> графит.
+#DownloadsPage, #ItemLists, #SectionItemWrapper, #Empty, #EmptyQueue, #EmptyTransfers {
+  background-color: var(--x4-bg-0);
+}
+#TopSection, #TopSectionInner, #TopBar { background-color: var(--x4-bg-1); }
+#SectionItem, #DownloadSectionActiveItem { background-color: var(--x4-bg-1); }
+#SectionItem:hover, #HoverRing { background-color: var(--x4-bg-2); }
+
+// Заголовки секций (Активные/Завершённые/Далее) -> риска + uppercase.
+#SectionTitle { @include tick; padding-left: 12px; }
+#SectionTitle #Title, #Title { @include caps(.8px); color: var(--x4-fg); }
+#Count { color: var(--x4-accent); }
+
+// Прогресс -> красный; Play/Green -> красный неон.
+#ProgressBar, #ActiveItemProgressBar, #Progress, #ProgressBars { background-color: var(--x4-accent); }
 #Green, #PlayButton { background-image: linear-gradient(180deg, var(--x4-accent-2), var(--x4-accent-dim)); background-color: var(--x4-accent-dim); color: #fff; }
-#TopBar { background-color: var(--x4-bg-1); }
+#PauseResumeButton:hover, #Button:hover { color: var(--x4-accent-2); }
