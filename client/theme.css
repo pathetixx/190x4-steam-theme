@@ -16,12 +16,6 @@ body.DesktopUI .x4-railwrap {
   min-width: 0 !important;
 }
 
-body.DesktopUI .x4-railwrap > [class*=steamdesktop_ContentFrame_] {
-  flex: 1 1 auto !important;
-  min-width: 0 !important;
-  position: relative !important;
-}
-
 body.DesktopUI .x4-rail {
   flex: 0 0 54px !important;
   width: 54px !important;
@@ -36,6 +30,7 @@ body.DesktopUI .x4-rail {
 }
 
 body.DesktopUI .x4-rail-btn {
+  position: relative !important;
   width: 38px !important;
   height: 38px !important;
   display: flex !important;

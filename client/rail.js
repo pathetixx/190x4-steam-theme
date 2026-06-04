@@ -1,15 +1,23 @@
 // ============================================================================
 // 190x4 - STEAM THEME · client/rail.js
 // Кастомная фишка темы: вертикальный иконочный нав-рельс слева (как Fluenty,
-// но в стиле 190x4). Техника проверенная: ждём рамку клиента, переносим
-// ContentFrame в flex-обёртку рядом с рельсом (DOM-move сохраняет React-слушатели).
-// Фейл-безопасно: если рамка не найдена — рельс не строится, клиент не трогается.
-// Навигация через SteamUIStore (как в Fluenty); всё в try/catch.
+// но в стиле 190x4). Ждём ContentFrame клиента, вставляем flex-обёртку на его
+// место и переносим контент рядом с рельсом (DOM-move сохраняет React-слушатели).
+// Классы на этом билде — голые хеши, поэтому ищем И по хешу из карты, И по
+// читаемой форме (на случай иной сборки). Фейл-безопасно: нет рамки -> нет рельса.
 // ============================================================================
 (function () {
   "use strict";
-  var SEL_OUTER = '[class*="steamdesktop_OuterFrame_"]';
-  var SEL_CONTENT = '[class*="steamdesktop_ContentFrame_"]';
+  // ContentFrame: читаемая форма (некоторые сборки) + текущий хеш из class_maps/client.json
+  var CONTENT = ['[class*="steamdesktop_ContentFrame_"]', "._1rDh5rXSFZJOqCa4UpnI4z"];
+
+  function find(list) {
+    for (var i = 0; i < list.length; i++) {
+      var e = document.querySelector(list[i]);
+      if (e) return e;
+    }
+    return null;
+  }
 
   // доступ к API главного окна (в разных контекстах лежит на window или opener)
   function api(name) {
@@ -21,7 +29,6 @@
 
   function go(fn) { return function () { try { fn(); } catch (e) { /* no-op */ } }; }
   function navLib() { store().Navigate("/library/home"); }
-  function navColl() { store().Navigate("/library/collections"); }
   function navDl() { store().Navigate("/library/downloads"); }
   function navWeb(key) {
     return function () {
@@ -29,7 +36,10 @@
       store().Navigate("/browser", browser().LoadURL(u));
     };
   }
-  function navSettings() { try { window.location.href = "steam://open/settings"; } catch (e) {} }
+  function navSettings() {
+    var sc = api("SteamClient");
+    if (sc && sc.URL && sc.URL.ExecuteSteamURL) sc.URL.ExecuteSteamURL("steam://open/settings");
+  }
 
   // минимальные иконки (stroke=currentColor)
   var IC = {
@@ -61,9 +71,8 @@
 
   function buildRail() {
     if (document.querySelector(".x4-rail")) return true;
-    var outer = document.querySelector(SEL_OUTER);
-    var content = document.querySelector(SEL_CONTENT);
-    if (!outer || !content) return false;
+    var content = find(CONTENT);
+    if (!content || !content.parentNode) return false;
 
     var wrap = document.createElement("div");
     wrap.className = "x4-railwrap";
@@ -85,9 +94,13 @@
       }
     });
 
-    outer.insertBefore(wrap, content);
+    // вставляем обёртку на место контента, затем переносим контент внутрь
+    content.parentNode.insertBefore(wrap, content);
     wrap.appendChild(rail);
-    wrap.appendChild(content); // перенос контента рядом с рельсом (flex)
+    wrap.appendChild(content);
+    // гарантируем растяжение контента независимо от хеш-классов
+    content.style.flex = "1 1 auto";
+    content.style.minWidth = "0";
     setActive();
     return true;
   }
