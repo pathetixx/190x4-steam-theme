@@ -25,6 +25,35 @@
   --x4-line-rgb: 255, 255, 255; /* линии — с малой альфой */
 }
 
+/* §0 ===================================== МОСТ ТОКЕНОВ STEAM (каскад на весь UI)
+   Реальные дизайн-токены SteamUI (сняты var-probe.ps1 с машины). Перебиваем их
+   в :root с !important — цвет идёт каскадом по всему интерфейсу (выделение,
+   фокус, прогресс-бары, акценты меню), без охоты за хешами. Лесенка
+   SystemAccentColor — главный акцент SteamUI; красим в красную градацию. */
+:root, body.DesktopUI {
+  /* акцентная лесенка: Dark3(тёмный)…Base…Light3(светлый) */
+  --SystemAccentColorDark3:  #4d0509 !important; --SystemAccentColorDark3-RGB:  77, 5, 9   !important;
+  --SystemAccentColorDark2:  #7d0d13 !important; --SystemAccentColorDark2-RGB:  125, 13, 19 !important;
+  --SystemAccentColorDark1:  #b3121b !important; --SystemAccentColorDark1-RGB:  179, 18, 27 !important;
+  --SystemAccentColor:       #ff2530 !important; --SystemAccentColor-RGB:       255, 37, 48 !important;
+  --SystemAccentColorLight1: #ff4a54 !important; --SystemAccentColorLight1-RGB: 255, 74, 84 !important;
+  --SystemAccentColorLight2: #ff6068 !important; --SystemAccentColorLight2-RGB: 255, 96, 104 !important;
+  --SystemAccentColorLight3: #ff7a82 !important; --SystemAccentColorLight3-RGB: 255, 122, 130 !important;
+
+  /* иконический синий Steam → красный */
+  --virtualmenu-accent:       #ff2530 !important;
+  --virtualmenupointer-color: #ff2530 !important;
+  --virtualmenu-bg-hover:     #3a0d12 !important;
+  --idle-status:              #ff7a82 !important;
+
+  /* фоновые / прочие токены под нашу гамму */
+  --custom-accent:    #ff2530 !important;
+  --main-background:  rgb(var(--x4-bg-rgb)) !important;
+  --GradientColor1:   #ff2530 !important;
+  --GradientColor2:   #b3121b !important;
+  --MillenniumTextColor-Error: #ff4a54 !important;
+}
+
 /* §1 ============================================================== БАЗА ОКНА */
 body.DesktopUI {
   background-color: rgb(var(--x4-bg-rgb)) !important;
