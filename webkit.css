@@ -19,7 +19,15 @@
   --x4-text-hi: #e8edf4; --x4-text-md: #b6bfcd; --x4-text-lo: #8a93a3;
   --x4-r-md: 3px; --x4-ease: cubic-bezier(.2,.7,.3,1);
   --x4-f-ui: 'Saira', 'Motiva Sans', sans-serif;
+  --x4-f-cond: 'Saira Semi Condensed', 'Saira', sans-serif;
   --x4-f-display: 'Orbitron', sans-serif;
+}
+
+/* фирменная красная кромка на правом крае окна (как в клиенте) */
+body::after {
+  content: ""; position: fixed; top: 0; right: 0; bottom: 0; width: 2px;
+  background: linear-gradient(180deg, var(--x4-accent), var(--x4-accent-dim));
+  box-shadow: 0 0 10px rgba(255,37,48,.5); pointer-events: none; z-index: 99999;
 }
 
 html, body, .responsive_page_frame, #global_header, .pagecontent,
@@ -46,6 +54,24 @@ a:hover { color: var(--x4-accent); }
 /* панели/карточки */
 .home_page_content, .apphub_HomeHeaderContent, .game_area_purchase_game,
 .block, .home_ctn .home_section { background: var(--x4-bg-1); border: 1px solid var(--x4-line); }
+
+/* заголовки секций магазина/сообщества → uppercase + красная риска (эталон 01-store) */
+.home_section_title, .home_pillar_title, .StoreSaleSection_Title,
+.apphub_SectionTitle, .home_page_body_ctn h2, .ContentHubHeaderTitle {
+  text-transform: uppercase !important; letter-spacing: 1px; font-weight: 600 !important;
+  font-family: var(--x4-f-cond) !important; position: relative; padding-left: 14px;
+}
+.home_section_title::before, .home_pillar_title::before, .StoreSaleSection_Title::before,
+.apphub_SectionTitle::before, .ContentHubHeaderTitle::before {
+  content: ""; position: absolute; left: 0; top: 50%; transform: translateY(-50%);
+  width: 3px; height: 14px; background: var(--x4-accent); box-shadow: var(--x4-glow);
+}
+
+/* категорийные/live бейджи → красный */
+.broadcast_LiveBadge, .LiveBadge, .home_tabs_row .tab_count,
+.game_purchase_discount_quantity, .DiscountBadge {
+  background: var(--x4-accent) !important; color: #fff !important;
+}
 
 /* зелёные/синие кнопки Steam → красный неон */
 .btn_green_steamui, .btnv6_green_white_innerfade, .btn_addtocart {
