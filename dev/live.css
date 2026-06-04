@@ -59,3 +59,39 @@ body.DesktopUI ::-webkit-scrollbar-thumb {
   background: var(--x4-dim) !important; border-radius: 2px !important;
 }
 body.DesktopUI ::-webkit-scrollbar-thumb:hover { background: var(--x4-acc) !important; }
+
+/* ============================================================================
+   KILL BLUE — по живому сканеру (точные классы этой сборки)
+   ============================================================================ */
+
+/* активный таб нав (Магазин/Библиотека/Сообщество) */
+body.DesktopUI ._19axKcqYRuaJ8vdYKYmtTQ { color: var(--x4-acc) !important; }
+
+/* бейдж уведомлений */
+body.DesktopUI ._5wILZhsLODVwGfcJ0hKmJ {
+  background-color: var(--x4-acc) !important; color: #fff !important;
+}
+
+/* светло-синие лейблы / ссылки */
+body.DesktopUI ._3iV2vMTw_vwWJ_gmiz1Q1k,
+body.DesktopUI ._1J21tLst5SEhBPkVRT53UV {
+  color: var(--x4-acc) !important;
+}
+
+/* синие кнопки -> красные */
+body.DesktopUI ._1FnTqlsi2_-TJf1d5apoS6,
+body.DesktopUI ._3Rm36_oeAhvIg6ZYP9l1Jj {
+  background-color: var(--x4-acc) !important;
+  background-image: none !important;
+  color: #fff !important;
+}
+
+/* онлайн-статус -> зелёный (только статус) */
+body.DesktopUI ._3yD46y5pd3zOGR7CzKs0mC.online,
+body.DesktopUI ._3xUpb5DWXPFNcHHIcv-9pe,
+body.DesktopUI .avatarStatus {
+  color: #38e07b !important;
+}
+body.DesktopUI ._3xUpb5DWXPFNcHHIcv-9pe path,
+body.DesktopUI .avatarStatus svg,
+body.DesktopUI .avatarStatus path { fill: #38e07b !important; }
