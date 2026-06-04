@@ -1,0 +1,14 @@
+:root {
+  --custom-accent: #ff2530;
+
+  --main-background: #0d1016;
+
+  --offline-status: #59616f;
+  --online-status: #38e07b;
+  --idle-status: #4c91ac;
+  --ingame-status: #38e07b;
+  --ingameidle-status: #62813b;
+
+  --green-color: #38e07b;
+  --purple-color: #834e8d;
+}

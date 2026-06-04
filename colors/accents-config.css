@@ -1,0 +1,14 @@
+:root, body {
+	/* main accent */
+	--accent: var(--custom-accent) !important;
+	/* accent — transparent ramp */
+	--accent-transparent-alt2: color-mix(in srgb, var(--accent) 25%, transparent) !important;
+	--accent-transparent: color-mix(in srgb, var(--accent) 15%, transparent) !important;
+	--accent-transparent-alt: color-mix(in srgb, var(--accent) 10%, transparent) !important;
+	/* accent — light / dark */
+	--accent-light: color-mix(in srgb, var(--accent) 70%, white) !important;
+	--accent-dark: color-mix(in srgb, var(--accent) 85%, black) !important;
+
+	/* secondary surface, derived from main background */
+	--secondary-background: color-mix(in srgb, var(--main-background) 92%, white);
+}

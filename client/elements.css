@@ -1,0 +1,106 @@
+/* ============================================================================
+   190x4 — STEAM THEME · client/elements.css
+   Инжектится явными Patches в ^Steam$, Menu$, SuperNav$, .ModalDialogPopup
+   (паттерн рабочей темы NEVKO-UI). Красит РОДНЫЕ хеш-классы Steam токенами
+   --accent / --main-background / --secondary-background. Хеш-селекторы взяты из
+   боевой темы (проверены на текущей сборке Steam) + дамп реестра 190x4.
+   :root-фолбэк продублирован здесь, чтобы var() резолвился в окне даже без
+   accents-config (который грузится через .*). Источник палитры — colors/root.css.
+   ============================================================================ */
+
+:root {
+  --custom-accent: #ff2530;
+  --accent: #ff2530;
+  --accent-2: #ff3a44;
+  --accent-light: color-mix(in srgb, var(--accent) 70%, white);
+  --accent-dark: color-mix(in srgb, var(--accent) 85%, black);
+  --accent-transparent: color-mix(in srgb, var(--accent) 15%, transparent);
+  --accent-transparent-alt: color-mix(in srgb, var(--accent) 10%, transparent);
+  --accent-transparent-alt2: color-mix(in srgb, var(--accent) 25%, transparent);
+  --main-background: #0d1016;
+  --secondary-background: #11151d;
+  --x4-glow: 0 0 12px rgba(255,37,48,.55);
+  --x4-glow-lg: 0 0 22px rgba(255,37,48,.45), 0 0 4px rgba(255,37,48,.8);
+}
+
+/* §1 ===================================================== ФУНДАМЕНТ (classless) */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: rgba(0,0,0,.25); }
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(var(--accent-dark), #4a0a0f);
+  border: 2px solid transparent; background-clip: padding-box; border-radius: 6px;
+}
+::-webkit-scrollbar-thumb:hover { background: var(--accent); background-clip: padding-box; }
+::selection { background: var(--accent-transparent-alt2); color: #fff; }
+:focus-visible { outline-color: var(--accent) !important; }
+
+/* §2 ============================================== ФОНЫ КРУПНЫХ КОНТЕЙНЕРОВ */
+/* верхний бар / шапка (проверенные классы NEVKO) */
+._2YwTwqFtU04JgwfzXSAcSV { background: var(--main-background); }
+._3vCzSrrXZzZjVJFZNg9SGu,
+._1_yS5UP7el0aN4vntx3dx,
+._3Z7VQ1IMk4E3HsHvrkLNgo { background: var(--main-background); box-shadow: none !important; }
+._1ENHEsrSLcTRtPQFl1F-wL._1DvwQt0JN-Ogp_4tVZdkzX { background-color: var(--main-background); }
+
+/* §3 ================================ АКЦЕНТНЫЕ ТИНТЫ (боевые селекторы Steam) */
+/* Account Menu — имя и баланс */
+.HoGkIKTQnkTEFGjqO-GMl ._11phBiBefcVQdzrnrezkKa,
+.HoGkIKTQnkTEFGjqO-GMl ._2jphjrSifC6orDT4g_7Wd { color: var(--accent) !important; }
+
+/* прогресс-бар загрузки */
+._3szjUMH5QeRwtXAsLRcWt9._3DjdoQj5NoknowwV5t5JPN::after,
+._3szjUMH5QeRwtXAsLRcWt9::after { background-color: var(--accent) !important; }
+
+/* левый список игр */
+._2-O4ZG0KrnSrzISHBKctFQ._1LVQp3h_vGOZ8TuDUEge0k,
+._2-O4ZG0KrnSrzISHBKctFQ._26PT_OTo7-JDunJWeZgjT8 { color: var(--accent-dark); }
+._2-O4ZG0KrnSrzISHBKctFQ ._1vO6BoiVslZgs1kqDGdUs8 ._3uk3F1BmAJQR6rl1TPcaif,
+._2-O4ZG0KrnSrzISHBKctFQ._1UBpAXP408Ez_L_mXhW5Q9._1LVQp3h_vGOZ8TuDUEge0k { color: var(--accent-light); }
+._1UBpAXP408Ez_L_mXhW5Q9._2-O4ZG0KrnSrzISHBKctFQ .cMb2tLY-QjdRohM5U6Btp { color: var(--accent-light); }
+
+/* страница игры */
+._2SAb6geDpe6toA1GaP0GjH ._2aeAnRfwltWfd9Hb9M_1uE .qX4kNo6O0M-mYntdErKSJ { color: var(--accent-light); }
+._35_OgqfHHZfSzTYfv367K6, ._1kCN0pAntrcGCSmcc-vYdk { color: var(--accent-light); background: var(--accent-transparent); }
+._2Jkk-4RGWzhce22lSnA9Em { fill: var(--accent-light); }
+._35_OgqfHHZfSzTYfv367K6:hover,
+._1kCN0pAntrcGCSmcc-vYdk:not(.Z3L6KGVxi4ZjGUzbYUjBC):hover { background: var(--accent-transparent-alt); }
+._3qDWQGB0rtwM3qpXTb11Q-._21hXW2oDD7zvNsoOaW7Yob._2WaHZuAetbqENmqDthu3nl svg path { stroke: var(--accent); fill: var(--accent); }
+._25YVDTaClw6Y2COPsU0UaV ._1FnTqlsi2_-TJf1d5apoS6 { background-color: var(--accent); }
+._3ns9185LizH61StaAXuAp6 ._3Rm36_oeAhvIg6ZYP9l1Jj { background-color: var(--accent); }
+._2H1MiFt6wMYuJDB8kZElFs._2JMEE2dz_3JMJg5pNiinj5 { color: var(--accent-light); }
+._23HTprMKEMzlqooblsDngK.tLc3yNucBVuLCkXDIvOzj .IYDCY3MhJV7rB4ftg78kA,
+._1d0ijEIDvERoDLj_8CO6pH.tLc3yNucBVuLCkXDIvOzj .IYDCY3MhJV7rB4ftg78kA { color: var(--accent-transparent-alt2); }
+._23HTprMKEMzlqooblsDngK.tLc3yNucBVuLCkXDIvOzj,
+._1d0ijEIDvERoDLj_8CO6pH.tLc3yNucBVuLCkXDIvOzj {
+  color: var(--accent);
+  background-image: linear-gradient(to right, #2e323a 35%, rgba(34,40,43,.5) 100%);
+}
+._1pdQdoLxwmuMZpXXNHI2Uo ._1tRKRV0z9mHiZb76QCyqGO ._1Lot-TP3cPLuTO6bGZm8up.n98drbUHUKTXfcwqFg2WB { border-color: var(--accent); }
+._3bWTO29arCCJ6PBGRZ7fRy ._2WwG2r8yZuu2EMJgFTQZp8 .Udzrpqr8534T5DvVZveNP { color: var(--accent); }
+.Sf3urgalDvD2sZqNjEV9i { fill: var(--accent); }
+.QQy4BCjcpjCfAvTKAqBq3 > svg { fill: var(--accent); }
+._34YgMAbrVXVMMfXvsZAU9_, ._1PTQ2mq0eTaG8ifW8juu81 { fill: var(--accent-light); }
+._3csl-MPe-hKuT8hQpOqEG5, .QQy4BCjcpjCfAvTKAqBq3 { color: var(--accent); }
+.A_A2B6fTn_MPLlGCmsLtd a:not(.LinkButton) { color: var(--accent); }
+.A_A2B6fTn_MPLlGCmsLtd a:not(.LinkButton):hover { color: var(--accent-light); }
+._3oMUSjOFNB0E9LWcL2sE7 {
+  background: linear-gradient(to right, #ff253000 0%, var(--accent-transparent-alt2) 18px, var(--accent) 18px, var(--accent) 22px);
+}
+._39Zk32AvV5cr6g-83IVRVS { background: var(--accent-transparent-alt2); }
+
+/* §4 ================================ 190x4 НЕОН (наши хеши из дампа реестра) */
+/* КНОПКА «ИГРАТЬ» */
+.sQZ70orTPi-ELUlaS-ywR {
+  background: linear-gradient(180deg, var(--accent-2), var(--accent-dark)) !important;
+  border: 1px solid rgba(255,120,120,.5) !important;
+  color: #fff !important; letter-spacing: 1px; text-shadow: 0 1px 2px rgba(0,0,0,.45);
+  box-shadow: var(--x4-glow), inset 0 1px 0 rgba(255,255,255,.25) !important;
+  border-radius: 3px !important;
+}
+.sQZ70orTPi-ELUlaS-ywR:hover {
+  box-shadow: var(--x4-glow-lg), inset 0 1px 0 rgba(255,255,255,.3) !important;
+  filter: brightness(1.06);
+}
+/* прогресс (наш хеш) и тоггл */
+._2VCd-2F_zasXcshwdbxHXo { background: linear-gradient(90deg, var(--accent-dark), var(--accent)) !important; box-shadow: var(--x4-glow); }
+.IRQmSFtn3V-ntcKzv-fxE { background: linear-gradient(180deg, var(--accent-2), var(--accent-dark)) !important; box-shadow: var(--x4-glow); }
