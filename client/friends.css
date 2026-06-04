@@ -1,85 +1,50 @@
 /* ============================================================================
-   190x4 — STEAM THEME · client/friends.css
-   Окно ДРУЗЕЙ/ЧАТА — ОТДЕЛЬНЫЙ документ (target ".friendsui-container").
-   Наши --x4-* тут НЕ наследуются от RootColors клиента → объявляем прямо здесь,
-   иначе все var() пустые и окно остаётся сине-серым дефолтом Steam.
-   База — графит + красный неон; зелёный ТОЛЬКО для индикатора «в сети».
+   190x4 - STEAM THEME . client/friends.css
+   Окно друзей/чата (.friendsui-container) - отдельный документ; токены свои.
+   Классы взяты ТОЧНО из карты (class_maps/client.json), не из broad-догадок.
+   Бренд: в игре = КРАСНЫЙ (подпись игры), в сети = ЗЕЛЁНЫЙ (точка/статус).
    ============================================================================ */
 @import url('https://fonts.googleapis.com/css2?family=Saira:wght@300;400;500;600;700&family=Saira+Semi+Condensed:wght@500;600;700&display=swap');
 
 :root {
-  --x4-bg-0: #07090d; --x4-bg-1: #0d1016; --x4-bg-2: #11151d; --x4-bg-3: #161b25;
-  --x4-line: rgba(255,255,255,.06); --x4-line-2: rgba(255,255,255,.10);
-  --x4-accent: #ff2530; --x4-accent-2: #ff3a44; --x4-accent-dim: #b3121b;
-  --x4-accent-soft: rgba(255,37,48,.12); --x4-accent-line: rgba(255,37,48,.40);
-  --x4-glow: 0 0 12px rgba(255,37,48,.55);
-  --x4-text-hi: #e8edf4; --x4-text-md: #b6bfcd; --x4-text-lo: #8a93a3;
-  --x4-online: #38e07b; --x4-f-ui: 'Saira','Motiva Sans',sans-serif;
+  --x4-bg-0:#07090d; --x4-bg-1:#0d1016; --x4-bg-3:#161b25;
+  --x4-accent:#ff2530; --x4-accent-2:#ff3a44; --x4-accent-soft:rgba(255,37,48,.12);
+  --x4-accent-line:rgba(255,37,48,.40); --x4-glow:0 0 12px rgba(255,37,48,.55);
+  --x4-fg:#e8edf4; --x4-fg-dim:#8a93a3; --x4-online:#38e07b;
+  --x4-f-ui:'Saira','Motiva Sans',sans-serif;
 }
 
 /* база окна */
-html, body, .friendsui-container,
-.friendsui-container [class*="ContainerRoot"],
-.friendsui-container [class*="MainContainer"],
-.friendsui-container [class*="FriendsList"],
-.friendsui-container [class*="rootContainer"] {
-  background-color: var(--x4-bg-0) !important; color: var(--x4-text-md) !important;
+html, body, .friendsui-container, .friendsui-container .DTweUDZF7UEhll6ISmNG2 {
+  background-color: var(--x4-bg-0) !important; color: var(--x4-fg-dim) !important;
   font-family: var(--x4-f-ui) !important;
 }
 
-/* скролл / выделение */
-.friendsui-container ::-webkit-scrollbar { width: 10px; height: 10px; }
-.friendsui-container ::-webkit-scrollbar-track { background: rgba(0,0,0,.25); }
-.friendsui-container ::-webkit-scrollbar-thumb {
-  background: rgba(255,37,48,.55); border: 2px solid transparent;
-  background-clip: padding-box; border-radius: 6px;
-}
-.friendsui-container :hover::-webkit-scrollbar-thumb { background: var(--x4-accent); background-clip: padding-box; }
-.friendsui-container ::selection { background: var(--x4-accent-soft); color: #fff; }
-.friendsui-container a:hover { color: var(--x4-accent) !important; }
+/* скролл */
+.friendsui-container ::-webkit-scrollbar { width:10px; height:10px; }
+.friendsui-container ::-webkit-scrollbar-track { background:rgba(0,0,0,.25); }
+.friendsui-container ::-webkit-scrollbar-thumb { background:rgba(255,37,48,.55); border:2px solid transparent; background-clip:padding-box; border-radius:6px; }
+.friendsui-container :hover::-webkit-scrollbar-thumb { background:var(--x4-accent); background-clip:padding-box; }
+.friendsui-container ::selection { background:var(--x4-accent-soft); color:#fff; }
 
-/* шапка «Друзья» + заголовки секций (Друзья в сети / Не в сети / групповые чаты) */
-.friendsui-container [class*="Header"],
-.friendsui-container [class*="header"],
-.friendsui-container [class*="categoryButton"],
-.friendsui-container [class*="GroupName"] {
-  background: var(--x4-bg-1) !important; color: var(--x4-text-hi) !important;
+/* ИМЯ друга */
+.friendsui-container .nOdcT-MoOaXGePXLyPe0H,
+.friendsui-container ._2saJTAocZ9TnYXTGvnqUMC { color: var(--x4-fg) !important; }
+
+/* В ИГРЕ: подпись игры / rich-presence -> КРАСНЫЙ (бренд) */
+.friendsui-container ._1cB0qtF0paHWWyj1XNcnbG,
+.friendsui-container ._2Ri005Wg_uXDTa71kdRbcN { color: var(--x4-accent) !important; }
+
+/* заголовок группы чатов / разделов */
+.friendsui-container .YbZJKXumb1UyMPvuEM-Ft {
+  color: var(--x4-fg) !important; text-transform: uppercase; letter-spacing:.6px;
   border-bottom: 1px solid var(--x4-accent-line) !important;
-  text-transform: uppercase; letter-spacing: .6px;
-  font-family: 'Saira Semi Condensed','Saira',sans-serif !important;
+  font-family:'Saira Semi Condensed','Saira',sans-serif !important;
 }
 
-/* строка друга — hover красным */
-.friendsui-container [class*="friend"]:hover,
-.friendsui-container [class*="Friend"]:hover,
-.friendsui-container [class*="queueEntry"]:hover {
-  background: var(--x4-accent-soft) !important;
-}
+/* непрочитанные / упоминания -> акцент */
+.friendsui-container .AwC1OCUiJHyImqe3RNEkU,
+.friendsui-container ._2BDGqnQBl9QlXdvHdbzNoq { background-color: var(--x4-accent) !important; color:#fff !important; }
 
-/* статус «в сети» — зелёный (бренд-исключение); прочее — наш текст */
-.friendsui-container [class*="online"],
-.friendsui-container [class*="Online"],
-.friendsui-container [class*="inGame"] { color: var(--x4-online) !important; }
-.friendsui-container [class*="offline"],
-.friendsui-container [class*="Offline"] { color: var(--x4-text-lo) !important; }
-
-/* поля ввода / поиск */
-.friendsui-container input, .friendsui-container textarea,
-.friendsui-container [class*="searchBox"], .friendsui-container [class*="SearchBox"] {
-  background: var(--x4-bg-3) !important; color: var(--x4-text-hi) !important;
-  border: 1px solid var(--x4-line-2) !important; border-radius: 3px !important;
-}
-.friendsui-container input:focus, .friendsui-container [class*="searchBox"]:focus-within {
-  border-color: var(--x4-accent-line) !important;
-  box-shadow: inset 0 0 0 1px rgba(255,37,48,.25) !important;
-}
-
-/* кнопки */
-.friendsui-container [class*="Button"]:not([class*="online"]) {
-  border-radius: 3px !important;
-}
-.friendsui-container [class*="PrimaryButton"],
-.friendsui-container [class*="greenButton"] {
-  background: linear-gradient(180deg, var(--x4-accent-2), var(--x4-accent-dim)) !important;
-  color: #fff !important; box-shadow: var(--x4-glow) !important;
-}
+/* кнопка GotIt / акцент-шеврон */
+.friendsui-container ._3O7zSIxFPCfDxrCf7T8fGM { color: var(--x4-accent) !important; }
