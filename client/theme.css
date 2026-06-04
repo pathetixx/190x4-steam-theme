@@ -12,6 +12,10 @@
    Палитра — rgb-тройки (RootColors colors/root.css, правится в редакторе тем).
    ============================================================================ */
 
+/* Шрифты бренда (Google Fonts — trusted по гайдлайну Millennium).
+   Orbitron — ТОЛЬКО лого+нав; Saira — тело UI. */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;800&family=Saira:wght@300;400;500;600;700&family=Saira+Semi+Condensed:wght@500;600;700&display=swap');
+
 :root {
   --x4-accent-rgb: 255, 37, 48;
   --x4-accent-2-rgb: 255, 58, 68;
@@ -215,4 +219,92 @@ body.DesktopUI ._2AzIX5kl9k6JnxLfR5H4kX {
 body.DesktopUI ._1FnJ6dPuknQFQ2RTpKTI16,
 body.DesktopUI ._2zxzStp5qY5M1evOm8keES ._1FnJ6dPuknQFQ2RTpKTI16 {
   box-shadow: 0 0 12px rgba(var(--x4-accent-rgb), .55) !important; border-radius: 3px !important;
+}
+
+/* §7 ============== СИГНАТУРА ДИЗАЙНА (struct-probe.ps1, окно Steam) ============
+   Реальные классы топбара/навигации/сайдбара с живого DOM. Здесь — фирменные
+   детали 190x4: лого, uppercase-нав, убийство синего, красные риски секций,
+   типографика. Рефреш классов — повторить struct-probe.ps1 при апдейте Steam. */
+
+/* --- ТИПОГРАФИКА: тело UI = Saira (иконочные шрифты у Steam заданы на самих
+   элементах → их не трогаем, перебиваем только наследуемый текст) --- */
+body.DesktopUI,
+body.DesktopUI ._19axKcqYRuaJ8vdYKYmtTQ,
+body.DesktopUI ._2mZ8LlvoUiyeEUtIWuTri,
+body.DesktopUI ._3O48LaKWcabKx07xdrt1TH {
+  font-family: 'Saira', 'Motiva Sans', sans-serif !important;
+}
+
+/* --- ЛОГО 190x4 вместо текста «Steam» в левом углу топбара --- */
+body.DesktopUI .bSKGlAJG2UVWTsntEJY2v {
+  font-size: 0 !important;            /* прячем родной «Steam» */
+  display: inline-flex !important; align-items: center !important;
+  font-family: 'Orbitron', sans-serif !important; line-height: 1 !important;
+}
+body.DesktopUI .bSKGlAJG2UVWTsntEJY2v::before {
+  content: "190"; font-size: 15px !important; font-weight: 800 !important;
+  color: rgb(var(--x4-fg-rgb)) !important; letter-spacing: .5px !important;
+}
+body.DesktopUI .bSKGlAJG2UVWTsntEJY2v::after {
+  content: "x4"; font-size: 15px !important; font-weight: 800 !important;
+  color: rgb(var(--x4-accent-rgb)) !important; letter-spacing: .5px !important;
+  text-shadow: 0 0 8px rgba(var(--x4-accent-rgb), .7) !important;
+}
+
+/* --- НАВИГАЦИЯ Магазин/Библиотека/Сообщество: uppercase + letter-spacing --- */
+body.DesktopUI ._19axKcqYRuaJ8vdYKYmtTQ {
+  text-transform: uppercase !important;
+  letter-spacing: 1.4px !important;
+  font-weight: 600 !important;
+  font-family: 'Saira Semi Condensed', 'Saira', sans-serif !important;
+  transition: color .15s ease !important;
+}
+body.DesktopUI ._19axKcqYRuaJ8vdYKYmtTQ:hover { color: rgb(var(--x4-accent-2-rgb)) !important; }
+
+/* --- УБИЙСТВО СИНЕГО --- */
+/* бейдж-уведомление в топбаре (был rgb 25,153,255) */
+body.DesktopUI ._5wILZhsLODVwGfcJ0hKmJ {
+  background-color: rgb(var(--x4-accent-rgb)) !important;
+  box-shadow: 0 0 8px rgba(var(--x4-accent-rgb), .6) !important;
+}
+/* зелёно-зелёный title-area-highlight (drag-подсветка) → красный */
+body.DesktopUI .title-area-highlight {
+  background-image: linear-gradient(to right, rgba(var(--x4-accent-rgb), .5), transparent) !important;
+}
+
+/* --- СПИСОК ИГР В САЙДБАРЕ: выделенная игра (была сине-серая 62,78,105) --- */
+body.DesktopUI ._1UBpAXP408E,
+body.DesktopUI ._2-O4ZG0KrnSrzISHBKctFQ._1UBpAXP408E {
+  background-color: rgba(var(--x4-accent-rgb), .16) !important;
+  box-shadow: inset 3px 0 0 rgb(var(--x4-accent-rgb)) !important;   /* красная риска слева */
+}
+body.DesktopUI ._2-O4ZG0KrnSrzISHBKctFQ:hover {
+  background-color: rgba(var(--x4-accent-rgb), .08) !important;
+}
+
+/* --- ЗАГОЛОВКИ КОЛЛЕКЦИЙ (Избранное / Без категории): красная риска + uppercase
+   плюс гасим родной сине-серый градиент полосы --- */
+body.DesktopUI ._2sYIghGVXJr6tsQVvcryy8 {
+  background-image: none !important;
+  background-color: transparent !important;
+  position: relative !important;
+}
+body.DesktopUI ._2sYIghGVXJr6tsQVvcryy8::before {
+  content: ""; position: absolute; left: 0; top: 50%; transform: translateY(-50%);
+  width: 3px; height: 13px; background: rgb(var(--x4-accent-rgb));
+  box-shadow: 0 0 8px rgba(var(--x4-accent-rgb), .6);
+}
+body.DesktopUI ._2mZ8LlvoUiyeEUtIWuTri {
+  text-transform: uppercase !important; letter-spacing: 1px !important;
+  font-weight: 600 !important; color: rgb(var(--x4-fg-rgb)) !important;
+}
+/* «Библиотека»-таб в шапке сайдбара */
+body.DesktopUI ._2TKEazUUS3TlniZfpc8OOe { background-color: transparent !important; }
+body.DesktopUI ._3O48LaKWcabKx07xdrt1TH {
+  text-transform: uppercase !important; letter-spacing: 1.2px !important; font-weight: 600 !important;
+}
+
+/* --- ТОНКАЯ ВЕРХНЯЯ ПОЛОСКА КОНТЕНТА (была 23,29,37) → акцентная нить --- */
+body.DesktopUI ._2CmrnGY-Amtd83ScJkFvx2 {
+  background: linear-gradient(to right, rgba(var(--x4-accent-rgb), .5), transparent 60%) !important;
 }
