@@ -2,7 +2,7 @@
   "name": "190x4",
   "author": "190x4",
   "description": "Cyberpunk command-center theme - red neon over graphite. Deep Steam reskin.",
-  "version": "1.5.0",
+  "version": "1.6.0",
 
   "github": { "owner": "pathetixx", "repo_name": "190x4-steam-theme" },
   "tags": ["Dark", "Cyberpunk", "Red", "Customizable"],
@@ -11,7 +11,7 @@
   "RootColors": "colors/root.css",
 
   "Patches": [
-    { "MatchRegexString": ".*", "TargetCss": "client/theme.css" },
+    { "MatchRegexString": ".*", "TargetCss": "client/theme.css", "TargetJs": "client/rail.js" },
     { "MatchRegexString": ".*", "TargetCss": "webkit.css" },
     { "MatchRegexString": ".friendsui-container", "TargetCss": "client/friends.css" },
     { "MatchRegexString": "Menu$", "TargetCss": "client/menu.css" },

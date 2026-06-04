@@ -1,0 +1,28 @@
+// Вертикальный нав-рельс (строится client/rail.js). Классы .x4-* -> резолвер не
+// трогает; scope-плагин префиксит body.DesktopUI. Контент переносится в flex-обёртку.
+.x4-railwrap { display: flex; flex: 1 1 auto; min-height: 0; min-width: 0; }
+.x4-railwrap > [class*="steamdesktop_ContentFrame_"] { flex: 1 1 auto; min-width: 0; position: relative; }
+
+.x4-rail {
+  flex: 0 0 54px; width: 54px;
+  background: linear-gradient(180deg, var(--x4-bg-1), var(--x4-bg-0));
+  border-right: 1px solid rgba(255,255,255,.06);
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+  padding: 12px 0; z-index: 50;
+}
+.x4-rail-btn {
+  width: 38px; height: 38px; display: flex; align-items: center; justify-content: center;
+  color: var(--x4-fg-dim); border-radius: 3px; cursor: pointer;
+  border: 1px solid transparent; transition: color .15s ease, background .15s ease, border-color .15s ease;
+}
+.x4-rail-btn svg { width: 19px; height: 19px; }
+.x4-rail-btn:hover { color: var(--x4-fg); background: rgba(255,255,255,.05); border-color: rgba(255,255,255,.08); }
+.x4-rail-btn.is-active {
+  color: var(--x4-accent); border-color: var(--x4-accent-line);
+  box-shadow: inset 0 0 14px rgba(255,37,48,.15);
+}
+.x4-rail-btn.is-active::before {
+  content: ""; position: absolute; left: 0; width: 2px; height: 22px;
+  background: var(--x4-accent); box-shadow: var(--x4-glow);
+}
+.x4-rail-sep { flex: 1 1 auto; }

@@ -3,6 +3,81 @@
 
 /* == _mixins.css == */
 /* Сигнатурные примитивы (sass-миксины разворачиваются ДО резолва селекторов).*/
+/* tick — плотная красная риска панель-хедера (эталон .x4-panel__head: 4px блок,*/
+/* сильный glow). caps — плотный uppercase Saira Condensed.*/
+
+/* == _rail.css == */
+/* Вертикальный нав-рельс (строится client/rail.js). Классы .x4-* -> резолвер не*/
+/* трогает; scope-плагин префиксит body.DesktopUI. Контент переносится в flex-обёртку.*/
+body.DesktopUI .x4-railwrap {
+  display: flex !important;
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  min-width: 0 !important;
+}
+
+body.DesktopUI .x4-railwrap > [class*=steamdesktop_ContentFrame_] {
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
+  position: relative !important;
+}
+
+body.DesktopUI .x4-rail {
+  flex: 0 0 54px !important;
+  width: 54px !important;
+  background: linear-gradient(180deg, var(--x4-bg-1), var(--x4-bg-0)) !important;
+  border-right: 1px solid rgba(255, 255, 255, 0.06) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  gap: 6px !important;
+  padding: 12px 0 !important;
+  z-index: 50 !important;
+}
+
+body.DesktopUI .x4-rail-btn {
+  width: 38px !important;
+  height: 38px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: var(--x4-fg-dim) !important;
+  border-radius: 3px !important;
+  cursor: pointer !important;
+  border: 1px solid transparent !important;
+  transition: color 0.15s ease, background 0.15s ease, border-color 0.15s ease !important;
+}
+
+body.DesktopUI .x4-rail-btn svg {
+  width: 19px !important;
+  height: 19px !important;
+}
+
+body.DesktopUI .x4-rail-btn:hover {
+  color: var(--x4-fg) !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+body.DesktopUI .x4-rail-btn.is-active {
+  color: var(--x4-accent) !important;
+  border-color: var(--x4-accent-line) !important;
+  box-shadow: inset 0 0 14px rgba(255, 37, 48, 0.15) !important;
+}
+
+body.DesktopUI .x4-rail-btn.is-active::before {
+  content: "" !important;
+  position: absolute !important;
+  left: 0 !important;
+  width: 2px !important;
+  height: 22px !important;
+  background: var(--x4-accent) !important;
+  box-shadow: var(--x4-glow) !important;
+}
+
+body.DesktopUI .x4-rail-sep {
+  flex: 1 1 auto !important;
+}
 
 /* == _stable.css == */
 /* Стабильные НЕхешированные классы Steam (диалоги/настройки/легаси контекст-меню,*/
@@ -259,10 +334,10 @@ body.DesktopUI ._2Th-vimU76KOpmdy45yu52::before {
   left: 0 !important;
   top: 50% !important;
   transform: translateY(-50%) !important;
-  width: 3px !important;
-  height: 13px !important;
+  width: 4px !important;
+  height: 15px !important;
   background: var(--x4-accent) !important;
-  box-shadow: var(--x4-glow) !important;
+  box-shadow: 0 0 10px rgba(255, 37, 48, 0.7), 0 0 2px rgba(255, 37, 48, 0.9) !important;
 }
 body.DesktopUI ._2Th-vimU76KOpmdy45yu52 {
   padding-left: 12px !important;
@@ -270,7 +345,7 @@ body.DesktopUI ._2Th-vimU76KOpmdy45yu52 {
 
 body.DesktopUI ._3ONu7-h8EhRcUI72YoSVbD {
   text-transform: uppercase !important;
-  letter-spacing: 1px !important;
+  letter-spacing: 1.4px !important;
   font-weight: 600 !important;
   font-family: var(--x4-f-cond) !important;
   color: var(--x4-fg) !important;
@@ -381,10 +456,10 @@ body.DesktopUI ._3bWISeqP3H2j6YJnFwVEwu::before {
   left: 0 !important;
   top: 50% !important;
   transform: translateY(-50%) !important;
-  width: 3px !important;
-  height: 13px !important;
+  width: 4px !important;
+  height: 15px !important;
   background: var(--x4-accent) !important;
-  box-shadow: var(--x4-glow) !important;
+  box-shadow: 0 0 10px rgba(255, 37, 48, 0.7), 0 0 2px rgba(255, 37, 48, 0.9) !important;
 }
 body.DesktopUI ._3bWISeqP3H2j6YJnFwVEwu {
   padding-left: 12px !important;
@@ -392,7 +467,7 @@ body.DesktopUI ._3bWISeqP3H2j6YJnFwVEwu {
 
 body.DesktopUI ._2hvQbTq62AjXQS4tZqVepi {
   text-transform: uppercase !important;
-  letter-spacing: 1px !important;
+  letter-spacing: 1.4px !important;
   font-weight: 600 !important;
   font-family: var(--x4-f-cond) !important;
   color: var(--x4-fg) !important;
@@ -488,10 +563,10 @@ body.DesktopUI ._2rqTSCLSSEycEiuCS_OkpX::before {
   left: 0 !important;
   top: 50% !important;
   transform: translateY(-50%) !important;
-  width: 3px !important;
-  height: 13px !important;
+  width: 4px !important;
+  height: 15px !important;
   background: var(--x4-accent) !important;
-  box-shadow: var(--x4-glow) !important;
+  box-shadow: 0 0 10px rgba(255, 37, 48, 0.7), 0 0 2px rgba(255, 37, 48, 0.9) !important;
 }
 body.DesktopUI ._2rqTSCLSSEycEiuCS_OkpX {
   padding-left: 12px !important;
@@ -499,7 +574,7 @@ body.DesktopUI ._2rqTSCLSSEycEiuCS_OkpX {
 
 body.DesktopUI ._2oJt3qYLAqr6xMjnpmBFLN {
   text-transform: uppercase !important;
-  letter-spacing: 1px !important;
+  letter-spacing: 1.4px !important;
   font-weight: 600 !important;
   font-family: var(--x4-f-cond) !important;
   color: var(--x4-fg) !important;
@@ -589,10 +664,10 @@ body.DesktopUI .qq2xItSXjpCsNrcxyPJtO::before {
   left: 0 !important;
   top: 50% !important;
   transform: translateY(-50%) !important;
-  width: 3px !important;
-  height: 13px !important;
+  width: 4px !important;
+  height: 15px !important;
   background: var(--x4-accent) !important;
-  box-shadow: var(--x4-glow) !important;
+  box-shadow: 0 0 10px rgba(255, 37, 48, 0.7), 0 0 2px rgba(255, 37, 48, 0.9) !important;
 }
 body.DesktopUI .qq2xItSXjpCsNrcxyPJtO {
   padding-left: 12px !important;
@@ -752,10 +827,10 @@ body.DesktopUI ._1QOqxv1IVU4TSd_6unnCY0::before {
   left: 0 !important;
   top: 50% !important;
   transform: translateY(-50%) !important;
-  width: 3px !important;
-  height: 13px !important;
+  width: 4px !important;
+  height: 15px !important;
   background: var(--x4-accent) !important;
-  box-shadow: var(--x4-glow) !important;
+  box-shadow: 0 0 10px rgba(255, 37, 48, 0.7), 0 0 2px rgba(255, 37, 48, 0.9) !important;
 }
 body.DesktopUI ._1QOqxv1IVU4TSd_6unnCY0 {
   padding-left: 12px !important;
@@ -763,7 +838,7 @@ body.DesktopUI ._1QOqxv1IVU4TSd_6unnCY0 {
 
 body.DesktopUI ._1p4KV0LZCs0tnDlcOahdCN {
   text-transform: uppercase !important;
-  letter-spacing: 1px !important;
+  letter-spacing: 1.4px !important;
   font-weight: 600 !important;
   font-family: var(--x4-f-cond) !important;
   color: var(--x4-fg) !important;
@@ -798,10 +873,10 @@ body.DesktopUI ._23SnllqT_AqZ1C_QHcNQ4Z::before {
   left: 0 !important;
   top: 50% !important;
   transform: translateY(-50%) !important;
-  width: 3px !important;
-  height: 13px !important;
+  width: 4px !important;
+  height: 15px !important;
   background: var(--x4-accent) !important;
-  box-shadow: var(--x4-glow) !important;
+  box-shadow: 0 0 10px rgba(255, 37, 48, 0.7), 0 0 2px rgba(255, 37, 48, 0.9) !important;
 }
 body.DesktopUI ._23SnllqT_AqZ1C_QHcNQ4Z {
   padding-left: 12px !important;
@@ -961,10 +1036,10 @@ body.DesktopUI ._2rK4YqGvSzXLj1bPZL8xMJ::before {
   left: 0 !important;
   top: 50% !important;
   transform: translateY(-50%) !important;
-  width: 3px !important;
-  height: 13px !important;
+  width: 4px !important;
+  height: 15px !important;
   background: var(--x4-accent) !important;
-  box-shadow: var(--x4-glow) !important;
+  box-shadow: 0 0 10px rgba(255, 37, 48, 0.7), 0 0 2px rgba(255, 37, 48, 0.9) !important;
 }
 body.DesktopUI ._2rK4YqGvSzXLj1bPZL8xMJ {
   padding-left: 12px !important;

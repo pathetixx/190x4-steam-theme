@@ -1,12 +1,15 @@
 // Сигнатурные примитивы (sass-миксины разворачиваются ДО резолва селекторов).
-@mixin tick($h: 13px) {
+// tick — плотная красная риска панель-хедера (эталон .x4-panel__head: 4px блок,
+// сильный glow). caps — плотный uppercase Saira Condensed.
+@mixin tick($h: 15px) {
   position: relative;
   &::before {
     content: ""; position: absolute; left: 0; top: 50%; transform: translateY(-50%);
-    width: 3px; height: $h; background: var(--x4-accent); box-shadow: var(--x4-glow);
+    width: 4px; height: $h; background: var(--x4-accent);
+    box-shadow: 0 0 10px rgba(255,37,48,.7), 0 0 2px rgba(255,37,48,.9);
   }
 }
-@mixin caps($ls: 1px) {
+@mixin caps($ls: 1.4px) {
   text-transform: uppercase; letter-spacing: $ls; font-weight: 600;
   font-family: var(--x4-f-cond);
 }
