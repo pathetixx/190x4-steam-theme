@@ -153,3 +153,37 @@ body.DesktopUI ._3UTzw3N80nelbkfxvveH0o:hover { color: rgb(var(--x4-accent-2-rgb
 .friendsui-container .chatHeader,
 .friendsui-container .chatRoomGroupHeader { border-bottom: 1px solid rgba(var(--x4-accent-rgb), .35) !important; }
 .friendsui-container .friend:hover { background: rgba(var(--x4-accent-rgb), .12) !important; }
+
+/* §6 ============== ТОЧНЫЕ КЛАССЫ С ЖИВОГО DOM (tools/dom-probe.ps1, окно Steam) =
+   Сняты прямо с рендера — это реальные фон-несущие элементы, которые оставались
+   серыми/синими. Перебивают дефолт Steam. Рефреш при апдейте Steam — повторить
+   dom-probe.ps1 (хеши меняются между крупными сборками, не между перезапусками). */
+
+/* чёрная обёртка окна + главная контент-зона + hero-градиент → графит */
+body.DesktopUI ._1ENHEsrSLcTRtPQFl1F-wL,
+body.DesktopUI ._2Dd4T78PcCTUVgOtDGFY5j { background-color: rgb(var(--x4-bg-rgb)) !important; }
+body.DesktopUI ._3lDczhulqraStjCitLYJ1K {
+  background-image: radial-gradient(100% 100% at 45% 35%, rgba(var(--x4-accent-rgb), .07), rgb(var(--x4-bg-rgb)) 70%) !important;
+}
+/* сайдбар / список игр (градиент 45,51,60 → графит) */
+body.DesktopUI ._3x1HklzyDs4TEjACrRO2tB {
+  background-image: linear-gradient(rgb(var(--x4-bg2-rgb)) 0%, rgb(var(--x4-bg-rgb)) 100%) !important;
+}
+/* шапки/полосы (23,29,37 → панель) */
+body.DesktopUI ._3Z7VQ1IMk4E3HsHvrkLNgo,
+body.DesktopUI ._3vCzSrrXZzZjVJFZNg9SGu { background-color: rgb(var(--x4-bg2-rgb)) !important; box-shadow: none !important; }
+/* СИНЯЯ акцент-полоса Steam (26,159,255) → красный */
+body.DesktopUI ._2iJsgdTIX9Tj23rWnB7Q-c { background-color: rgb(var(--x4-accent-rgb)) !important; }
+
+/* КНОПКА «ИГРАТЬ» — зелёная заливка = background-image градиент на внутреннем
+   элементе ._3ydigb6.../._2AzIX5... → красный градиент; контейнер держит неон */
+body.DesktopUI ._3ydigb6zZAjJ0JCDgHwSYA,
+body.DesktopUI ._2AzIX5kl9k6JnxLfR5H4kX {
+  background-image: linear-gradient(to right, rgb(var(--x4-accent-2-rgb)) 0%, rgb(var(--x4-accent-dim-rgb)) 60%) !important;
+  background-color: rgb(var(--x4-accent-dim-rgb)) !important;
+  color: #fff !important;
+}
+body.DesktopUI ._1FnJ6dPuknQFQ2RTpKTI16,
+body.DesktopUI ._2zxzStp5qY5M1evOm8keES ._1FnJ6dPuknQFQ2RTpKTI16 {
+  box-shadow: 0 0 12px rgba(var(--x4-accent-rgb), .55) !important; border-radius: 3px !important;
+}
