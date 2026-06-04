@@ -1,0 +1,4 @@
+// Колокол/баланс/кнопки окна управления.
+#AnnouncementsButton:hover, #WalletBalance:hover { color: var(--x4-accent-2); }
+#Button:hover { background: var(--x4-accent-soft); border-radius: 3px; }
+#Active { color: var(--x4-accent); }

@@ -1,0 +1,5 @@
+// Нижний бар (загрузки): графит + красный прогресс.
+#BottomBar, #BottomBarContainer { background-color: var(--x4-bg-1); border-top: 1px solid rgba(255,37,48,.18); }
+#ProgressBar { background-color: var(--x4-accent); }
+#Icon svg { color: var(--x4-accent); fill: var(--x4-accent); }
+#FriendsButton:hover, #AddGameButton:hover { color: var(--x4-accent-2); }

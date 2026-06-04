@@ -1,0 +1,2 @@
+#Capsule { transition: transform .18s ease, box-shadow .18s ease; }
+#Capsule:hover { transform: translateY(-3px); box-shadow: var(--x4-glow), 0 0 0 1px var(--x4-accent-line); }

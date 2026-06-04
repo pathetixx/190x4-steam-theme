@@ -1,0 +1,8 @@
+// Заголовки коллекций (Избранное/Без категории): красная риска + uppercase.
+#Container { background-image: none; background-color: transparent; position: relative; }
+#Container::before {
+  content: ""; position: absolute; left: 0; top: 50%; transform: translateY(-50%);
+  width: 3px; height: 13px; background: var(--x4-accent); box-shadow: var(--x4-glow);
+}
+#SectionName { text-transform: uppercase; letter-spacing: 1px; font-weight: 600; color: var(--x4-fg); }
+#SectionRule { background-color: rgba(255,37,48,.18); }

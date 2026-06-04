@@ -1,0 +1,5 @@
+// Контекст-меню в клиенте (модульные классы).
+#contextMenuContents, #ContextMenuPopup { background-color: var(--x4-bg-1); border: 1px solid var(--x4-accent-line); color: var(--x4-fg); border-radius: 4px; }
+#contextMenuItem:hover, #contextMenuItem.active { background-color: var(--x4-accent-soft); color: #fff; }
+#ContextMenuSeparator { background-color: rgba(255,255,255,.08); }
+#MenuSectionHeader { color: var(--x4-fg-dim); text-transform: uppercase; letter-spacing: .6px; }

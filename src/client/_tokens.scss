@@ -1,6 +1,34 @@
+// 190x4 - дизайн-токены (источник правды: design/theme.css). Файл в ignore
+// steam-theming-utils -> селекторы не трогаются, остаётся чистый :root.
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;800&family=Saira:wght@300;400;500;600;700&family=Saira+Semi+Condensed:wght@500;600;700&display=swap');
+
 :root {
-  --x4-accent: #ff2530;
-  --x4-accent-2: #ff3a44;
-  --x4-accent-dim: #b3121b;
-  --x4-glow: 0 0 12px rgba(255, 37, 48, 0.55);
+  --x4-bg-0: #07090d; --x4-bg-1: #0d1016; --x4-bg-2: #11151d; --x4-bg-3: #161b25;
+  --x4-accent: #ff2530; --x4-accent-2: #ff3a44; --x4-accent-dim: #b3121b;
+  --x4-accent-soft: rgba(255,37,48,.12); --x4-accent-line: rgba(255,37,48,.40);
+  --x4-glow: 0 0 12px rgba(255,37,48,.55);
+  --x4-glow-lg: 0 0 20px rgba(255,37,48,.55), 0 0 4px rgba(255,37,48,.8);
+  --x4-fg: #e8edf4; --x4-fg-dim: #8a93a3; --x4-online: #38e07b;
+  --x4-f-ui: 'Saira','Motiva Sans',sans-serif;
+  --x4-f-cond: 'Saira Semi Condensed','Saira',sans-serif;
+  --x4-f-display: 'Orbitron',sans-serif;
 }
+
+// Мост токенов SteamUI: перебиваем системный акцент в красную гамму. :root
+// исключён из авто-!important -> ставим вручную, чтобы бить инлайн-токены Steam.
+:root {
+  --SystemAccentColorDark3: #4d0509 !important; --SystemAccentColorDark3-RGB: 77,5,9 !important;
+  --SystemAccentColorDark2: #7d0d13 !important; --SystemAccentColorDark2-RGB: 125,13,19 !important;
+  --SystemAccentColorDark1: #b3121b !important; --SystemAccentColorDark1-RGB: 179,18,27 !important;
+  --SystemAccentColor: #ff2530 !important; --SystemAccentColor-RGB: 255,37,48 !important;
+  --SystemAccentColorLight1: #ff4a54 !important; --SystemAccentColorLight1-RGB: 255,74,84 !important;
+  --SystemAccentColorLight2: #ff6068 !important; --SystemAccentColorLight2-RGB: 255,96,104 !important;
+  --SystemAccentColorLight3: #ff7a82 !important; --SystemAccentColorLight3-RGB: 255,122,130 !important;
+  --virtualmenu-accent: #ff2530 !important; --virtualmenupointer-color: #ff2530 !important;
+  --virtualmenu-bg-hover: #3a0d12 !important; --idle-status: #ff7a82 !important;
+  --custom-accent: #ff2530 !important; --main-background: #07090d !important;
+  --GradientColor1: #ff2530 !important; --GradientColor2: #b3121b !important;
+  --MillenniumTextColor-Error: #ff4a54 !important;
+}
+
+body { font-family: var(--x4-f-ui); }

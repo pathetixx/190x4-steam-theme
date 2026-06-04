@@ -1,0 +1,16 @@
+// Лого 190x4 на месте слота Steam + кнопки меню-бара.
+#SteamButton {
+  font-size: 0; display: inline-flex; align-items: center; gap: 0;
+  font-family: var(--x4-f-display); line-height: 1;
+}
+#SteamButton > * { display: none; }
+#SteamButton::before { content: "190"; font-size: 15px; font-weight: 800; color: var(--x4-fg); letter-spacing: .5px; }
+#SteamButton::after { content: "x4"; font-size: 15px; font-weight: 800; color: var(--x4-accent); letter-spacing: .5px; text-shadow: 0 0 8px rgba(255,37,48,.7); }
+
+#RootMenuBar { background: transparent; }
+#RootMenuButton {
+  color: var(--x4-fg-dim); text-transform: uppercase; letter-spacing: .6px;
+  font-family: var(--x4-f-cond); border-radius: 3px;
+  transition: color .15s ease, background .15s ease;
+}
+#RootMenuButton:hover { color: #fff; background: var(--x4-accent-soft); }

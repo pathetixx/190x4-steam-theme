@@ -2,7 +2,7 @@
   "name": "steam-theme-190x4",
   "private": true,
   "type": "module",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "scripts": {
     "build": "postcss \"src/client/**/*.scss\" --base src --dir dist --ext css && node scripts/concat.mjs"
   },

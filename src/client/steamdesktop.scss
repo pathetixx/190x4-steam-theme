@@ -1,0 +1,7 @@
+// Рамка/окно: фоны -> графит, бары -> панель, нижняя акцент-нить.
+#Wrapper, #ContentFrame, #Library, #OuterFrame, #LocalContentContainer { background-color: var(--x4-bg-0); }
+#TopBar, #SuperNavBar, #TitleBar, #DragArea { background-color: var(--x4-bg-1); box-shadow: none; }
+#TitleBar { border-bottom: 1px solid rgba(255,37,48,.22); }
+#URLBarReplacement, #URLBar {
+  background: var(--x4-bg-3); border: 1px solid rgba(255,255,255,.12); border-radius: 3px;
+}

@@ -1,374 +1,493 @@
-/* ============================================================================
-   190x4 — STEAM THEME · client/theme.css
-   Стратегия (выведена из рабочих тем Adwaita + win95-themes, проверенных на
-   железе юзера):
-     · инжект через ".*" во ВСЕ окна, скоуп body.DesktopUI (главное окно) и
-       .friendsui-container (чат) — стабильные НЕхешированные классы на <body>.
-     · ФУНДАМЕНТ строим на СТАБИЛЬНЫХ классах Steam, которые Valve НЕ обфусцирует:
-       body, .DialogButton (+.Primary), .DialogBody/.DialogInput/.DialogHeader,
-       .ContextMenuPopupBody и т.п. Именно ими красятся настройки/диалоги/меню.
-     · Контент библиотеки (фоны окна, кнопка Играть, список игр) — хеши из дампа
-       реестра с машины юзера (build 1780352834); рефреш через tools/2-dump.ps1.
-   Палитра — rgb-тройки (RootColors colors/root.css, правится в редакторе тем).
-   ============================================================================ */
+/* 190x4 Steam theme - GENERATED from src/client/*.scss via steam-theming-utils.
+   DO NOT EDIT directly; edit the SCSS sources and run "npm run build". */
 
-/* Шрифты бренда (Google Fonts — trusted по гайдлайну Millennium).
-   Orbitron — ТОЛЬКО лого+нав; Saira — тело UI. */
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;800&family=Saira:wght@300;400;500;600;700&family=Saira+Semi+Condensed:wght@500;600;700&display=swap');
-
-:root {
-  --x4-accent-rgb: 255, 37, 48;
-  --x4-accent-2-rgb: 255, 58, 68;
-  --x4-accent-dim-rgb: 179, 18, 27;
-  --x4-accent-fg-rgb: 255, 255, 255;
-  --x4-bg-rgb: 7, 9, 13;        /* окно */
-  --x4-bg2-rgb: 13, 16, 22;     /* панели / кнопки / меню */
-  --x4-bg3-rgb: 17, 21, 29;     /* инпуты / приподнятое */
-  --x4-fg-rgb: 232, 237, 244;
-  --x4-fg-dim-rgb: 138, 147, 163;
-  --x4-line-rgb: 255, 255, 255; /* линии — с малой альфой */
+/* == _stable.css == */
+/* Стабильные НЕхешированные классы Steam (диалоги/настройки/легаси контекст-меню,*/
+/* скролл/выделение). Не в module-карте -> файл в ignore, селекторы литеральные.*/
+::-webkit-scrollbar {
+  width: 10px !important;
+  height: 10px !important;
 }
 
-/* §0 ===================================== МОСТ ТОКЕНОВ STEAM (каскад на весь UI)
-   Реальные дизайн-токены SteamUI (сняты var-probe.ps1 с машины). Перебиваем их
-   в :root с !important — цвет идёт каскадом по всему интерфейсу (выделение,
-   фокус, прогресс-бары, акценты меню), без охоты за хешами. Лесенка
-   SystemAccentColor — главный акцент SteamUI; красим в красную градацию. */
-:root, body.DesktopUI {
-  /* акцентная лесенка: Dark3(тёмный)…Base…Light3(светлый) */
-  --SystemAccentColorDark3:  #4d0509 !important; --SystemAccentColorDark3-RGB:  77, 5, 9   !important;
-  --SystemAccentColorDark2:  #7d0d13 !important; --SystemAccentColorDark2-RGB:  125, 13, 19 !important;
-  --SystemAccentColorDark1:  #b3121b !important; --SystemAccentColorDark1-RGB:  179, 18, 27 !important;
-  --SystemAccentColor:       #ff2530 !important; --SystemAccentColor-RGB:       255, 37, 48 !important;
-  --SystemAccentColorLight1: #ff4a54 !important; --SystemAccentColorLight1-RGB: 255, 74, 84 !important;
-  --SystemAccentColorLight2: #ff6068 !important; --SystemAccentColorLight2-RGB: 255, 96, 104 !important;
-  --SystemAccentColorLight3: #ff7a82 !important; --SystemAccentColorLight3-RGB: 255, 122, 130 !important;
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.25) !important;
+}
 
-  /* иконический синий Steam → красный */
-  --virtualmenu-accent:       #ff2530 !important;
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 37, 48, 0.55) !important;
+  border: 2px solid transparent !important;
+  background-clip: padding-box !important;
+  border-radius: 6px !important;
+}
+
+:hover::-webkit-scrollbar-thumb {
+  background: var(--x4-accent) !important;
+  background-clip: padding-box !important;
+}
+
+::selection {
+  background: rgba(255, 37, 48, 0.3) !important;
+  color: #fff !important;
+}
+
+:focus-visible {
+  outline-color: var(--x4-accent) !important;
+}
+
+:where(.DialogButton) {
+  appearance: none !important;
+  background-image: none !important;
+  background-color: var(--x4-bg-3) !important;
+  color: var(--x4-fg) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  box-shadow: none !important;
+  border-radius: 3px !important;
+  transition: background 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease !important;
+}
+
+:where(.DialogButton):hover {
+  background-color: var(--x4-accent-soft) !important;
+  border-color: rgba(255, 37, 48, 0.6) !important;
+}
+
+:where(.DialogButton):active {
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.5) !important;
+}
+
+:where(.DialogButton).Primary {
+  background: linear-gradient(180deg, var(--x4-accent-2), var(--x4-accent-dim)) !important;
+  border-color: rgba(255, 120, 120, 0.5) !important;
+  color: #fff !important;
+  box-shadow: var(--x4-glow), inset 0 1px 0 rgba(255, 255, 255, 0.22) !important;
+}
+
+:where(.DialogButton).Primary:hover {
+  filter: brightness(1.08) !important;
+  box-shadow: var(--x4-glow-lg), inset 0 1px 0 rgba(255, 255, 255, 0.28) !important;
+}
+
+.DialogBody, .DialogContent, .DialogInnerBody, .DialogControlsSection, .DialogContentTransition {
+  background-color: var(--x4-bg-1) !important;
+  color: var(--x4-fg) !important;
+}
+
+.DialogHeader, .DialogControlsSectionHeader {
+  border-bottom: 1px solid var(--x4-accent-line) !important;
+  color: var(--x4-fg) !important;
+}
+
+.DialogInput, .DialogInput_Wrapper, .DialogTextInputBase, .DialogDropDown, .DialogDropDown_CurrentDisplay {
+  background-color: var(--x4-bg-3) !important;
+  color: var(--x4-fg) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+}
+
+.DialogInput:focus, .DialogTextInputBase:focus-within {
+  border-color: var(--x4-accent) !important;
+  box-shadow: 0 0 0 1px rgba(255, 37, 48, 0.5) !important;
+}
+
+.DialogSlider_Slider .DialogSlider_Grabber {
+  background: var(--x4-accent) !important;
+}
+
+.DialogCheckbox:checked, .DialogRoundCheckboxField_Control[class*=Checked] {
+  background: var(--x4-accent) !important;
+}
+
+.ContextMenuPopupBody, .contextMenuContents {
+  background-color: var(--x4-bg-1) !important;
+  border: 1px solid var(--x4-accent-line) !important;
+  color: var(--x4-fg) !important;
+}
+
+.ContextMenuButton:hover, .contextMenuItem:hover {
+  background-color: var(--x4-accent-soft) !important;
+  color: #fff !important;
+}
+
+.title-area-highlight {
+  background-image: linear-gradient(to right, rgba(255, 37, 48, 0.5), transparent) !important;
+}
+
+/* == _tokens.css == */
+/* 190x4 - дизайн-токены (источник правды: design/theme.css). Файл в ignore*/
+/* steam-theming-utils -> селекторы не трогаются, остаётся чистый :root.*/
+@import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;800&family=Saira:wght@300;400;500;600;700&family=Saira+Semi+Condensed:wght@500;600;700&display=swap");
+:root {
+  --x4-bg-0: #07090d;
+  --x4-bg-1: #0d1016;
+  --x4-bg-2: #11151d;
+  --x4-bg-3: #161b25;
+  --x4-accent: #ff2530;
+  --x4-accent-2: #ff3a44;
+  --x4-accent-dim: #b3121b;
+  --x4-accent-soft: rgba(255,37,48,.12);
+  --x4-accent-line: rgba(255,37,48,.40);
+  --x4-glow: 0 0 12px rgba(255,37,48,.55);
+  --x4-glow-lg: 0 0 20px rgba(255,37,48,.55), 0 0 4px rgba(255,37,48,.8);
+  --x4-fg: #e8edf4;
+  --x4-fg-dim: #8a93a3;
+  --x4-online: #38e07b;
+  --x4-f-ui: 'Saira','Motiva Sans',sans-serif;
+  --x4-f-cond: 'Saira Semi Condensed','Saira',sans-serif;
+  --x4-f-display: 'Orbitron',sans-serif;
+}
+
+/* Мост токенов SteamUI: перебиваем системный акцент в красную гамму. :root*/
+/* исключён из авто-!important -> ставим вручную, чтобы бить инлайн-токены Steam.*/
+:root {
+  --SystemAccentColorDark3: #4d0509 !important;
+  --SystemAccentColorDark3-RGB: 77,5,9 !important;
+  --SystemAccentColorDark2: #7d0d13 !important;
+  --SystemAccentColorDark2-RGB: 125,13,19 !important;
+  --SystemAccentColorDark1: #b3121b !important;
+  --SystemAccentColorDark1-RGB: 179,18,27 !important;
+  --SystemAccentColor: #ff2530 !important;
+  --SystemAccentColor-RGB: 255,37,48 !important;
+  --SystemAccentColorLight1: #ff4a54 !important;
+  --SystemAccentColorLight1-RGB: 255,74,84 !important;
+  --SystemAccentColorLight2: #ff6068 !important;
+  --SystemAccentColorLight2-RGB: 255,96,104 !important;
+  --SystemAccentColorLight3: #ff7a82 !important;
+  --SystemAccentColorLight3-RGB: 255,122,130 !important;
+  --virtualmenu-accent: #ff2530 !important;
   --virtualmenupointer-color: #ff2530 !important;
-  --virtualmenu-bg-hover:     #3a0d12 !important;
-  --idle-status:              #ff7a82 !important;
-
-  /* фоновые / прочие токены под нашу гамму */
-  --custom-accent:    #ff2530 !important;
-  --main-background:  rgb(var(--x4-bg-rgb)) !important;
-  --GradientColor1:   #ff2530 !important;
-  --GradientColor2:   #b3121b !important;
+  --virtualmenu-bg-hover: #3a0d12 !important;
+  --idle-status: #ff7a82 !important;
+  --custom-accent: #ff2530 !important;
+  --main-background: #07090d !important;
+  --GradientColor1: #ff2530 !important;
+  --GradientColor2: #b3121b !important;
   --MillenniumTextColor-Error: #ff4a54 !important;
 }
 
-/* §1 ============================================================== БАЗА ОКНА */
-body.DesktopUI {
-  background-color: rgb(var(--x4-bg-rgb)) !important;
-  color: rgb(var(--x4-fg-rgb)) !important;
+body {
+  font-family: var(--x4-f-ui) !important;
 }
 
-/* §2 ========================================== СКРОЛЛ / ВЫДЕЛЕНИЕ / ФОКУС */
-body.DesktopUI ::-webkit-scrollbar { width: 10px !important; height: 10px !important; }
-body.DesktopUI ::-webkit-scrollbar-track { background: rgba(0,0,0,.25) !important; }
-body.DesktopUI ::-webkit-scrollbar-thumb {
-  background: rgba(var(--x4-accent-rgb), .55) !important;
-  border: 2px solid transparent !important; background-clip: padding-box !important; border-radius: 6px !important;
-}
-body.DesktopUI :hover::-webkit-scrollbar-thumb { background: rgb(var(--x4-accent-rgb)) !important; background-clip: padding-box !important; }
-body.DesktopUI ::selection { background: rgba(var(--x4-accent-rgb), .30) !important; color: #fff !important; }
-body.DesktopUI :focus-visible { outline-color: rgb(var(--x4-accent-rgb)) !important; }
-
-/* §3 ============================ СТАБИЛЬНЫЕ КЛАССЫ (диалоги / настройки / меню) */
-/* генерик-кнопка Steam */
-body.DesktopUI :where(.DialogButton) {
-  appearance: none !important; background-image: none !important;
-  background-color: rgb(var(--x4-bg3-rgb)) !important;
-  color: rgb(var(--x4-fg-rgb)) !important;
-  border: 1px solid rgba(var(--x4-line-rgb), .12) !important;
-  box-shadow: none !important; border-radius: 3px !important;
-  transition: background .15s ease, box-shadow .15s ease, border-color .15s ease !important;
-}
-body.DesktopUI :where(.DialogButton):hover {
-  background-color: rgba(var(--x4-accent-rgb), .12) !important;
-  border-color: rgba(var(--x4-accent-rgb), .6) !important;
-}
-body.DesktopUI :where(.DialogButton):active { box-shadow: inset 0 2px 6px rgba(0,0,0,.5) !important; }
-/* главная кнопка — красный неон */
-body.DesktopUI :where(.DialogButton).Primary {
-  background: linear-gradient(180deg, rgb(var(--x4-accent-2-rgb)), rgb(var(--x4-accent-dim-rgb))) !important;
-  border-color: rgba(255,120,120,.5) !important; color: #fff !important;
-  box-shadow: 0 0 12px rgba(var(--x4-accent-rgb), .5), inset 0 1px 0 rgba(255,255,255,.22) !important;
-}
-body.DesktopUI :where(.DialogButton).Primary:hover { filter: brightness(1.08); box-shadow: 0 0 20px rgba(var(--x4-accent-rgb), .55), inset 0 1px 0 rgba(255,255,255,.28) !important; }
-
-/* панели / тела диалогов */
-body.DesktopUI .DialogBody,
-body.DesktopUI .DialogContent,
-body.DesktopUI .DialogInnerBody,
-body.DesktopUI .DialogControlsSection,
-body.DesktopUI .DialogContentTransition { background-color: rgb(var(--x4-bg2-rgb)) !important; color: rgb(var(--x4-fg-rgb)) !important; }
-/* заголовки */
-body.DesktopUI .DialogHeader,
-body.DesktopUI .DialogControlsSectionHeader { border-bottom: 1px solid rgba(var(--x4-accent-rgb), .4) !important; color: rgb(var(--x4-fg-rgb)) !important; }
-
-/* поля ввода / дропдауны */
-body.DesktopUI .DialogInput,
-body.DesktopUI .DialogInput_Wrapper,
-body.DesktopUI .DialogTextInputBase,
-body.DesktopUI .DialogDropDown,
-body.DesktopUI .DialogDropDown_CurrentDisplay {
-  background-color: rgb(var(--x4-bg3-rgb)) !important;
-  color: rgb(var(--x4-fg-rgb)) !important;
-  border: 1px solid rgba(var(--x4-line-rgb), .12) !important;
-}
-body.DesktopUI .DialogInput:focus,
-body.DesktopUI .DialogTextInputBase:focus-within { border-color: rgb(var(--x4-accent-rgb)) !important; box-shadow: 0 0 0 1px rgba(var(--x4-accent-rgb), .5) !important; }
-
-/* слайдеры / чекбоксы / тогглы — акцент */
-body.DesktopUI .DialogSlider_Slider .DialogSlider_Grabber { background: rgb(var(--x4-accent-rgb)) !important; }
-body.DesktopUI .DialogCheckbox:checked,
-body.DesktopUI .DialogRoundCheckboxField_Control[class*="Checked"] { background: rgb(var(--x4-accent-rgb)) !important; }
-
-/* контекст-меню */
-body.DesktopUI .ContextMenuPopupBody,
-body.DesktopUI .contextMenuContents {
-  background-color: rgb(var(--x4-bg2-rgb)) !important;
-  border: 1px solid rgba(var(--x4-accent-rgb), .3) !important;
-  color: rgb(var(--x4-fg-rgb)) !important;
-}
-body.DesktopUI .ContextMenuButton:hover,
-body.DesktopUI .contextMenuItem:hover { background-color: rgba(var(--x4-accent-rgb), .18) !important; color: #fff !important; }
-
-/* §4 ===================== БИБЛИОТЕКА (хеши build 1780352834 + префикс-фолбэк) */
-/* фоны окна / баров */
-body.DesktopUI ._1rDh5rXSFZJOqCa4UpnI4z,
-body.DesktopUI ._3WJCt_OkjPA6npxOtguSt5,
-body.DesktopUI div[class*="steamdesktop_ContentFrame_"],
-body.DesktopUI div[class*="library_Container_"] { background-color: rgb(var(--x4-bg-rgb)) !important; }
-body.DesktopUI .SEmVpmXrYVl3OxL1sDFTg,
-body.DesktopUI ._3Z3ohQ8-1NKnCZkbS6fvy,
-body.DesktopUI div[class*="steamdesktop_TopBar_"],
-body.DesktopUI div[class*="steamdesktop_SuperNavBar_"] { background-color: rgb(var(--x4-bg2-rgb)) !important; box-shadow: none !important; }
-
-/* список игр */
-body.DesktopUI ._1e6tjguQEHdYIehM9aRmO5,
-body.DesktopUI div[class*="gamelist_Container_"] { background-color: rgb(var(--x4-bg2-rgb)) !important; }
-body.DesktopUI ._1vO6BoiVslZgs1kqDGdUs8:hover,
-body.DesktopUI div[class*="gamelistentry_Container_"]:hover { background: rgba(var(--x4-fg-rgb), .06) !important; }
-
-/* КНОПКА «ИГРАТЬ»: контейнер — неон, внутренняя зелёная заливка — красный */
-body.DesktopUI ._1FnJ6dPuknQFQ2RTpKTI16,
-body.DesktopUI div[class*="appactionbutton_PlayButtonContainer_"] {
+/* == appactionbutton.css == */
+/* Кнопка <Играть>: зелёная заливка -> красный неон.*/
+._1FnJ6dPuknQFQ2RTpKTI16 {
   border-radius: 3px !important;
-  box-shadow: 0 0 12px rgba(var(--x4-accent-rgb), .55), inset 0 1px 0 rgba(255,255,255,.22) !important;
-}
-body.DesktopUI .MAz4a5CbYdLofX51lonjn,
-body.DesktopUI ._23fSnYfnMQqkgm3ROkJhrO,
-body.DesktopUI .QsZdWtHTlIK9KIKbscNTt,
-body.DesktopUI .sQZ70orTPi-ELUlaS-ywR,
-body.DesktopUI div[class*="appactionbutton_PlayButtonContainer_"][class*="appactionbutton_Green_"] {
-  background: linear-gradient(180deg, rgb(var(--x4-accent-2-rgb)), rgb(var(--x4-accent-dim-rgb))) !important;
-  background-image: linear-gradient(180deg, rgb(var(--x4-accent-2-rgb)), rgb(var(--x4-accent-dim-rgb))) !important;
-  background-color: rgb(var(--x4-accent-dim-rgb)) !important;
-  color: rgb(var(--x4-accent-fg-rgb)) !important;
+  box-shadow: var(--x4-glow), inset 0 1px 0 rgba(255, 255, 255, 0.22) !important;
 }
 
-/* капсула-обложка — hover glow */
-body.DesktopUI ._13w3SEbKLJRUhSyoGQZze8 { transition: transform .18s ease, box-shadow .18s ease; }
-body.DesktopUI ._13w3SEbKLJRUhSyoGQZze8:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 0 14px rgba(var(--x4-accent-rgb), .5), 0 0 0 1px rgba(var(--x4-accent-rgb), .4) !important;
-}
-
-/* акцентные ховеры верхней навигации */
-body.DesktopUI ._3qDWQGB0rtwM3qpXTb11Q-:hover,
-body.DesktopUI ._3UTzw3N80nelbkfxvveH0o:hover { color: rgb(var(--x4-accent-2-rgb)) !important; }
-
-/* §5 ============================================================ ЧАТ / ДРУЗЬЯ */
-.friendsui-container ::-webkit-scrollbar-thumb { background: rgba(var(--x4-accent-rgb), .55) !important; }
-.friendsui-container .chatHeader,
-.friendsui-container .chatRoomGroupHeader { border-bottom: 1px solid rgba(var(--x4-accent-rgb), .35) !important; }
-.friendsui-container .friend:hover { background: rgba(var(--x4-accent-rgb), .12) !important; }
-
-/* §6 ============== ТОЧНЫЕ КЛАССЫ С ЖИВОГО DOM (tools/dom-probe.ps1, окно Steam) =
-   Сняты прямо с рендера — это реальные фон-несущие элементы, которые оставались
-   серыми/синими. Перебивают дефолт Steam. Рефреш при апдейте Steam — повторить
-   dom-probe.ps1 (хеши меняются между крупными сборками, не между перезапусками). */
-
-/* чёрная обёртка окна + главная контент-зона + hero-градиент → графит */
-body.DesktopUI ._1ENHEsrSLcTRtPQFl1F-wL,
-body.DesktopUI ._2Dd4T78PcCTUVgOtDGFY5j { background-color: rgb(var(--x4-bg-rgb)) !important; }
-body.DesktopUI ._3lDczhulqraStjCitLYJ1K {
-  background-image: radial-gradient(100% 100% at 45% 35%, rgba(var(--x4-accent-rgb), .07), rgb(var(--x4-bg-rgb)) 70%) !important;
-}
-/* сайдбар / список игр (градиент 45,51,60 → графит) */
-body.DesktopUI ._3x1HklzyDs4TEjACrRO2tB {
-  background-image: linear-gradient(rgb(var(--x4-bg2-rgb)) 0%, rgb(var(--x4-bg-rgb)) 100%) !important;
-}
-/* шапки/полосы (23,29,37 → панель) */
-body.DesktopUI ._3Z7VQ1IMk4E3HsHvrkLNgo,
-body.DesktopUI ._3vCzSrrXZzZjVJFZNg9SGu { background-color: rgb(var(--x4-bg2-rgb)) !important; box-shadow: none !important; }
-/* СИНЯЯ акцент-полоса Steam (26,159,255) → красный */
-body.DesktopUI ._2iJsgdTIX9Tj23rWnB7Q-c { background-color: rgb(var(--x4-accent-rgb)) !important; }
-
-/* КНОПКА «ИГРАТЬ» — зелёная заливка = background-image градиент на внутреннем
-   элементе ._3ydigb6.../._2AzIX5... → красный градиент; контейнер держит неон */
-body.DesktopUI ._3ydigb6zZAjJ0JCDgHwSYA,
-body.DesktopUI ._2AzIX5kl9k6JnxLfR5H4kX {
-  background-image: linear-gradient(to right, rgb(var(--x4-accent-2-rgb)) 0%, rgb(var(--x4-accent-dim-rgb)) 60%) !important;
-  background-color: rgb(var(--x4-accent-dim-rgb)) !important;
+._3ydigb6zZAjJ0JCDgHwSYA, ._2AzIX5kl9k6JnxLfR5H4kX, ._3cI5TXsFX3bvpR-7EBOtxq {
+  background-image: linear-gradient(180deg, var(--x4-accent-2), var(--x4-accent-dim)) !important;
+  background-color: var(--x4-accent-dim) !important;
   color: #fff !important;
 }
-body.DesktopUI ._1FnJ6dPuknQFQ2RTpKTI16,
-body.DesktopUI ._2zxzStp5qY5M1evOm8keES ._1FnJ6dPuknQFQ2RTpKTI16 {
-  box-shadow: 0 0 12px rgba(var(--x4-accent-rgb), .55) !important; border-radius: 3px !important;
+
+._33cnXIqTRgRr49_FNXIHj6 {
+  text-shadow: inherit !important;
 }
 
-/* §7 ============== СИГНАТУРА ДИЗАЙНА (struct-probe.ps1, окно Steam) ============
-   Реальные классы топбара/навигации/сайдбара с живого DOM. Здесь — фирменные
-   детали 190x4: лого, uppercase-нав, убийство синего, красные риски секций,
-   типографика. Рефреш классов — повторить struct-probe.ps1 при апдейте Steam. */
-
-/* --- ТИПОГРАФИКА: тело UI = Saira (иконочные шрифты у Steam заданы на самих
-   элементах → их не трогаем, перебиваем только наследуемый текст) --- */
-body.DesktopUI,
-body.DesktopUI ._19axKcqYRuaJ8vdYKYmtTQ,
-body.DesktopUI ._2mZ8LlvoUiyeEUtIWuTri,
-body.DesktopUI ._3O48LaKWcabKx07xdrt1TH {
-  font-family: 'Saira', 'Motiva Sans', sans-serif !important;
+/* == appdetailsplaysection.css == */
+._2zxzStp5qY5M1evOm8keES {
+  background: transparent !important;
 }
 
-/* --- ЛОГО 190x4 вместо текста «Steam» в левом углу топбара --- */
-body.DesktopUI .bSKGlAJG2UVWTsntEJY2v {
-  font-size: 0 !important;            /* прячем родной текст «Steam» */
-  display: inline-flex !important; align-items: center !important; gap: 0 !important;
-  font-family: 'Orbitron', sans-serif !important; line-height: 1 !important;
-}
-/* прячем дочернюю иконку Steam (img/svg) — оставляем только вордмарк 190x4 */
-body.DesktopUI .bSKGlAJG2UVWTsntEJY2v > * { display: none !important; }
-body.DesktopUI .bSKGlAJG2UVWTsntEJY2v::before {
-  content: "190"; font-size: 15px !important; font-weight: 800 !important;
-  color: rgb(var(--x4-fg-rgb)) !important; letter-spacing: .5px !important;
-}
-body.DesktopUI .bSKGlAJG2UVWTsntEJY2v::after {
-  content: "x4"; font-size: 15px !important; font-weight: 800 !important;
-  color: rgb(var(--x4-accent-rgb)) !important; letter-spacing: .5px !important;
-  text-shadow: 0 0 8px rgba(var(--x4-accent-rgb), .7) !important;
+._3qDWQGB0rtwM3qpXTb11Q-:hover {
+  color: var(--x4-accent-2) !important;
 }
 
-/* --- НАВИГАЦИЯ Магазин/Библиотека/Сообщество: uppercase + letter-spacing --- */
-body.DesktopUI ._19axKcqYRuaJ8vdYKYmtTQ {
+/* == appdetailssectionheader.css == */
+/* ЗАГОЛОВКИ СЕКЦИЙ ПРАВОЙ ПАНЕЛИ (Активность/Друзья/Достижения...): красная риска.*/
+._1Q2q_tQ9_Eq8YdEHNAHS3F {
+  position: relative !important;
+}
+
+._1Q2q_tQ9_Eq8YdEHNAHS3F::before {
+  content: "" !important;
+  position: absolute !important;
+  left: 0 !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  width: 3px !important;
+  height: 14px !important;
+  background: var(--x4-accent) !important;
+  box-shadow: var(--x4-glow) !important;
+}
+
+._1SQ30LQnUhED7sXI79rmas, ._3i0kopAostOz2IDi9HqmeN {
   text-transform: uppercase !important;
-  letter-spacing: 1.4px !important;
+  letter-spacing: 0.8px !important;
   font-weight: 600 !important;
-  font-family: 'Saira Semi Condensed', 'Saira', sans-serif !important;
-  transition: color .15s ease !important;
-}
-body.DesktopUI ._19axKcqYRuaJ8vdYKYmtTQ:hover { color: rgb(var(--x4-accent-2-rgb)) !important; }
-
-/* --- УБИЙСТВО СИНЕГО --- */
-/* бейдж-уведомление в топбаре (был rgb 25,153,255) */
-body.DesktopUI ._5wILZhsLODVwGfcJ0hKmJ {
-  background-color: rgb(var(--x4-accent-rgb)) !important;
-  box-shadow: 0 0 8px rgba(var(--x4-accent-rgb), .6) !important;
-}
-/* зелёно-зелёный title-area-highlight (drag-подсветка) → красный */
-body.DesktopUI .title-area-highlight {
-  background-image: linear-gradient(to right, rgba(var(--x4-accent-rgb), .5), transparent) !important;
+  color: var(--x4-fg) !important;
 }
 
-/* --- СПИСОК ИГР В САЙДБАРЕ: выделенная игра (была сине-серая 62,78,105) --- */
-body.DesktopUI ._1UBpAXP408E,
-body.DesktopUI ._2-O4ZG0KrnSrzISHBKctFQ._1UBpAXP408E {
-  background-color: rgba(var(--x4-accent-rgb), .16) !important;
-  box-shadow: inset 3px 0 0 rgb(var(--x4-accent-rgb)) !important;   /* красная риска слева */
-}
-body.DesktopUI ._2-O4ZG0KrnSrzISHBKctFQ:hover {
-  background-color: rgba(var(--x4-accent-rgb), .08) !important;
+/* == appportrait.css == */
+._13w3SEbKLJRUhSyoGQZze8 {
+  transition: transform 0.18s ease, box-shadow 0.18s ease !important;
 }
 
-/* --- ЗАГОЛОВКИ КОЛЛЕКЦИЙ (Избранное / Без категории): красная риска + uppercase
-   плюс гасим родной сине-серый градиент полосы --- */
-body.DesktopUI ._2sYIghGVXJr6tsQVvcryy8 {
+._13w3SEbKLJRUhSyoGQZze8:hover {
+  transform: translateY(-3px) !important;
+  box-shadow: var(--x4-glow), 0 0 0 1px var(--x4-accent-line) !important;
+}
+
+/* == bottombar.css == */
+/* Нижний бар (загрузки): графит + красный прогресс.*/
+._3vCzSrrXZzZjVJFZNg9SGu, ._1_yS5UP7el0aN4vntx3dx {
+  background-color: var(--x4-bg-1) !important;
+  border-top: 1px solid rgba(255, 37, 48, 0.18) !important;
+}
+
+.wi0pDywRgOCxhG7OqQNaA {
+  background-color: var(--x4-accent) !important;
+}
+
+._1KrJ3sFAqPBN9mfpaNTU5F svg {
+  color: var(--x4-accent) !important;
+  fill: var(--x4-accent) !important;
+}
+
+._1TdaAqMFadi0UTqilrkelR:hover, ._2foCkpRXhqq0UGVE50BWqj:hover {
+  color: var(--x4-accent-2) !important;
+}
+
+/* == contextmenu.css == */
+/* Контекст-меню в клиенте (модульные классы).*/
+._2EstNjFIIZm_WUSKm5Wt7n, ._14wqdluDeDnnEcg3OSLEmd {
+  background-color: var(--x4-bg-1) !important;
+  border: 1px solid var(--x4-accent-line) !important;
+  color: var(--x4-fg) !important;
+  border-radius: 4px !important;
+}
+
+._1n7Wloe5jZ6fSuvV18NNWI:hover, ._1n7Wloe5jZ6fSuvV18NNWI.active {
+  background-color: var(--x4-accent-soft) !important;
+  color: #fff !important;
+}
+
+.WUOrULWKkGLl3ZUQdDXg8 {
+  background-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+._2Bb4JC5n6anf32WgmTfeMP {
+  color: var(--x4-fg-dim) !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.6px !important;
+}
+
+/* == downloads.css == */
+/* Страница загрузок: Play/Green/TopBar -> красный/панель.*/
+.MAz4a5CbYdLofX51lonjn, .sQZ70orTPi-ELUlaS-ywR {
+  background-image: linear-gradient(180deg, var(--x4-accent-2), var(--x4-accent-dim)) !important;
+  background-color: var(--x4-accent-dim) !important;
+  color: #fff !important;
+}
+
+.SEmVpmXrYVl3OxL1sDFTg {
+  background-color: var(--x4-bg-1) !important;
+}
+
+/* == gamelistbar.css == */
+/* Сайдбар библиотеки: фон-градиент -> графит.*/
+._3x1HklzyDs4TEjACrRO2tB {
+  background-image: linear-gradient(var(--x4-bg-1) 0%, var(--x4-bg-0) 100%) !important;
+}
+
+._2TKEazUUS3TlniZfpc8OOe {
+  background-color: transparent !important;
+}
+
+/* == gamelistentry.css == */
+/* Список игр: hover + ВЫДЕЛЕННАЯ игра (#Selected) с красной риской слева.*/
+._2-O4ZG0KrnSrzISHBKctFQ:hover, ._1vO6BoiVslZgs1kqDGdUs8:hover {
+  background: rgba(232, 237, 244, 0.06) !important;
+}
+
+._1UBpAXP408Ez_L_mXhW5Q9 {
+  background-color: var(--x4-accent-soft) !important;
+  box-shadow: inset 3px 0 0 var(--x4-accent) !important;
+}
+
+._10GdoB3tQXXGFToQ3yY_SK {
+  color: var(--x4-online) !important;
+}
+
+.cNZ3wORgnf1KSNhI2eE2M {
+  color: var(--x4-online) !important;
+}
+
+/* == gamelisthome.css == */
+._3O48LaKWcabKx07xdrt1TH {
+  text-transform: uppercase !important;
+  letter-spacing: 1.2px !important;
+  font-weight: 600 !important;
+}
+
+/* == gamelistsectionheader.css == */
+/* Заголовки коллекций (Избранное/Без категории): красная риска + uppercase.*/
+._2sYIghGVXJr6tsQVvcryy8 {
   background-image: none !important;
   background-color: transparent !important;
   position: relative !important;
 }
-body.DesktopUI ._2sYIghGVXJr6tsQVvcryy8::before {
-  content: ""; position: absolute; left: 0; top: 50%; transform: translateY(-50%);
-  width: 3px; height: 13px; background: rgb(var(--x4-accent-rgb));
-  box-shadow: 0 0 8px rgba(var(--x4-accent-rgb), .6);
-}
-body.DesktopUI ._2mZ8LlvoUiyeEUtIWuTri {
-  text-transform: uppercase !important; letter-spacing: 1px !important;
-  font-weight: 600 !important; color: rgb(var(--x4-fg-rgb)) !important;
-}
-/* «Библиотека»-таб в шапке сайдбара */
-body.DesktopUI ._2TKEazUUS3TlniZfpc8OOe { background-color: transparent !important; }
-body.DesktopUI ._3O48LaKWcabKx07xdrt1TH {
-  text-transform: uppercase !important; letter-spacing: 1.2px !important; font-weight: 600 !important;
+
+._2sYIghGVXJr6tsQVvcryy8::before {
+  content: "" !important;
+  position: absolute !important;
+  left: 0 !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  width: 3px !important;
+  height: 13px !important;
+  background: var(--x4-accent) !important;
+  box-shadow: var(--x4-glow) !important;
 }
 
-/* --- ТОНКАЯ ВЕРХНЯЯ ПОЛОСКА КОНТЕНТА (была 23,29,37) → акцентная нить --- */
-body.DesktopUI ._2CmrnGY-Amtd83ScJkFvx2 {
-  background: linear-gradient(to right, rgba(var(--x4-accent-rgb), .5), transparent 60%) !important;
+._2mZ8LlvoUiyeEUtIWuTri {
+  text-transform: uppercase !important;
+  letter-spacing: 1px !important;
+  font-weight: 600 !important;
+  color: var(--x4-fg) !important;
 }
 
-/* §8 ============= ДЮРАБЕЛЬНЫЙ ХРОМ ОКНА (стабильные префиксы module_Name_hash) ==
-   Рамка/титлбар/менюбар/нижний бар у Steam именуются как `module_ClassName_HASH`
-   — меняется только HASH после `_`, префикс живёт между сборками. Бьём через
-   [class*="module_Name_"] → не ломается при апдейте (в отличие от чистых хешей
-   библиотеки). Это фундамент под кастом-раскладку (Релиз B). */
+._1PxXcZNpN0cCxbnjEoTdYT {
+  background-color: rgba(255, 37, 48, 0.18) !important;
+}
 
-/* титлбар + drag-зона → графит, нижняя акцент-нить */
-body.DesktopUI [class*="steamdesktop_TitleBar_"],
-body.DesktopUI [class*="steamdesktop_DragArea_"],
-body.DesktopUI [class*="steamdesktop_TopBar_"],
-body.DesktopUI [class*="steamdesktop_SuperNavBar_"] {
-  background-color: rgb(var(--x4-bg2-rgb)) !important;
-  border-bottom: 1px solid rgba(var(--x4-accent-rgb), .22) !important;
+/* == library.css == */
+._3xRRJfD2xy95i9NhJxLTp0, ._3BFcmjAaMyP6GTPwc0VyWi, ._2Dd4T78PcCTUVgOtDGFY5j, ._2Nq6ov7A1hGcHXVOXNt_OE {
+  background-color: var(--x4-bg-0) !important;
+}
+
+._34CqrAnD-hs0Fl08rfvoF5 {
+  background-image: linear-gradient(rgba(255, 37, 48, 0.06), transparent) !important;
+}
+
+/* == main.css == */
+._3UTzw3N80nelbkfxvveH0o:hover {
+  color: var(--x4-accent-2) !important;
+}
+
+/* == menu.css == */
+/* Выпадашки меню-бара (Steam/Вид/Друзья...).*/
+._2jXHP0742MyApMUVUM8IFn:hover, ._2uiDecKkKjAq7nimy3uLhG:hover {
+  background-color: var(--x4-accent-soft) !important;
+  color: #fff !important;
+}
+
+._21GPYlKBCLsHQpTsHw_RL_ {
+  background-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+/* == rootmenu.css == */
+/* Лого 190x4 на месте слота Steam + кнопки меню-бара.*/
+.bSKGlAJG2UVWTsntEJY2v {
+  font-size: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 0 !important;
+  font-family: var(--x4-f-display) !important;
+  line-height: 1 !important;
+}
+
+.bSKGlAJG2UVWTsntEJY2v > * {
+  display: none !important;
+}
+
+.bSKGlAJG2UVWTsntEJY2v::before {
+  content: "190" !important;
+  font-size: 15px !important;
+  font-weight: 800 !important;
+  color: var(--x4-fg) !important;
+  letter-spacing: 0.5px !important;
+}
+
+.bSKGlAJG2UVWTsntEJY2v::after {
+  content: "x4" !important;
+  font-size: 15px !important;
+  font-weight: 800 !important;
+  color: var(--x4-accent) !important;
+  letter-spacing: 0.5px !important;
+  text-shadow: 0 0 8px rgba(255, 37, 48, 0.7) !important;
+}
+
+._1Ky59qmywxOUtNcI1cgmkX {
+  background: transparent !important;
+}
+
+._2UyOBeiSdBayaFdRa39N2O {
+  color: var(--x4-fg-dim) !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.6px !important;
+  font-family: var(--x4-f-cond) !important;
+  border-radius: 3px !important;
+  transition: color 0.15s ease, background 0.15s ease !important;
+}
+
+._2UyOBeiSdBayaFdRa39N2O:hover {
+  color: #fff !important;
+  background: var(--x4-accent-soft) !important;
+}
+
+/* == smartscrollcontainer.css == */
+/* Hero-зона страницы игры: радиальный акцент-градиент вместо плоского.*/
+._3lDczhulqraStjCitLYJ1K {
+  background-image: radial-gradient(100% 100% at 45% 35%, rgba(255, 37, 48, 0.07), var(--x4-bg-0) 70%) !important;
+}
+
+/* == steamdesktop.css == */
+/* Рамка/окно: фоны -> графит, бары -> панель, нижняя акцент-нить.*/
+._1ENHEsrSLcTRtPQFl1F-wL, ._1rDh5rXSFZJOqCa4UpnI4z, ._3WJCt_OkjPA6npxOtguSt5, ._3mz8wQ6Q44B8P7pzPP4Iyw, .RGNMWtyj73_-WdhflrmuY {
+  background-color: var(--x4-bg-0) !important;
+}
+
+._3Z7VQ1IMk4E3HsHvrkLNgo, ._3Z3ohQ8-1NKnCZkbS6fvy, ._39oUCO1OuizVPwcnnv88no, ._30vB9DdsPK7VrZAbb5Q1Av {
+  background-color: var(--x4-bg-1) !important;
   box-shadow: none !important;
 }
 
-/* меню-бар (Steam / Вид / Друзья / Игры / Справка) — uppercase + красный hover */
-body.DesktopUI [class*="rootmenu_RootMenuBar_"] { background: transparent !important; }
-body.DesktopUI [class*="rootmenu_RootMenuButton_"] {
-  color: rgb(var(--x4-fg-dim-rgb)) !important;
-  text-transform: uppercase !important; letter-spacing: .6px !important;
-  font-family: 'Saira Semi Condensed','Saira',sans-serif !important;
-  border-radius: 3px !important; transition: color .15s ease, background .15s ease !important;
-}
-body.DesktopUI [class*="rootmenu_RootMenuButton_"]:hover {
-  color: #fff !important; background: rgba(var(--x4-accent-rgb), .14) !important;
+._39oUCO1OuizVPwcnnv88no {
+  border-bottom: 1px solid rgba(255, 37, 48, 0.22) !important;
 }
 
-/* кнопки управления окном (min/max/close) — hover красным, close — неон */
-body.DesktopUI [class*="titlebarcontrols_Button_"] {
-  border-radius: 3px !important; transition: background .15s ease !important;
+._2CmrnGY-Amtd83ScJkFvx2, .UkR3sY319PuaUNuUWks2K {
+  background: var(--x4-bg-3) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  border-radius: 3px !important;
 }
-body.DesktopUI [class*="titlebarcontrols_Button_"]:hover {
-  background: rgba(var(--x4-accent-rgb), .18) !important;
-}
-body.DesktopUI [class*="titlebarcontrols_Button_"]:last-child:hover {
-  background: rgb(var(--x4-accent-rgb)) !important;
-  box-shadow: 0 0 10px rgba(var(--x4-accent-rgb), .6) !important;
-}
-/* колокол-уведомления / баланс кошелька — акцент */
-body.DesktopUI [class*="titlebarcontrols_AnnouncementsButton_"]:hover,
-body.DesktopUI [class*="titlebarcontrols_WalletBalance_"]:hover { color: rgb(var(--x4-accent-2-rgb)) !important; }
 
-/* нижний бар (загрузки/статус) → графит, прогресс-заливка красная */
-body.DesktopUI [class*="bottombar_BottomBarContainer_"] {
-  background-color: rgb(var(--x4-bg2-rgb)) !important;
-  border-top: 1px solid rgba(var(--x4-accent-rgb), .18) !important;
+/* == supernav.css == */
+/* Верхняя навигация (Магазин/Библиотека/Сообщество): uppercase + красный акцент.*/
+._19axKcqYRuaJ8vdYKYmtTQ {
+  text-transform: uppercase !important;
+  letter-spacing: 1.4px !important;
+  font-weight: 600 !important;
+  font-family: var(--x4-f-cond) !important;
+  transition: color 0.15s ease !important;
 }
-body.DesktopUI [class*="bottombar_Icon_"] svg { color: rgb(var(--x4-accent-rgb)) !important; fill: rgb(var(--x4-accent-rgb)) !important; }
-body.DesktopUI [class*="bottombar_Queue_"] [class*="Progress"],
-body.DesktopUI [class*="downloadpage_"] [class*="Progress"] { background-color: rgb(var(--x4-accent-rgb)) !important; }
 
-/* стрелки супернавигации (назад/вперёд) — акцент-hover */
-body.DesktopUI [class*="supernav_Arrow_"]:hover { color: rgb(var(--x4-accent-2-rgb)) !important; }
+._19axKcqYRuaJ8vdYKYmtTQ:hover, ._19axKcqYRuaJ8vdYKYmtTQ.Selected {
+  color: var(--x4-accent-2) !important;
+}
 
-/* поиск/URL-бар в шапке → инпут-стиль */
-body.DesktopUI [class*="steamdesktop_URLBarReplacement_"],
-body.DesktopUI [class*="gamelistbar_SearchInput_"] {
-  background: rgb(var(--x4-bg3-rgb)) !important;
-  border: 1px solid rgba(var(--x4-line-rgb), .12) !important; border-radius: 3px !important;
+._25lBLzuVeYAUG279up4xP8:hover {
+  color: var(--x4-accent-2) !important;
+}
+
+/* == titlebarcontrols.css == */
+/* Колокол/баланс/кнопки окна управления.*/
+._5wILZhsLODVwGfcJ0hKmJ:hover, ._2jphjrSifC6orDT4g_7Wd:hover {
+  color: var(--x4-accent-2) !important;
+}
+
+._2Szzh5sKyGgnLUR870zbDE:hover {
+  background: var(--x4-accent-soft) !important;
+  border-radius: 3px !important;
+}
+
+._1oEwirQksXfZ-3RWWslbAR {
+  color: var(--x4-accent) !important;
+}
+
+/* == updatealert.css == */
+/* Update-алерт (был сине-акцентный) -> красный.*/
+._2iJsgdTIX9Tj23rWnB7Q-c {
+  background-color: var(--x4-accent) !important;
+  color: #fff !important;
 }

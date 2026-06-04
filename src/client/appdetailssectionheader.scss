@@ -1,0 +1,7 @@
+// ЗАГОЛОВКИ СЕКЦИЙ ПРАВОЙ ПАНЕЛИ (Активность/Друзья/Достижения...): красная риска.
+#SectionHeader { position: relative; }
+#SectionHeader::before {
+  content: ""; position: absolute; left: 0; top: 50%; transform: translateY(-50%);
+  width: 3px; height: 14px; background: var(--x4-accent); box-shadow: var(--x4-glow);
+}
+#Label, #LabelText { text-transform: uppercase; letter-spacing: .8px; font-weight: 600; color: var(--x4-fg); }

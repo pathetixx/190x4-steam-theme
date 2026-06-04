@@ -1,0 +1,8 @@
+// Список игр: hover + ВЫДЕЛЕННАЯ игра (#Selected) с красной риской слева.
+#Container:hover, #GameListEntryContainer:hover { background: rgba(232,237,244,.06); }
+#Selected {
+  background-color: var(--x4-accent-soft);
+  box-shadow: inset 3px 0 0 var(--x4-accent);
+}
+#Running { color: var(--x4-online); }
+#FriendIsPlaying { color: var(--x4-online); }

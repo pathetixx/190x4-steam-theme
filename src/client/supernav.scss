@@ -1,0 +1,7 @@
+// Верхняя навигация (Магазин/Библиотека/Сообщество): uppercase + красный акцент.
+#MenuButton {
+  text-transform: uppercase; letter-spacing: 1.4px; font-weight: 600;
+  font-family: var(--x4-f-cond); transition: color .15s ease;
+}
+#MenuButton:hover, #MenuButton.Selected { color: var(--x4-accent-2); }
+#Arrow:hover { color: var(--x4-accent-2); }

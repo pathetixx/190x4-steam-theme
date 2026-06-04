@@ -1,0 +1,39 @@
+// Стабильные НЕхешированные классы Steam (диалоги/настройки/легаси контекст-меню,
+// скролл/выделение). Не в module-карте -> файл в ignore, селекторы литеральные.
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: rgba(0,0,0,.25); }
+::-webkit-scrollbar-thumb { background: rgba(255,37,48,.55); border: 2px solid transparent; background-clip: padding-box; border-radius: 6px; }
+:hover::-webkit-scrollbar-thumb { background: var(--x4-accent); background-clip: padding-box; }
+::selection { background: rgba(255,37,48,.30); color: #fff; }
+:focus-visible { outline-color: var(--x4-accent); }
+
+:where(.DialogButton) {
+  appearance: none; background-image: none; background-color: var(--x4-bg-3);
+  color: var(--x4-fg); border: 1px solid rgba(255,255,255,.12);
+  box-shadow: none; border-radius: 3px;
+  transition: background .15s ease, box-shadow .15s ease, border-color .15s ease;
+}
+:where(.DialogButton):hover { background-color: var(--x4-accent-soft); border-color: rgba(255,37,48,.6); }
+:where(.DialogButton):active { box-shadow: inset 0 2px 6px rgba(0,0,0,.5); }
+:where(.DialogButton).Primary {
+  background: linear-gradient(180deg, var(--x4-accent-2), var(--x4-accent-dim));
+  border-color: rgba(255,120,120,.5); color: #fff;
+  box-shadow: var(--x4-glow), inset 0 1px 0 rgba(255,255,255,.22);
+}
+:where(.DialogButton).Primary:hover { filter: brightness(1.08); box-shadow: var(--x4-glow-lg), inset 0 1px 0 rgba(255,255,255,.28); }
+
+.DialogBody, .DialogContent, .DialogInnerBody, .DialogControlsSection, .DialogContentTransition {
+  background-color: var(--x4-bg-1); color: var(--x4-fg);
+}
+.DialogHeader, .DialogControlsSectionHeader { border-bottom: 1px solid var(--x4-accent-line); color: var(--x4-fg); }
+.DialogInput, .DialogInput_Wrapper, .DialogTextInputBase, .DialogDropDown, .DialogDropDown_CurrentDisplay {
+  background-color: var(--x4-bg-3); color: var(--x4-fg); border: 1px solid rgba(255,255,255,.12);
+}
+.DialogInput:focus, .DialogTextInputBase:focus-within { border-color: var(--x4-accent); box-shadow: 0 0 0 1px rgba(255,37,48,.5); }
+.DialogSlider_Slider .DialogSlider_Grabber { background: var(--x4-accent); }
+.DialogCheckbox:checked, .DialogRoundCheckboxField_Control[class*="Checked"] { background: var(--x4-accent); }
+
+.ContextMenuPopupBody, .contextMenuContents { background-color: var(--x4-bg-1); border: 1px solid var(--x4-accent-line); color: var(--x4-fg); }
+.ContextMenuButton:hover, .contextMenuItem:hover { background-color: var(--x4-accent-soft); color: #fff; }
+
+.title-area-highlight { background-image: linear-gradient(to right, rgba(255,37,48,.5), transparent); }

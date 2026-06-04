@@ -1,13 +1,7 @@
-// Кнопка «Играть»: зелёная заливка -> красный неон. Селекторы #ReadableName
-// резолвятся steam-theming-utils в актуальные классы Steam на build.
-#PlayButtonContainer {
-  border-radius: 3px;
-  box-shadow: var(--x4-glow), inset 0 1px 0 rgba(255, 255, 255, 0.22);
-}
-
-#PlayButton,
-#ButtonChild {
+// Кнопка <Играть>: зелёная заливка -> красный неон.
+#PlayButtonContainer { border-radius: 3px; box-shadow: var(--x4-glow), inset 0 1px 0 rgba(255,255,255,.22); }
+#PlayButton, #ButtonChild, #Green {
   background-image: linear-gradient(180deg, var(--x4-accent-2), var(--x4-accent-dim));
-  background-color: var(--x4-accent-dim);
-  color: #fff;
+  background-color: var(--x4-accent-dim); color: #fff;
 }
+#ButtonText { text-shadow: inherit; }
