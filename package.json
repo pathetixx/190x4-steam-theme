@@ -1,0 +1,17 @@
+{
+  "name": "steam-theme-190x4",
+  "private": true,
+  "type": "module",
+  "version": "1.1.0",
+  "scripts": {
+    "build": "postcss \"src/client/**/*.scss\" --base src --dir dist --ext css && node scripts/concat.mjs"
+  },
+  "devDependencies": {
+    "@csstools/postcss-sass": "^5.1.1",
+    "postcss": "^8.4.47",
+    "postcss-cli": "^11.0.1",
+    "postcss-discard-empty": "^7.0.1",
+    "postcss-scss": "^4.0.9",
+    "steam-theming-utils": "^3.5.0"
+  }
+}
