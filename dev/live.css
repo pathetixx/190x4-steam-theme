@@ -1,32 +1,61 @@
 /* ============================================================================
-   190x4 · LIVE DEV CSS
-   ШАГ 0b: ГРОМКИЙ ПРУФ — fixed-оверлей поверх ВСЕГО (max z-index), его не
-   перекрыть контейнером. Видишь magenta-рамку по всему окну + "X4 LIVE OK"
-   вверху => инжект в правильном окне, петля рабочая. Тогда метку снимаю.
+   190x4 · LIVE DEV CSS — ШАГ 1: токены + KILL синего + near-black фундамент.
+   Durable: бьём по системным переменным Steam + стабильным префиксам рамки.
+   Что останется синим/светлым — добьём по выхлопу blue-scanner точечно.
    ============================================================================ */
 
-body.DesktopUI::before {
-  content: "X4 LIVE OK" !important;
-  position: fixed !important;
-  inset: 0 !important;
-  border: 8px solid magenta !important;
-  z-index: 2147483647 !important;
-  pointer-events: none !important;
-  color: magenta !important;
-  font: 700 42px/1 monospace !important;
-  display: flex !important;
-  align-items: flex-start !important;
-  justify-content: center !important;
-  padding-top: 90px !important;
-  box-sizing: border-box !important;
-}
-
-/* заодно перебиваем системный акцент Steam в красный (безвредно) */
 :root, body.DesktopUI {
+  /* --- палитра 190x4 --- */
+  --x4-bg0: #07090d; --x4-bg1: #0d1016; --x4-bg2: #11151d; --x4-bg3: #161b24;
+  --x4-acc: #ff2530; --x4-acc2: #ff3a44; --x4-dim: #b3121b;
+  --x4-fg: #e8edf4; --x4-fgdim: #8a93a3; --x4-line: rgba(255,255,255,.07);
+
+  /* --- ноль синего: перебиваем системный акцент Steam --- */
   --SystemAccentColor: #ff2530 !important;
   --SystemAccentColorLight1: #ff3a44 !important;
   --SystemAccentColorLight2: #ff5a62 !important;
   --SystemAccentColorLight3: #ff7a82 !important;
   --SystemAccentColorDark1: #d4121b !important;
+  --SystemAccentColorDark2: #a30d15 !important;
+  --SystemAccentColorDark3: #4d0509 !important;
   --SystemAccentColor-RGB: 255,37,48 !important;
+  --SystemAccentColorLight1-RGB: 255,58,68 !important;
+  --SystemAccentColorLight2-RGB: 255,90,98 !important;
+  --SystemAccentColorLight3-RGB: 255,122,130 !important;
+  --SystemAccentColorDark1-RGB: 212,18,27 !important;
+  /* меню/указатели/idle */
+  --virtualmenu-accent: #ff2530 !important;
+  --virtualmenupointer-color: #ff2530 !important;
+  --virtualmenu-bg-hover: #3a0d12 !important;
+  --idle-status: #ff7a82 !important;
+  --gpfocus-color: #ff2530 !important;
+  --gpfocus-glow-color: rgba(255,37,48,.5) !important;
 }
+
+/* --- near-black фон на крупных контейнерах (префиксы + известные хеши) --- */
+body.DesktopUI [class*="steamdesktop_OuterFrame_"],
+body.DesktopUI [class*="steamdesktop_ContentFrame_"],
+body.DesktopUI [class*="steamdesktop_Wrapper_"],
+body.DesktopUI [class*="library_Container_"],
+body.DesktopUI ._1rDh5rXSFZJOqCa4UpnI4z {
+  background-color: var(--x4-bg0) !important;
+  background-image: none !important;
+}
+
+body.DesktopUI [class*="steamdesktop_TopBar_"],
+body.DesktopUI [class*="rootmenu_RootMenuBar_"] {
+  background-color: var(--x4-bg1) !important;
+}
+
+body.DesktopUI [class*="gamelistbar_Container_"],
+body.DesktopUI [class*="gamelist_Container_"] {
+  background: var(--x4-bg1) !important;
+}
+
+/* --- скроллбар --- */
+body.DesktopUI ::-webkit-scrollbar { width: 10px !important; height: 10px !important; }
+body.DesktopUI ::-webkit-scrollbar-track { background: var(--x4-bg0) !important; }
+body.DesktopUI ::-webkit-scrollbar-thumb {
+  background: var(--x4-dim) !important; border-radius: 2px !important;
+}
+body.DesktopUI ::-webkit-scrollbar-thumb:hover { background: var(--x4-acc) !important; }
