@@ -46,11 +46,11 @@ A dark, high-contrast reskin built for [Millennium](https://github.com/SteamClie
 
 Millennium must already be installed ([guide](https://docs.steambrew.app/users/installing)).
 
-1. Copy this folder into your Steam skins directory:
+1. Copy this folder into the Millennium themes directory:
    ```
-   <Steam>/steamui/skins/190x4/
+   <Steam>/millennium/themes/190x4/
    ```
-   On Windows that's usually `C:\Program Files (x86)\Steam\steamui\skins\190x4\`.
+   On Windows that's usually `C:\Program Files (x86)\Steam\millennium\themes\190x4\`.
    The `design/` folder is for development only and can be omitted.
 2. In Steam, open the **Millennium → Themes** menu, select **190x4**, and restart Steam.
 3. Tweak colors in **Settings → Themes → Edit** (values defined in `colors.css`).

@@ -46,11 +46,11 @@
 
 Millennium должен быть уже установлен ([инструкция](https://docs.steambrew.app/users/installing)).
 
-1. Скопировать папку в каталог скинов Steam:
+1. Скопировать папку в каталог тем Millennium:
    ```
-   <Steam>/steamui/skins/190x4/
+   <Steam>/millennium/themes/190x4/
    ```
-   На Windows обычно `C:\Program Files (x86)\Steam\steamui\skins\190x4\`.
+   На Windows обычно `C:\Program Files (x86)\Steam\millennium\themes\190x4\`.
    Папку `design/` можно не копировать — она для разработки.
 2. В Steam открыть меню **Millennium → Themes**, выбрать **190x4**, перезапустить Steam.
 3. Цвета правятся в **Settings → Themes → Edit** (значения из `colors.css`).
