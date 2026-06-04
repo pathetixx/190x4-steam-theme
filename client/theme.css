@@ -183,12 +183,48 @@ body {
   text-shadow: inherit !important;
 }
 
+/* == appdetailsfeatureicon.css == */
+/* Стат-блоки экшн-бара (Облачные сохр./Посл.запуск/Вы играли/Достижения):*/
+/* иконки -> красный, лейблы -> uppercase (эталон 03-game).*/
+._2RwHEhnDQNfN31QK-EOHy7 {
+  color: var(--x4-accent) !important;
+}
+
+._2RwHEhnDQNfN31QK-EOHy7 svg {
+  color: var(--x4-accent) !important;
+  fill: var(--x4-accent) !important;
+}
+
+._1VoVzLPXjhlaguJLgO8htG {
+  text-transform: uppercase !important;
+  letter-spacing: 0.8px !important;
+  font-weight: 600 !important;
+  color: var(--x4-fg-dim) !important;
+}
+
 /* == appdetailsplaysection.css == */
 ._2zxzStp5qY5M1evOm8keES {
   background: transparent !important;
 }
 
-._3qDWQGB0rtwM3qpXTb11Q-:hover {
+._3fLo166MlaNqP8r8tTyRz {
+  border-top: 1px solid var(--x4-accent-line) !important;
+}
+
+._3qDWQGB0rtwM3qpXTb11Q-:hover, ._2v1XDHrL4pTW4qCXaYUPG6:hover {
+  color: var(--x4-accent-2) !important;
+}
+
+/* == appdetailsprimarylinkssection.css == */
+/* Табы под экшн-баром (Страница в магазине/Доп.контент/...): uppercase + красный ховер.*/
+.DY4_wSF8h9T5o46hO5I9V, ._1b6LYWVijW-9E4YV0keDWZ, ._2NqVq4PVcmWt9enYtvzRf-, ._2sNDjgK9EWiPLdNGkjun-w {
+  text-transform: uppercase !important;
+  letter-spacing: 0.8px !important;
+  font-weight: 600 !important;
+  transition: color 0.15s ease !important;
+}
+
+.DY4_wSF8h9T5o46hO5I9V:hover, ._1b6LYWVijW-9E4YV0keDWZ:hover, ._2NqVq4PVcmWt9enYtvzRf-:hover {
   color: var(--x4-accent-2) !important;
 }
 

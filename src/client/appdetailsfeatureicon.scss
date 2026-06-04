@@ -1,0 +1,5 @@
+// Стат-блоки экшн-бара (Облачные сохр./Посл.запуск/Вы играли/Достижения):
+// иконки -> красный, лейблы -> uppercase (эталон 03-game).
+#Icon { color: var(--x4-accent); }
+#Icon svg { color: var(--x4-accent); fill: var(--x4-accent); }
+#Label { text-transform: uppercase; letter-spacing: .8px; font-weight: 600; color: var(--x4-fg-dim); }

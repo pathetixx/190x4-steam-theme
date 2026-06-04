@@ -1,0 +1,6 @@
+// Табы под экшн-баром (Страница в магазине/Доп.контент/...): uppercase + красный ховер.
+#Anchor, #Link, #NavButton, #Text {
+  text-transform: uppercase; letter-spacing: .8px; font-weight: 600;
+  transition: color .15s ease;
+}
+#Anchor:hover, #Link:hover, #NavButton:hover { color: var(--x4-accent-2); }
