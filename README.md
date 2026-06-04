@@ -2,7 +2,7 @@
 
 # 190×4
 
-**Cyberpunk command-center colorway for the Steam Client — red neon over graphite.**
+**Cyberpunk command-center theme for the Steam Client — red neon over graphite.**
 
 A dark [Millennium](https://github.com/SteamClientHomebrew/Millennium) theme.
 
@@ -24,23 +24,32 @@ A dark [Millennium](https://github.com/SteamClientHomebrew/Millennium) theme.
 |---|---|
 | ![Store](design/screenshots/01-store.png) | ![Design system](design/screenshots/10-design-system.png) |
 
-> These renders in `design/` are the **target identity** (the long-term bespoke layout).
-> The current release is a 190×4 **colorway** — see *How it works* below.
-
 ---
 
 ## How it works
 
-The Steam client is rendered with fully **hashed** CSS class names that change with
-every Steam build, so a recolor can't be authored blind. This theme therefore runs the
-190×4 palette on top of the **[SpaceTheme](https://github.com/SpaceTheme/Steam)** selector
-engine (MIT) — a current, maintained map of those classes. All colors come from a single
-palette file (`src/css/root.css`); everything else is SpaceTheme's structural CSS.
+Steam renders its client with **hashed** CSS class names (`._3cI5TX…`) that change with
+every build — so you can't target them directly and have it survive updates. But the
+source classes are **semantically named**, and Steam keeps that registry inside its own
+webpack modules (CSS-module objects whose exports are all strings).
 
-Brand rules applied in the palette:
-- **Red `#ff2530` = accent / Play / selected / connected** (Steam's blue is remapped to red).
-- **Green `#38e07b` — online status only.**
-- Graphite surfaces, sharp 3px corners.
+This theme reads that registry at runtime (`client/resolver.js`), resolves each **stable
+name → current hash**, and tags matching elements with our own stable attributes
+(`data-x4="play-button"`, …). The CSS (`client/client.css`) then styles those attributes.
+No copied hash lists, no chasing Steam builds.
+
+```
+skin.json            manifest (RootColors, Steam-WebKit, Patches)
+theme/colors.css     palette (RootColors) — edit colors here
+client/resolver.js   reads Steam's class registry → tags elements data-x4
+client/client.css    foundation + rules on the data-x4 hooks + logo
+webkit/store.css     store & community (stable classes, targeted directly)
+tools/dump-classmap.js  console snippet: dump the full name→hash registry
+design/              bespoke reference mockups (north-star)
+```
+
+**Brand rules:** red `#ff2530` = accent / Play / selected / connected (Steam blue is
+remapped); green `#38e07b` = online status only; graphite surfaces, sharp corners.
 
 ---
 
@@ -48,30 +57,25 @@ Brand rules applied in the palette:
 
 Millennium must already be installed ([guide](https://docs.steambrew.app/users/installing)).
 
-1. Download the release zip and extract the `190x4/` folder into:
+1. Download the release zip, extract the `190x4/` folder into:
    ```
    <Steam>/millennium/themes/190x4/
    ```
-   On Windows that's usually `C:\Program Files (x86)\Steam\millennium\themes\190x4\`.
-2. In Steam, open **Millennium → Themes**, select **190x4**, and restart Steam.
-3. Tweak options (layout toggles, sidebar, fonts, border radius) in the Millennium theme
-   settings; recolor by editing `src/css/root.css`.
+   On Windows usually `C:\Program Files (x86)\Steam\millennium\themes\190x4\`.
+2. In Steam open **Millennium → Themes**, select **190x4**, restart Steam.
+3. Edit colors in `theme/colors.css`.
 
 ---
 
-## Customizing
+## Mapping the client (DevTools)
 
-- **Colors:** edit the `--st-*` variables in `src/css/root.css` (values are `R, G, B`).
-- **Layout/behavior:** the Millennium theme settings expose SpaceTheme's option toggles
-  (sidebar position, what's-new, banner, fonts, etc.).
-- `design/` holds the bespoke 190×4 reference mockups (HTML + screenshots) — the design
-  north-star for future passes.
+The resolver targets stable names; to pin them precisely for the current build:
 
----
+1. Enable Millennium **developer mode** → right-click the Steam window → **Inspect** →
+   **Console**.
+2. With the theme installed, run `x4.dump()` (or paste `tools/dump-classmap.js`). It copies
+   the full `{ ClassName: hash }` registry to the clipboard.
+3. Save it as `classmap.json` — from that list the `TARGETS` in `client/resolver.js` get
+   finalized to the exact names your build exposes.
 
-## Credits
-
-- Selector engine & structural CSS: **[SpaceTheme/Steam](https://github.com/SpaceTheme/Steam)**
-  by SpaceEnergy, MIT — see [`LICENSE`](LICENSE). This project is a 190×4 palette/colorway
-  on top of it.
-- Framework: **[Millennium](https://github.com/SteamClientHomebrew/Millennium)**.
+`x4.findClass("PlayButton")` resolves a single name in the console.

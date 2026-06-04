@@ -1,0 +1,63 @@
+/* ============================================================================
+   190x4 — STEAM THEME · RootColors (палитра)
+   Объявлен в skin.json как RootColors → Millennium инжектит этот :root во все окна
+   Steam и даёт крутить значения в Settings → Themes → Edit.
+   Держать ТОЛЬКО :root. Менять цвета темы — здесь.
+   Помимо своих токенов 190x4 — переопределяем ИЗВЕСТНЫЕ core-переменные Steam,
+   чтобы перекрасить акцент/фон без привязки к хеш-классам.
+   ============================================================================ */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700;800&family=Saira:wght@300;400;500;600;700&family=Saira+Semi+Condensed:wght@400;500;600;700&display=swap');
+
+:root {
+  /* --- surfaces (графит) --- */
+  --x4-bg-0: #07090d;          /* самый глубокий фон окна */
+  --x4-bg-1: #0d1016;          /* панели */
+  --x4-bg-2: #11151d;          /* приподнятые карточки / hover-фон */
+  --x4-bg-3: #161b25;          /* инпуты, well */
+  --x4-line:   rgba(255,255,255,.06);
+  --x4-line-2: rgba(255,255,255,.10);
+
+  /* --- accent — КРАСНЫЙ = успех/Play/connected/выбранное --- */
+  --x4-accent:      #ff2530;
+  --x4-accent-2:    #ff3a44;   /* hover/lighter */
+  --x4-accent-dim:  #b3121b;
+  --x4-accent-deep: #4a0a0f;
+  --x4-accent-soft: rgba(255,37,48,.12);
+  --x4-accent-line: rgba(255,37,48,.40);
+  --x4-glow:    0 0 12px rgba(255,37,48,.55);
+  --x4-glow-lg: 0 0 22px rgba(255,37,48,.45), 0 0 4px rgba(255,37,48,.8);
+
+  /* --- text --- */
+  --x4-text-hi:  #e8edf4;
+  --x4-text-md:  #b6bfcd;
+  --x4-text-lo:  #8a93a3;
+  --x4-text-dis: #555c6a;
+
+  /* --- status (зелёный — ТОЛЬКО онлайн-точка) --- */
+  --x4-online:  #38e07b;
+  --x4-offline: #59616f;
+  --x4-warn:    #ffb020;
+
+  /* --- geometry / type --- */
+  --x4-r-sm: 2px; --x4-r-md: 3px; --x4-r-lg: 5px;
+  --x4-f-display: 'Orbitron', sans-serif;     /* лого + верхняя навигация */
+  --x4-f-ui: 'Saira', sans-serif;             /* весь UI */
+  --x4-f-cond: 'Saira Semi Condensed', 'Saira', sans-serif;
+  --x4-ease: cubic-bezier(.2,.7,.3,1);
+
+  /* ====================================================================
+     ИЗВЕСТНЫЕ CORE-ПЕРЕМЕННЫЕ STEAM → бренд.
+     Не хеш-классы, а токены клиента: устойчивы к апдейтам. Перепроверять в
+     DevTools — Valve иногда переименовывает.
+     ==================================================================== */
+  --main-bg-color: var(--x4-bg-0);
+  --header-bg-color: var(--x4-bg-0);
+
+  --SystemAccentColor: var(--x4-accent);
+  --SystemAccentColorLight1: var(--x4-accent-2);
+  --SystemAccentColorLight2: var(--x4-accent-2);
+  --SystemAccentColorDark1: var(--x4-accent-dim);
+  --SystemAccentColorDark2: var(--x4-accent-deep);
+  --highlight-color: var(--x4-accent);
+  --gpFocusRingColor: var(--x4-accent);
+}

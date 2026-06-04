@@ -1,0 +1,58 @@
+/* ============================================================================
+   190x4 — STEAM THEME · store.css  (Steam-WebKit)
+   Магазин/сообщество (*.steampowered.com, steamcommunity.com) + in-game overlay.
+   Эти страницы — обычный HTML со стабильными «человеческими» классами, поэтому
+   адресуем напрямую (в отличие от клиента, где нужен resolver). Цвета — colors.css.
+   ============================================================================ */
+html, body, .responsive_page_frame, #global_header, .pagecontent {
+  background: var(--x4-bg-0) !important; color: var(--x4-text-md);
+  font-family: var(--x4-f-ui) !important;
+}
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: rgba(0,0,0,.25); }
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(var(--x4-accent-dim), var(--x4-accent-deep));
+  border: 2px solid transparent; background-clip: padding-box; border-radius: 6px;
+}
+::-webkit-scrollbar-thumb:hover { background: var(--x4-accent); background-clip: padding-box; }
+::selection { background: var(--x4-accent-soft); color: #fff; }
+a { color: var(--x4-text-md); }
+a:hover { color: var(--x4-accent); }
+
+/* верхняя навигация (Orbitron) */
+#global_header .supernav { font-family: var(--x4-f-display) !important; text-transform: uppercase; letter-spacing: 1px; }
+#global_header .supernav:hover { color: #fff !important; text-shadow: 0 0 10px rgba(255,37,48,.35); }
+
+/* панели/карточки */
+.home_page_content, .apphub_HomeHeaderContent, .game_area_purchase_game,
+.block, .home_ctn .home_section { background: var(--x4-bg-1); border: 1px solid var(--x4-line); }
+
+/* зелёные/синие кнопки Steam → красный неон */
+.btn_green_steamui, .btnv6_green_white_innerfade, .btn_addtocart {
+  background: linear-gradient(180deg, var(--x4-accent-2), var(--x4-accent-dim)) !important;
+  color: #fff !important; box-shadow: var(--x4-glow); border-radius: var(--x4-r-md);
+}
+.btn_green_steamui:hover, .btnv6_green_white_innerfade:hover { box-shadow: var(--x4-glow-lg) !important; filter: brightness(1.06); }
+.btnv6_blue_hoverfade, .btn_grey_steamui {
+  background: rgba(255,255,255,.02) !important; border: 1px solid var(--x4-line-2) !important; color: var(--x4-text-hi) !important;
+}
+
+/* скидки/цены → красный, не зелёный */
+.discount_pct, .discount_block { background: var(--x4-accent) !important; color: #fff !important; box-shadow: var(--x4-glow); }
+.discount_final_price { color: var(--x4-accent) !important; }
+
+/* карточки игр: hover-подъём + glow */
+.tab_item:hover, .store_capsule:hover, .home_marketing_message:hover, .apphub_Card:hover {
+  transform: translateY(-3px); box-shadow: var(--x4-glow), 0 0 0 1px var(--x4-accent-line);
+  transition: transform .18s var(--x4-ease), box-shadow .18s var(--x4-ease);
+}
+
+/* поля ввода */
+.gray_bevel input, #store_nav_search_term, .searchbox input {
+  background: var(--x4-bg-3) !important; border: 1px solid var(--x4-line-2) !important;
+  color: var(--x4-text-hi) !important; border-radius: var(--x4-r-md);
+}
+.gray_bevel input:focus, #store_nav_search_term:focus {
+  border-color: var(--x4-accent-line) !important;
+  box-shadow: inset 0 0 0 1px rgba(255,37,48,.25), 0 0 0 3px rgba(255,37,48,.10) !important;
+}
