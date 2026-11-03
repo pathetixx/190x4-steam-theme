@@ -336,3 +336,4 @@ button{{DialogButton}}, {{DialogButton}} { border-radius: 0 !important; backgrou
 {{SectionList}} > * { background: transparent !important; }
 {{TopSection}} > *, {{TopSection}} > * > * { background-color: transparent !important; }
 {{HeroAndLogo}}{{Empty@HeroAndLogo}} { background: transparent !important; }
+{{URLBar}}, {{URLBarText}} { background: rgba(5, 4, 5, .7) !important; }

@@ -44,8 +44,9 @@ namespace Bloodmoon
             using (var k = Registry.CurrentUser.OpenSubKey(RunKey, true)) if (k != null) k.DeleteValue("190x4-Bloodmoon", false);
             Registry.CurrentUser.DeleteSubKeyTree(UninstallKey, false);
             if (steam != null && SteamRunning() && !GameRunning()) { status("Перезапускаю Steam"); RestartSteam(steam, status); }
-            // сам себя exe удалить не может: это сделает cmd после выхода
-            Process.Start(new ProcessStartInfo("cmd.exe", "/c timeout /t 3 /nobreak >nul & rmdir /s /q \"" + Paths.InstallDir + "\"") { CreateNoWindow = true, UseShellExecute = false });
+            // Сам себя exe удалить не может, а окно может оставаться открытым: cmd повторяет попытки до двух минут.
+            var dir = "\"" + Paths.InstallDir + "\"";
+            Process.Start(new ProcessStartInfo("cmd.exe", "/c for /l %i in (1,1,60) do (timeout /t 2 /nobreak >nul & rmdir /s /q " + dir + " 2>nul & if not exist " + dir + " exit)") { CreateNoWindow = true, UseShellExecute = false });
         }
 
         // Обновление: временный exe ждёт выхода старого, заменяет его и запускает новую версию.

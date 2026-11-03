@@ -13,7 +13,7 @@ namespace Bloodmoon
     sealed class SetupForm : Form
     {
         const int W = 760, H = 440;
-        readonly Image bg = Art("setup-bg.jpg"), word = Art("wordmark.png"), btn = Art("button.jpg");
+        readonly Image bg = Art("setup-bg.png"), word = Art("wordmark.png"), btn = Art("button.jpg");
         readonly PrivateFontCollection fonts = new PrivateFontCollection();
         readonly bool uninstallMode;
         string status = "", button;
@@ -65,7 +65,8 @@ namespace Bloodmoon
         {
             var g = e.Graphics;
             g.SmoothingMode = SmoothingMode.AntiAlias;
-            g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+            // бикубик GDI+ на резких тёмных краях арта даёт белые точки
+            g.InterpolationMode = InterpolationMode.HighQualityBilinear;
             g.TextRenderingHint = TextRenderingHint.AntiAliasGridFit;
             g.DrawImage(bg, new RectangleF(0, 0, ClientSize.Width, ClientSize.Height));
             var wr = 620f * k;

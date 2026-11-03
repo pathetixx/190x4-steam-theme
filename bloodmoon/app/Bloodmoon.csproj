@@ -20,7 +20,7 @@
     <EmbeddedResource Include="..\out\web.css" LogicalName="web.css" />
     <EmbeddedResource Include="..\out\resolver.js" LogicalName="resolver.js" />
     <EmbeddedResource Include="..\out\recolor.js" LogicalName="recolor.js" />
-    <EmbeddedResource Include="Assets\setup-bg.jpg" LogicalName="setup-bg.jpg" />
+    <EmbeddedResource Include="Assets\setup-bg.png" LogicalName="setup-bg.png" />
     <EmbeddedResource Include="Assets\wordmark.png" LogicalName="wordmark.png" />
     <EmbeddedResource Include="Assets\button.jpg" LogicalName="button.jpg" />
     <EmbeddedResource Include="Assets\Oswald-700.ttf" LogicalName="Oswald-700.ttf" />
