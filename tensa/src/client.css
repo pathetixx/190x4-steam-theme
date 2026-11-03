@@ -333,3 +333,5 @@ button{{DialogButton}}, {{DialogButton}} { border-radius: 0 !important; backgrou
 /* --- загрузки: без красной плашки слева от графика --- */
 {{EmptyTransfers}} { background: transparent !important; }
 {{SectionList}} > * { background: transparent !important; }
+{{TopSection}} > *, {{TopSection}} > * > * { background-color: transparent !important; }
+{{HeroAndLogo}}{{Empty@HeroAndLogo}} { background: transparent !important; }
