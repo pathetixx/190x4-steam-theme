@@ -133,7 +133,9 @@ namespace Bloodmoon
                     }
                     css = await job.ConfigureAwait(false);
                 }
+                if (string.IsNullOrWhiteSpace(css)) throw new InvalidDataException("пустой ответ");
                 var body = Utf8.GetBytes(Recolor.Sheet(href, css));
+                Paths.Log("css ok " + u.Host + " " + body.Length);
                 // кеш только ускоряет: если записать не вышло, стиль всё равно отдаём
                 try
                 {
