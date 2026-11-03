@@ -39,7 +39,11 @@ $popupHook = @'
   }
   if(window.__x4bmhooked)return;
   window.__x4bmhooked=1;
-  g_PopupManager.AddPopupCreatedCallback(function(p){apply(p.window||p.m_popup);});
+  g_PopupManager.AddPopupCreatedCallback(function(p){
+    // the in-game overlay sits on top of the game and must stay transparent
+    if(/^SP (?!Desktop)/.test(p.m_strName||""))return;
+    apply(p.window||p.m_popup);
+  });
 })();
 '@
 
@@ -190,6 +194,12 @@ while ($true) {
       foreach ($t in $targets) {
         if ($t["type"] -ne "page" -or $t["id"] -eq $sharedId) { continue }
         $url = [string]$t["url"]
+        # the in-game overlay gets its title after it is created, so a theme applied early is taken off here
+        if (([string]$t["title"]).StartsWith("SP ")) {
+          if ($seen.ContainsKey($t["id"])) { try { [void](Invoke-Page $t["webSocketDebuggerUrl"] $clearJs) } catch {}; $seen.Remove($t["id"]) }
+          [void](Invoke-Page $t["webSocketDebuggerUrl"] "(function(){var s=document.getElementById('x4bloodmoon');if(s){s.remove();if(window.__x4recolor)window.__x4recolor.revert();}return 1;})()")
+          continue
+        }
         $isClient = $url.StartsWith("about:blank")
         $isWeb = $url -match "^https://([a-z0-9-]+\.)?(steampowered|steamcommunity)\.com"
         if (-not $isClient -and -not $isWeb) { continue }

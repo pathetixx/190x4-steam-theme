@@ -47,7 +47,8 @@
 
 /* --- основа: шрифт, бумага --- */
 body, body * { font-family: "Oswald", "Arial Narrow", Arial, sans-serif !important; letter-spacing: .015em; }
-body { background: var(--t-black) !important; color: var(--t-bone); }
+/* у body фона нет: всплывающие уведомления и другие прозрачные окна должны оставаться прозрачными */
+body { color: var(--t-bone); }
 {{Wrapper@OuterFrame}}, {{ForceOpaqueBackground}} { background: var(--t-black) !important; }
 {{OuterFrame}} {
   background: url(assets/paper.webp) center / cover no-repeat var(--t-black) !important;
