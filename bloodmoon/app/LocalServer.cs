@@ -125,10 +125,16 @@ namespace Bloodmoon
                 using (var w = new WebClient { Encoding = Utf8 })
                     css = await w.DownloadStringTaskAsync(u).ConfigureAwait(false);
                 var body = Utf8.GetBytes(Recolor.Sheet(href, css));
-                var tmp = path + ".tmp";
-                File.WriteAllBytes(tmp, body);
-                if (File.Exists(path)) File.Delete(path);
-                File.Move(tmp, path);
+                // кеш только ускоряет: если записать не вышло, стиль всё равно отдаём
+                try
+                {
+                    Directory.CreateDirectory(cacheDir);
+                    var tmp = path + ".tmp";
+                    File.WriteAllBytes(tmp, body);
+                    if (File.Exists(path)) File.Delete(path);
+                    File.Move(tmp, path);
+                }
+                catch (Exception e) { Paths.Log("cache: " + e.Message); }
                 return body;
             }
             catch (Exception e) { Paths.Log("css " + u.Host + ": " + e.Message); return null; }

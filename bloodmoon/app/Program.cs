@@ -30,6 +30,7 @@ namespace Bloodmoon
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new SetupForm(cmd == "--uninstall"));
+            if (Setup.CleanupOnExit) Setup.RunCleanup();
             return 0;
         }
 
