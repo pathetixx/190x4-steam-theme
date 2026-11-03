@@ -282,7 +282,6 @@ hr{{Separator@MenuItem}} {
 
 /* --- загрузки --- */
 {{DownloadGraph}}, {{DownloadsPage}} { background: transparent !important; }
-{{DownloadGraph}} { background: linear-gradient(90deg, rgba(179, 18, 46, .12), transparent 45%) !important; }
 
 /* --- настройки и прочие окна на бумаге --- */
 {{PagedSettingsDialog}}, {{PagedSettingsDialog_PageContent}}, {{DialogBody}}, {{DialogContent_InnerWidth}} { background: transparent !important; }
@@ -333,3 +332,4 @@ button{{DialogButton}}, {{DialogButton}} { border-radius: 0 !important; backgrou
 
 /* --- загрузки: без красной плашки слева от графика --- */
 {{EmptyTransfers}} { background: transparent !important; }
+{{SectionList}} > * { background: transparent !important; }
