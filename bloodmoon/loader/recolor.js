@@ -1,5 +1,7 @@
-// Перекрашивает синие цвета прямо в стилях Steam: акцент в багровый, сине-серое в тёплый чёрный.
+// Перекрашивает синие цвета стилей Steam: акцент в багровый, сине-серое в тёплый чёрный.
 // Так не надо охотиться за каждым классом, и новые экраны после обновлений Steam тоже становятся тёмными.
+// В окнах клиента оригинальные стили не трогаем: Chromium держит их одной копией на все окна,
+// а правка через CSSOM размножила бы их. Поверх кладём только правила оформления.
 (function () {
   if (window.__x4recolor) { window.__x4recolor.run(); return; }
   // окна клиента тоже бывают на https (steamloopback.host), поэтому проверяем сам сайт
@@ -89,10 +91,93 @@
       }
     }
   }
+  var PAINT = /^(color|fill|stroke|caret-color|accent-color|background(-color|-image)?|border(-(top|right|bottom|left))?(-color)?|outline(-color)?|box-shadow|text-shadow|text-decoration-color)$/;
+  function closeBrace(css, from) {
+    var d = 1, j = from;
+    while (j < css.length && d) { var c = css[j++]; if (c === "{") d++; else if (c === "}") d--; }
+    return j;
+  }
+  function splitDecls(body) {
+    var out = [], d = 0, q = "", st = 0;
+    for (var i = 0; i < body.length; i++) {
+      var c = body[i];
+      if (q) { if (c === q && body[i - 1] !== "\\") q = ""; continue; }
+      if (c === '"' || c === "'") q = c;
+      else if (c === "(") d++;
+      else if (c === ")") d--;
+      else if (c === ";" && !d) { out.push(body.slice(st, i)); st = i + 1; }
+    }
+    out.push(body.slice(st));
+    return out;
+  }
+  // Все правила оформления в исходном порядке: каскад для цвета и фона остаётся таким же, как у Steam.
+  var paintedHeads = {};
+  function paintRules(css) {
+    var out = "", i = 0;
+    while (i < css.length) {
+      var a = css.indexOf("{", i);
+      if (a < 0) break;
+      var semi = css.indexOf(";", i);
+      if (css[i] === "@" && semi >= 0 && semi < a) { i = semi + 1; continue; }
+      var head = css.slice(i, a).trim(), end = closeBrace(css, a + 1), body = css.slice(a + 1, end - 1);
+      i = end;
+      if (/^@(media|supports|container)/.test(head)) {
+        var inner = paintRules(body);
+        if (inner) out += head + "{" + inner + "}";
+      } else if (/^@(-webkit-)?keyframes/.test(head)) {
+        out += head + "{" + body.replace(RE, function (c) { return map(c, false); }) + "}";
+      } else if (head[0] !== "@") {
+        var kept = "";
+        splitDecls(body).forEach(function (d) {
+          var k = d.indexOf(":");
+          if (k < 0) return;
+          var name = d.slice(0, k).trim().toLowerCase(), v = d.slice(k + 1);
+          var custom = name.indexOf("--") === 0;
+          if (custom ? !(v.indexOf("#") >= 0 || v.indexOf("rgb") >= 0) : !PAINT.test(name)) return;
+          // встроенные картинки занимают мегабайты, а цвета в них нет: оставляем только там, где правило их перекрывает
+          if (v.indexOf("url(data:") >= 0 || v.indexOf('url("data:') >= 0) { if (!paintedHeads[head]) return; }
+          else paintedHeads[head] = 1;
+          var txt = name === "color" || name === "fill";
+          kept += name + ":" + (v.indexOf("url(") >= 0 ? v : v.replace(RE, function (c) { return map(c, txt); })) + ";";
+        });
+        if (kept) out += head + "{" + kept + "}";
+      }
+    }
+    return out;
+  }
+  function absoluteUrls(href, text) {
+    return text.replace(/\/\*[\s\S]*?\*\//g, "").replace(/url\(\s*(['"]?)(?!data:|https?:|#)([^'")]+)\1\s*\)/g, function (_, q, u) {
+      try { return 'url("' + new URL(u, href).href + '")'; } catch (e) { return _; }
+    });
+  }
+  // Готовый текст один на все окна: он хранится в общем окне Steam.
+  var shared = window;
+  try { if (window.opener && window.opener.document) shared = window.opener; } catch (e) {}
+  var inflight = 0;
+  function overlay(href) {
+    var all = shared.__x4over || (shared.__x4over = {});
+    if (!all[href]) all[href] = fetch(href).then(function (r) { return r.text(); }).then(function (t) { return paintRules(absoluteUrls(href, t)); });
+    return all[href];
+  }
+  function paintLinks() {
+    [].forEach.call(document.querySelectorAll("link[rel=stylesheet]"), function (l) {
+      if (l.__x4p || !l.href) return;
+      l.__x4p = 1;
+      inflight++;
+      overlay(l.href).then(function (css) {
+        var st = document.createElement("style");
+        st.setAttribute("data-x4copy", "1");
+        st.textContent = css;
+        if (l.parentNode) l.parentNode.insertBefore(st, l.nextSibling);
+      }).catch(function () {}).then(function () { inflight--; later(); });
+    });
+  }
   function run() {
+    if (!isWeb) paintLinks();
     var list = document.styleSheets;
     for (var i = 0; i < list.length; i++) {
       var s = list[i];
+      if (!isWeb && s.href) continue;
       if (seen.has(s) || (s.ownerNode && (s.ownerNode.id === "x4bloodmoon" || s.ownerNode.getAttribute("data-x4copy")))) continue;
       var rules;
       try { rules = s.cssRules; } catch (e) { continue; }
@@ -105,7 +190,17 @@
     [].forEach.call(document.querySelectorAll("link[rel=stylesheet]"), function (l) {
       if (!l.sheet && l.media !== "not all") wait = true;
     });
-    if (!wait && document.readyState !== "loading" && (!isWeb || !pending().length)) ready();
+    if (isWeb) markNav();
+    if (!wait && !inflight && document.readyState !== "loading" && (!isWeb || !pending().length)) ready();
+  }
+  // Верхнее меню магазина: классы у него хешированные, поэтому находим его по форме поиска.
+  function markNav() {
+    var f = document.querySelector("form input");
+    f = f && f.closest("form");
+    if (!f || f.getBoundingClientRect().top > 60) return;
+    var e = f;
+    for (var i = 0; e && i < 4; i++) e = e.parentElement;
+    if (e && e !== document.body) e.setAttribute("data-x4nav", "1");
   }
   // Стили с чужого домена читать нельзя: подключатель скачивает их сам и передаёт текст сюда.
   function pending() {
@@ -167,6 +262,13 @@
     if (!img || !img.src) return;
     var full = img.src.replace(/(_medium|_full)?\.jpg.*$/, "_full.jpg");
     document.documentElement.style.setProperty("--x4-me", 'url("' + full + '")');
+    // обёртки блока аккаунта растягиваем под большую аватарку, иначе клик по ней не попадает
+    var e = img.closest(".avatarHolder.X-Small");
+    for (var i = 0; e && i < 4; i++) {
+      e = e.parentElement;
+      if (e) e.setAttribute("data-x4-acc", "1");
+      if (e && e.classList.contains("tool-tip-source")) break;
+    }
   }
   if (!isWeb) { avatar(); setInterval(avatar, 5000); }
   // Big Picture убран из меню Steam. Меню это отдельные окна, поэтому следим только за ними.
@@ -217,6 +319,7 @@
       ready();
       undo.forEach(function (u) { try { u[0].style.setProperty(u[1], u[2], u[3]); } catch (e) {} });
       undo = [];
+      try { delete shared.__x4over; } catch (e) {}
       [].forEach.call(document.querySelectorAll("style[data-x4copy]"), function (n) { n.remove(); });
       [].forEach.call(document.querySelectorAll("[data-x4off]"), function (n) { n.media = n.getAttribute("data-x4off"); n.removeAttribute("data-x4off"); });
       done = {};

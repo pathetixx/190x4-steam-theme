@@ -245,7 +245,7 @@ hr{{Separator@MenuItem}} {
 /* --- свой аккаунт в заголовке окна: большая аватарка в багровой рамке, ник и кошелёк столбиком --- */
 {{TitleBar@TopBar}} { position: relative; z-index: 6 !important; overflow: visible !important; }
 {{TitleBarControls}} { align-items: flex-start !important; overflow: visible !important; }
-{{TitleBarControls}} > div:has({{AccountMenu}}), {{TitleBarControls}} > div:has({{AccountMenu}}) div:has({{AccountMenu}}) { overflow: visible !important; height: 56px !important; }
+[data-x4-acc] { overflow: visible !important; height: 56px !important; }
 {{AccountMenu}} {
   display: grid !important; grid-template-columns: 56px auto 14px; grid-template-rows: 28px 24px; column-gap: 8px; align-items: center;
   height: 56px !important; min-height: 56px !important; max-height: none !important; width: auto !important; padding: 0 6px 0 0 !important; margin-top: -2px; background: transparent !important; border: 0 !important; border-radius: 0 !important; color: var(--t-bone) !important;
@@ -315,7 +315,7 @@ button{{DialogButton}}, {{DialogButton}} { border-radius: 0 !important; backgrou
 {{Logo@SteamButton}} { display: none !important; }
 {{SteamButton}}::before { content: ""; width: 24px; height: 24px; flex: none; background: url(assets/logo.webp) center / contain no-repeat; }
 {{SteamButton}}::after { content: ""; width: 62px; height: 18px; flex: none; background: url(assets/wordmark.webp) left center / contain no-repeat; }
-{{RootMenuButton}}:has({{SteamButton}}) { width: auto !important; }
+{{RootMenuButton}} { width: auto !important; }
 
 /* --- кнопки окна: свернуть, развернуть, закрыть --- */
 .windowControlButton svg { display: none !important; }
@@ -328,7 +328,7 @@ button{{DialogButton}}, {{DialogButton}} { border-radius: 0 !important; backgrou
 .closeButton.windowControlButton:hover { background: var(--t-blood) !important; }
 
 /* --- Big Picture скрыт: кнопка в заголовке --- */
-{{TitleBarControls}} > div:has({{GamepadUIToggle}}) { display: none !important; }
+{{GamepadUIToggle}} { display: none !important; }
 
 /* --- загрузки: без красной плашки слева от графика --- */
 {{EmptyTransfers}} { background: transparent !important; }

@@ -45,7 +45,7 @@ a:hover img, img:hover { filter: none !important; }
 #BG_top { background: transparent !important; }
 .market_header_logo { background: url(assets/btn.webp) center / cover no-repeat !important; clip-path: polygon(0 0, 100% 0, calc(100% - 24px) 100%, 0 100%); }
 /* Верхнее меню магазина без сплошной полосы: только мягкая тень, чтобы читалось над прокрученной страницей */
-div:has(> div.Panel > div > div > form) { background: linear-gradient(180deg, rgba(5, 4, 5, .82), rgba(5, 4, 5, 0)) !important; box-shadow: none !important; border: 0 !important; }
+[data-x4nav] { background: linear-gradient(180deg, rgba(5, 4, 5, .82), rgba(5, 4, 5, 0)) !important; box-shadow: none !important; border: 0 !important; }
 /* Сообщество: синие картинки Steam заменены */
 .friends_header_bg { background: url(assets/splash.webp) right top / auto 100% no-repeat !important; }
 .blotter_appselect, .blotter_appselect .option { background: rgba(232, 224, 212, .08) !important; color: #e8e0d4 !important; border-radius: 0 !important; }
