@@ -3,8 +3,21 @@
 (function () {
   if (window.__x4recolor) { window.__x4recolor.run(); return; }
   var isWeb = location.protocol === "https:";
+  // Пока тема не встала, окно остаётся чёрным: родной вид не успевает мелькнуть. Таймер снимет шторку в любом случае.
+  var gate = document.createElement("style");
+  gate.id = "x4gate";
+  gate.textContent = "html{background:#050405!important}body{visibility:hidden!important}";
+  // В момент старта документа корня ещё нет: вставлять раньше него нельзя, страница останется пустой.
+  function whenRoot(fn) {
+    if (document.documentElement) { fn(); return; }
+    var o = new MutationObserver(function () { if (document.documentElement) { o.disconnect(); fn(); } });
+    o.observe(document, { childList: true });
+  }
+  whenRoot(function () { if (gate) (document.head || document.documentElement).appendChild(gate); });
+  function ready() { if (gate) { gate.remove(); gate = null; } }
+  setTimeout(ready, isWeb ? 1500 : 700);
   // фон магазина вешаем только там, где у страницы нет своего оформления
-  if (location.hostname === "store.steampowered.com") document.documentElement.classList.add("x4-store");
+  if (location.hostname === "store.steampowered.com") whenRoot(function () { document.documentElement.classList.add("x4-store"); });
   var done = {};
   var RE = /#[0-9a-fA-F]{3,8}\b|rgba?\(\s*[\d.]+[ ,]+[\d.]+[ ,]+[\d.]+(?:[ ,/]+[\d.]+%?)?\s*\)/g;
   var cache = {};
@@ -87,6 +100,12 @@
       seen.add(s);
       walk(rules);
     }
+    swapKnown();
+    var wait = false;
+    [].forEach.call(document.querySelectorAll("link[rel=stylesheet]"), function (l) {
+      if (!l.sheet && l.media !== "not all") wait = true;
+    });
+    if (!wait && document.readyState !== "loading" && (!isWeb || !pending().length)) ready();
   }
   // Стили с чужого домена читать нельзя: подключатель скачивает их сам и передаёт текст сюда.
   function pending() {
@@ -112,16 +131,28 @@
         return k + ":" + v.replace(RE, function (c) { return map(c, txt); });
       });
   }
+  function swapLink(link, css) {
+    if (link.getAttribute("data-x4off")) return;
+    var st = document.createElement("style");
+    st.setAttribute("data-x4copy", "1");
+    st.textContent = css;
+    link.parentNode.insertBefore(st, link.nextSibling);
+    link.setAttribute("data-x4off", link.media || "all");
+    link.media = "not all";
+  }
   function swap(href, css) {
     done[href] = 1;
-    [].forEach.call(document.styleSheets, function (s) {
-      if (s.href !== href || !s.ownerNode || s.ownerNode.getAttribute("data-x4off")) return;
-      var st = document.createElement("style");
-      st.setAttribute("data-x4copy", "1");
-      st.textContent = css;
-      s.ownerNode.parentNode.insertBefore(st, s.ownerNode.nextSibling);
-      s.ownerNode.setAttribute("data-x4off", s.ownerNode.media || "all");
-      s.ownerNode.media = "not all";
+    [].forEach.call(document.querySelectorAll("link[rel=stylesheet]"), function (l) {
+      if (l.href === href) swapLink(l, css);
+    });
+    later();
+  }
+  // Подключатель заранее кладёт сюда перекрашенные копии: подмена происходит до загрузки оригинала.
+  function swapKnown() {
+    var c = window.__x4c;
+    if (!c || !document.head) return;
+    [].forEach.call(document.querySelectorAll("link[rel=stylesheet]"), function (l) {
+      if (c[l.href]) { done[l.href] = 1; swapLink(l, c[l.href]); }
     });
   }
   function addText(href, text) {
@@ -144,9 +175,17 @@
     ms.forEach(function (m) {
       [].forEach.call(m.addedNodes, function (n) { if (n.tagName === "LINK") n.addEventListener("load", later); });
     });
+    swapKnown();
+    var t = document.getElementById("x4tensa");
+    if (t && document.head && t !== document.head.lastElementChild) document.head.appendChild(t);
     later();
   });
-  obs.observe(document.head, { childList: true });
+  function watchHead() { if (document.head) { obs.observe(document.head, { childList: true }); return true; } return false; }
+  if (!watchHead()) {
+    var rootObs = new MutationObserver(function () { if (watchHead()) { rootObs.disconnect(); run(); } });
+    rootObs.observe(document, { childList: true, subtree: true });
+  }
+  document.addEventListener("DOMContentLoaded", later);
   window.__x4recolor = {
     run: run,
     pending: pending,
@@ -154,6 +193,7 @@
     addRaw: addRaw,
     revert: function () {
       obs.disconnect();
+      ready();
       undo.forEach(function (u) { try { u[0].style.setProperty(u[1], u[2], u[3]); } catch (e) {} });
       undo = [];
       [].forEach.call(document.querySelectorAll("style[data-x4copy]"), function (n) { n.remove(); });

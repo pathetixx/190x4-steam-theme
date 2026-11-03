@@ -44,3 +44,5 @@ body.community_home_page, body.apphub_blue, .apphub_HomeHeaderContent, .communit
 .item_market_action_button_green, .item_market_action_button_green .item_market_action_button_contents, .btn_green_white_innerfade, .btn_green_white_innerfade > span { background: #b3122e !important; color: #e8e0d4 !important; border-radius: 0 !important; }
 #BG_top { background: transparent !important; }
 .market_header_logo { background: url(assets/btn.webp) center / cover no-repeat !important; clip-path: polygon(0 0, 100% 0, calc(100% - 24px) 100%, 0 100%); }
+/* Верхнее меню магазина без сплошной полосы: только мягкая тень, чтобы читалось над прокрученной страницей */
+div:has(> div.Panel > div > div > form) { background: linear-gradient(180deg, rgba(5, 4, 5, .82), rgba(5, 4, 5, 0)) !important; box-shadow: none !important; border: 0 !important; }

@@ -27,6 +27,22 @@ Read-Theme
 $placeJs = '(function(c){var s=document.getElementById("x4tensa");if(!s){s=document.createElement("style");s.id="x4tensa";(document.head||document.documentElement).appendChild(s);}if(s.textContent!==c)s.textContent=c;window.__x4tensa=1;return 1;})'
 $clearJs = '(function(){var s=document.getElementById("x4tensa");if(s)s.remove();if(window.__x4recolor)window.__x4recolor.revert();delete window.__x4tensa;return 1;})()'
 
+$popupHook = @'
+(function(){
+  function apply(w){
+    try{
+      if(!w||!w.document)return;
+      var d=w.document;
+      if(!d.getElementById("x4tensa")){var s=d.createElement("style");s.id="x4tensa";s.textContent=window.__x4h.css;(d.head||d.documentElement).appendChild(s);w.__x4tensa=1;}
+      w.eval(window.__x4h.code);
+    }catch(e){}
+  }
+  if(window.__x4hooked)return;
+  window.__x4hooked=1;
+  g_PopupManager.AddPopupCreatedCallback(function(p){apply(p.window||p.m_popup);});
+})();
+'@
+
 function Invoke-Page($wsUrl, $expression) {
   $ws = New-Object System.Net.WebSockets.ClientWebSocket
   $cts = New-Object System.Threading.CancellationTokenSource(20000)
@@ -50,6 +66,14 @@ function Invoke-Page($wsUrl, $expression) {
       }
     }
   } finally { $ws.Dispose(); $cts.Dispose() }
+}
+
+# Sent over a connection that stays open: the browser keeps the script only while we are attached.
+function Send-Keep($ws, [int]$id, [string]$source) { Send-Raw $ws (@{ id = $id; method = "Page.addScriptToEvaluateOnNewDocument"; params = @{ source = $source } }) }
+
+function Send-Raw($ws, $obj) {
+  $bytes = $utf8.GetBytes($json.Serialize($obj))
+  $ws.SendAsync((New-Object ArraySegment[byte] -ArgumentList @(,$bytes)), [System.Net.WebSockets.WebSocketMessageType]::Text, $true, [Threading.CancellationToken]::None).Wait()
 }
 
 function Get-Targets {
@@ -80,6 +104,44 @@ $seen = @{}        # target id -> url it was themed at
 $webCache = @{}    # stylesheet url -> recolored text
 $client = $null
 $sharedId = ""
+$keep = @{}        # web target id -> open connection
+$drain = @{}       # web target id -> pending read
+
+function Get-WebBoot {
+  return "(function(){if(window!==top)return;var c=" + $json.Serialize($webCss) + ";function put(){var s=document.createElement('style');s.id='x4tensa';s.textContent=c;(document.head||document.documentElement).appendChild(s);window.__x4tensa=1;}if(document.documentElement){put();}else{var o=new MutationObserver(function(){if(document.documentElement){o.disconnect();put();}});o.observe(document,{childList:true});}})();" + $recolor
+}
+
+function Keep-Web($id, $wsUrl) {
+  if ($keep.ContainsKey($id)) { return }
+  $ws = New-Object System.Net.WebSockets.ClientWebSocket
+  $ws.ConnectAsync([Uri]$wsUrl, [Threading.CancellationToken]::None).Wait()
+  $keep[$id] = $ws
+  # new-document scripts only run while the Page domain is enabled
+  Send-Raw $ws (@{ id = 900000; method = "Page.enable"; params = @{} })
+  Send-Keep $ws 1 (Get-WebBoot)
+  $n = 2
+  foreach ($h in @($webCache.Keys)) { Send-Keep $ws $n (Get-CacheScript $h); $n++ }
+}
+
+# Page events keep coming over those connections; read them away so the socket never fills up.
+function Drain-Keep {
+  foreach ($k in @($keep.Keys)) {
+    try {
+      $st = $drain[$k]
+      while ($true) {
+        if ($st -and -not $st.Task.IsCompleted) { break }
+        if (-not $st) { $st = @{ Buf = New-Object byte[] 65536 } }
+        $st.Task = $keep[$k].ReceiveAsync((New-Object ArraySegment[byte] -ArgumentList @(,$st.Buf)), [Threading.CancellationToken]::None)
+        $drain[$k] = $st
+        if (-not $st.Task.IsCompleted) { break }
+      }
+    } catch { $drain.Remove($k) }
+  }
+}
+
+function Get-CacheScript($href) {
+  return "if(window===top){(window.__x4c=window.__x4c||{})[" + $json.Serialize($href) + "]=" + $json.Serialize($webCache[$href]) + ";}"
+}
 
 function Sync-Web($wsUrl) {
   $hrefs = $json.DeserializeObject((Invoke-Page $wsUrl "window.__x4recolor?JSON.stringify(window.__x4recolor.pending()):'[]'"))
@@ -93,6 +155,8 @@ function Sync-Web($wsUrl) {
       $text = $wc.DownloadString($href)
       $wc.Dispose()
       $webCache[$href] = Invoke-Page $wsUrl ("window.__x4recolor.addText(" + $json.Serialize($href) + "," + $json.Serialize($text) + ")")
+      $src = Get-CacheScript $href
+      foreach ($k in @($keep.Keys)) { try { Send-Keep $keep[$k] (Get-Random -Minimum 100 -Maximum 100000) $src } catch { Log "keep send failed" } }
     }
   }
 }
@@ -105,13 +169,24 @@ while ($true) {
       foreach ($t in @(Get-Targets)) { if ($t["type"] -eq "page" -and $t["title"] -ne "SharedJSContext" -and $seen.ContainsKey($t["id"])) { try { [void](Invoke-Page $t["webSocketDebuggerUrl"] $clearJs) } catch {} } }
       Read-Theme
       $client = $null; $seen = @{}; $webCache = @{}
+      foreach ($k in @($keep.Keys)) { try { $keep[$k].Dispose() } catch {} }
+      $keep = @{}; $drain = @{}
       Log "theme files reloaded"
     }
     $targets = @(Get-Targets)
     $shared = $targets | Where-Object { $_["title"] -eq "SharedJSContext" } | Select-Object -First 1
     if ($shared) {
       if ($shared["id"] -ne $sharedId) { $sharedId = $shared["id"]; $client = $null; $seen = @{} }
-      if (-not $Remove -and -not $client) { $client = Resolve-Client $shared["webSocketDebuggerUrl"]; Log "resolved classes" }
+      if (-not $Remove -and -not $client) {
+        $client = Resolve-Client $shared["webSocketDebuggerUrl"]
+        Log "resolved classes"
+        # Steam reports every new window here before showing it: the theme gets in ahead of the first paint.
+        [void](Invoke-Page $shared["webSocketDebuggerUrl"] ("window.__x4h={css:" + $json.Serialize($client) + ",code:" + $json.Serialize($recolor) + "};" + $popupHook))
+      }
+      $alive = @{}
+      foreach ($t in $targets) { $alive[$t["id"]] = 1 }
+      foreach ($k in @($keep.Keys)) { if (-not $alive[$k]) { try { $keep[$k].Dispose() } catch {} ; $keep.Remove($k); $drain.Remove($k) } }
+      Drain-Keep
       foreach ($t in $targets) {
         if ($t["type"] -ne "page" -or $t["id"] -eq $sharedId) { continue }
         $url = [string]$t["url"]
@@ -132,7 +207,7 @@ while ($true) {
             Log ("themed " + $t["id"])
           }
           # stylesheets of a web page keep arriving after it opens
-          if ($isWeb) { Sync-Web $ws }
+          if ($isWeb) { Keep-Web $t["id"] $ws; Sync-Web $ws }
         } catch { Log ("target failed: " + $_.Exception.Message) }
       }
     }
