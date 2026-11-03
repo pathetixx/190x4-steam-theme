@@ -168,6 +168,25 @@
     document.documentElement.style.setProperty("--x4-me", 'url("' + full + '")');
   }
   if (!isWeb) { avatar(); setInterval(avatar, 5000); }
+  // Big Picture убран из меню Steam. Меню это отдельные окна, поэтому следим только за ними.
+  function hideBigPicture() {
+    [].forEach.call(document.querySelectorAll(".contextMenuItem"), function (n) {
+      if (/Big Picture/i.test(n.textContent)) n.style.display = "none";
+    });
+  }
+  if (!isWeb) {
+    var menuWait = setInterval(function () {
+      if (!document.body) return;
+      clearInterval(menuWait);
+      hideBigPicture();
+      var menuObs = new MutationObserver(function () {
+        // в больших окнах (главное, настройки) меню нет, следить там незачем
+        if (document.querySelector(".FocusNavigationRoot")) { menuObs.disconnect(); return; }
+        hideBigPicture();
+      });
+      menuObs.observe(document.body, { childList: true, subtree: true });
+    }, 100);
+  }
   var timer = 0;
   function later() { clearTimeout(timer); timer = setTimeout(run, 150); }
   var obs = new MutationObserver(function (ms) {

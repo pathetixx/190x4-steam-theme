@@ -301,3 +301,35 @@ button{{DialogButton}}, {{DialogButton}} { border-radius: 0 !important; backgrou
 {{DialogInput}}:focus { outline: 1px solid var(--t-blood2) !important; }
 {{DialogToggle}} { border-radius: 0 !important; }
 {{DialogToggle}}{{On}} { background: var(--t-blood) !important; }
+
+/* --- настройки: вся правая часть лежит на бумаге, строки только чуть темнее её --- */
+{{PagedSettingDialog_ContentColumn}} { background: transparent !important; }
+{{PagedSettingsDialog_PageContent}} { background: transparent !important; }
+{{Field@FieldLabelRow}} { background: rgba(5, 4, 5, .5) !important; border-radius: 0 !important; box-shadow: none !important; }
+{{Field@FieldLabelRow}}:hover { background: rgba(179, 18, 46, .14) !important; }
+{{SettingsTitleBar}} { background: transparent !important; }
+{{SettingsDialogBodyFade}} { background: transparent !important; }
+{{FakeContainer}} { background: rgba(5, 4, 5, .5) !important; }
+
+/* --- логотип и надпись Steam в заголовке окна --- */
+{{SteamButton}} { display: flex !important; align-items: center; gap: 6px; width: auto !important; font-size: 0 !important; color: transparent !important; }
+{{Logo@SteamButton}} { display: none !important; }
+{{SteamButton}}::before { content: ""; width: 24px; height: 24px; flex: none; background: url(assets/logo.webp) center / contain no-repeat; }
+{{SteamButton}}::after { content: ""; width: 62px; height: 18px; flex: none; background: url(assets/wordmark.webp) left center / contain no-repeat; }
+{{RootMenuButton}}:has({{SteamButton}}) { width: auto !important; }
+
+/* --- кнопки окна: свернуть, развернуть, закрыть --- */
+.windowControlButton svg { display: none !important; }
+.windowControlButton .title-area-icon-inner { width: 100% !important; height: 100% !important; background-position: center !important; background-repeat: no-repeat !important; background-size: 18px auto !important; }
+.minimizeButton .title-area-icon-inner { background-image: url(assets/win-min.webp) !important; }
+.maximizeButton .title-area-icon-inner { background-image: url(assets/win-max.webp) !important; }
+.closeButton .title-area-icon-inner { background-image: url(assets/win-close.webp) !important; }
+.windowControlButton { background: transparent !important; opacity: .9; }
+.windowControlButton:hover { background: rgba(232, 224, 212, .1) !important; opacity: 1; }
+.closeButton.windowControlButton:hover { background: var(--t-blood) !important; }
+
+/* --- Big Picture скрыт: кнопка в заголовке --- */
+{{TitleBarControls}} > div:has({{GamepadUIToggle}}) { display: none !important; }
+
+/* --- загрузки: без красной плашки слева от графика --- */
+{{EmptyTransfers}} { background: transparent !important; }
