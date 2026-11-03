@@ -1,0 +1,45 @@
+name: Bloodmoon
+on:
+  push:
+    tags: ["bloodmoon-v*"]
+permissions:
+  contents: write
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+      - name: Build
+        shell: bash
+        run: |
+          VERSION="${GITHUB_REF_NAME#bloodmoon-v}"
+          echo "VERSION=$VERSION" >> "$GITHUB_ENV"
+          node bloodmoon/build.mjs
+          dotnet build bloodmoon/app/Bloodmoon.csproj -c Release -nologo -p:Version="$VERSION"
+          mkdir dist-release
+          cp bloodmoon/app/bin/Release/190x4-Bloodmoon.exe dist-release/190x4-Bloodmoon-Setup.exe
+      - name: Sign update
+        shell: bash
+        env:
+          UPDATE_KEY: ${{ secrets.BLOODMOON_UPDATE_KEY }}
+        run: |
+          echo "$UPDATE_KEY" | base64 -d > key.pem
+          node bloodmoon/tools/sign-release.mjs dist-release/190x4-Bloodmoon-Setup.exe "$VERSION" \
+            "https://github.com/${GITHUB_REPOSITORY}/releases/download/${GITHUB_REF_NAME}/190x4-Bloodmoon-Setup.exe" key.pem > dist-release/latest.json
+          rm key.pem
+      - name: Publish
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "$GITHUB_REF_NAME" dist-release/190x4-Bloodmoon-Setup.exe dist-release/latest.json \
+            --title "190x4 Bloodmoon v$VERSION" --notes-file bloodmoon/NOTES.md --latest=false
+          # постоянный адрес для обновлений: тег двигается на каждый выпуск и не становится Latest
+          gh release view bloodmoon-latest >/dev/null 2>&1 || gh release create bloodmoon-latest --title "190x4 Bloodmoon: канал обновлений" --notes "Служебный канал" --prerelease --latest=false
+          gh release upload bloodmoon-latest dist-release/latest.json --clobber

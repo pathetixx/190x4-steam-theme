@@ -45,7 +45,7 @@ namespace Bloodmoon
                     Task.Run(() => agent.Run());
                     Task.Run(async () =>
                     {
-                        await Task.Delay(TimeSpan.FromMinutes(1)).ConfigureAwait(false);
+                        await Task.Delay(Updater.TestFeed != null ? TimeSpan.FromSeconds(5) : TimeSpan.FromMinutes(1)).ConfigureAwait(false);
                         while (true)
                         {
                             await Updater.Check(false).ConfigureAwait(false);

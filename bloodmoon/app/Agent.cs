@@ -155,13 +155,6 @@ namespace Bloodmoon
                     Target t;
                     if (!targets.TryGetValue(id, out t)) targets[id] = t = new Target { Id = id };
                     t.Type = (string)ti["type"]; t.Title = (string)ti["title"]; t.Url = (string)ti["url"];
-                    // страница магазина при запуске Steam появляется как безымянная цель: подключаемся до начала загрузки
-                    if (t.Type == "other" && sharedReady && string.IsNullOrEmpty(t.Url) && !t.Themed && t.Session == null)
-                    {
-                        t.Themed = true;
-                        await Send(ws, new Dictionary<string, object> { { "id", msgId++ }, { "method", "Target.attachToTarget" }, { "params", new Dictionary<string, object> { { "targetId", id }, { "flatten", true } } } }).ConfigureAwait(false);
-                        continue;
-                    }
                     if (t.Type != "page") continue;
                     if (t.Title == "SharedJSContext" || t.Url.StartsWith("https://steamloopback.host/index.html"))
                     {

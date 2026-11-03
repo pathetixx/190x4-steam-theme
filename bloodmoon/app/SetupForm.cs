@@ -100,6 +100,7 @@ namespace Bloodmoon
                 using (var b = new SolidBrush(hoverLink ? Color.FromArgb(232, 224, 212) : Color.FromArgb(155, 146, 136)))
                 using (var sf = new StringFormat { LineAlignment = StringAlignment.Center })
                     g.DrawString(link, f, b, LinkRect, sf);
+            using (var edge = new Pen(Color.FromArgb(90, 179, 18, 46), 1)) g.DrawRectangle(edge, 0, 0, ClientSize.Width - 1, ClientSize.Height - 1);
             var cr = CloseRect;
             using (var p = new Pen(hoverClose ? Color.FromArgb(210, 26, 60) : Color.FromArgb(232, 224, 212), 2 * k))
             {

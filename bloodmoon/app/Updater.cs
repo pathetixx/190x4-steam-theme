@@ -20,9 +20,12 @@ namespace Bloodmoon
             "https://github.com/pathetixx/190x4-steam-theme/releases/download/bloodmoon-latest/latest.json"
         };
 
+        // Для проверки на тестовой сборке. Подпись обязательна и здесь.
+        public static readonly string TestFeed = Environment.GetEnvironmentVariable("BLOODMOON_TEST_FEED");
+
         public static async Task<string> Check(bool userAsked)
         {
-            foreach (var feed in Feeds)
+            foreach (var feed in TestFeed != null ? new[] { TestFeed } : Feeds)
             {
                 try
                 {
@@ -35,7 +38,7 @@ namespace Bloodmoon
                     await Apply((string)m["url"], (string)m["sha256"], (string)m["signature"]).ConfigureAwait(false);
                     return "Обновляю до " + version;
                 }
-                catch (Exception e) { Paths.Log("update " + new Uri(feed).Host + ": " + e.Message); }
+                catch (Exception e) { Paths.Log("update " + feed + ": " + e.Message); }
             }
             return "Не удалось проверить обновления";
         }
@@ -51,6 +54,7 @@ namespace Bloodmoon
                 File.Delete(tmp);
                 throw new InvalidDataException("подпись обновления не совпала");
             }
+            Paths.Log("update verified");
             Process.Start(new ProcessStartInfo(tmp, "--apply-update") { UseShellExecute = false });
             Environment.Exit(0);
         }
