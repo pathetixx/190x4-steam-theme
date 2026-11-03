@@ -10,6 +10,18 @@ using System.Threading.Tasks;
 
 namespace Bloodmoon
 {
+    // Сеть доставки fastly присылает сжатые стили, даже когда её об этом не просят.
+    sealed class Downloader : WebClient
+    {
+        protected override WebRequest GetWebRequest(Uri address)
+        {
+            var r = base.GetWebRequest(address);
+            var h = r as HttpWebRequest;
+            if (h != null) h.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
+            return r;
+        }
+    }
+
     // Отдаёт страницам Steam стили темы и перекрашенные копии стилей сайта. Слушает только 127.0.0.1.
     sealed class LocalServer
     {
@@ -122,7 +134,7 @@ namespace Bloodmoon
             {
                 if (File.Exists(path)) return File.ReadAllBytes(path);
                 string css;
-                using (var w = new WebClient { Encoding = Utf8 })
+                using (var w = new Downloader { Encoding = Utf8 })
                 {
                     // у WebClient нет своего срока ожидания: зависшая загрузка не должна держать страницу и очередь
                     var job = w.DownloadStringTaskAsync(u);
@@ -133,7 +145,7 @@ namespace Bloodmoon
                     }
                     css = await job.ConfigureAwait(false);
                 }
-                if (string.IsNullOrWhiteSpace(css)) throw new InvalidDataException("пустой ответ");
+                if (string.IsNullOrWhiteSpace(css) || css.IndexOf('\0') >= 0) throw new InvalidDataException("ответ не похож на стили");
                 var body = Utf8.GetBytes(Recolor.Sheet(href, css));
                 Paths.Log("css ok " + u.Host + " " + body.Length);
                 // кеш только ускоряет: если записать не вышло, стиль всё равно отдаём

@@ -16,6 +16,48 @@ namespace Bloodmoon
         const string UninstallKey = @"Software\Microsoft\Windows\CurrentVersion\Uninstall\190x4-Bloodmoon";
 
         public static bool IsInstalled { get { return File.Exists(Paths.InstalledExe); } }
+        public static bool RunningInstalled { get { return string.Equals(Paths.CurrentExe, Paths.InstalledExe, StringComparison.OrdinalIgnoreCase); } }
+
+        public static Version InstalledVersion
+        {
+            get
+            {
+                var v = FileVersionInfo.GetVersionInfo(Paths.InstalledExe);
+                return new Version(v.FileMajorPart, v.FileMinorPart, v.FileBuildPart);
+            }
+        }
+
+        static string ShortcutPath { get { return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Programs), Paths.Name + ".lnk"); } }
+
+        // Ярлык в Пуске: по нему программу находит поиск Windows.
+        public static void EnsureShortcut()
+        {
+            try
+            {
+                if (File.Exists(ShortcutPath)) return;
+                var type = Type.GetTypeFromProgID("WScript.Shell");
+                var shell = Activator.CreateInstance(type);
+                var lnk = type.InvokeMember("CreateShortcut", System.Reflection.BindingFlags.InvokeMethod, null, shell, new object[] { ShortcutPath });
+                var lt = lnk.GetType();
+                lt.InvokeMember("TargetPath", System.Reflection.BindingFlags.SetProperty, null, lnk, new object[] { Paths.InstalledExe });
+                lt.InvokeMember("WorkingDirectory", System.Reflection.BindingFlags.SetProperty, null, lnk, new object[] { Paths.InstallDir });
+                lt.InvokeMember("Description", System.Reflection.BindingFlags.SetProperty, null, lnk, new object[] { "Тема оформления Steam" });
+                lt.InvokeMember("IconLocation", System.Reflection.BindingFlags.SetProperty, null, lnk, new object[] { Paths.InstalledExe + ",0" });
+                lt.InvokeMember("Save", System.Reflection.BindingFlags.InvokeMethod, null, lnk, null);
+            }
+            catch (Exception e) { Paths.Log("shortcut: " + e.Message); }
+        }
+
+        public static void ToggleTheme()
+        {
+            try
+            {
+                Directory.CreateDirectory(Paths.InstallDir);
+                if (File.Exists(Paths.DisabledFlag)) File.Delete(Paths.DisabledFlag);
+                else File.WriteAllBytes(Paths.DisabledFlag, new byte[0]);
+            }
+            catch (Exception e) { Paths.Log("toggle: " + e.Message); }
+        }
 
         public static void Install(Action<string> status)
         {
@@ -29,6 +71,7 @@ namespace Bloodmoon
             status("Включаю подключение к Steam");
             SetFlag(steam, true);
             Register();
+            EnsureShortcut();
             try { File.Delete(Paths.DisabledFlag); } catch { }
             StartAgent();
             status("Перезапускаю Steam");
@@ -43,6 +86,7 @@ namespace Bloodmoon
             if (steam != null) SetFlag(steam, false);
             using (var k = Registry.CurrentUser.OpenSubKey(RunKey, true)) if (k != null) k.DeleteValue("190x4-Bloodmoon", false);
             Registry.CurrentUser.DeleteSubKeyTree(UninstallKey, false);
+            try { File.Delete(ShortcutPath); } catch { }
             if (steam != null && SteamRunning() && !GameRunning()) { status("Перезапускаю Steam"); RestartSteam(steam, status); }
             CleanupOnExit = true;
         }
@@ -56,7 +100,7 @@ namespace Bloodmoon
         }
 
         // Обновление: временный exe ждёт выхода старого, заменяет его и запускает новую версию.
-        public static void ApplyUpdate()
+        public static void ApplyUpdate(bool reopen)
         {
             StopAgents();
             for (var i = 0; ; i++)
@@ -65,6 +109,7 @@ namespace Bloodmoon
                 catch (IOException) when (i < 20) { Thread.Sleep(500); }
             }
             StartAgent();
+            if (reopen) Process.Start(new ProcessStartInfo(Paths.InstalledExe) { UseShellExecute = false });
             // временный файл удалит cmd после выхода этого процесса
             Process.Start(new ProcessStartInfo("cmd.exe", "/c timeout /t 3 /nobreak >nul & del /q \"" + Paths.CurrentExe + "\"") { CreateNoWindow = true, UseShellExecute = false });
         }

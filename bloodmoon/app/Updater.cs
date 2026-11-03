@@ -23,19 +23,20 @@ namespace Bloodmoon
         // Для проверки на тестовой сборке. Подпись обязательна и здесь.
         public static readonly string TestFeed = Environment.GetEnvironmentVariable("BLOODMOON_TEST_FEED");
 
-        public static async Task<string> Check(bool userAsked)
+        // progress задан, когда проверку запустили из окна: новая версия откроет окно снова.
+        public static async Task<string> Check(Action<int> progress)
         {
             foreach (var feed in TestFeed != null ? new[] { TestFeed } : Feeds)
             {
                 try
                 {
                     string text;
-                    using (var w = new WebClient { Proxy = WebRequest.DefaultWebProxy })
+                    using (var w = new Downloader())
                         text = await w.DownloadStringTaskAsync(feed).ConfigureAwait(false);
                     var m = new JavaScriptSerializer().Deserialize<Dictionary<string, object>>(text);
                     var version = new Version((string)m["version"]);
                     if (version <= Paths.CurrentVersion) return "Установлена последняя версия";
-                    await Apply((string)m["url"], (string)m["sha256"], (string)m["signature"]).ConfigureAwait(false);
+                    await Apply((string)m["url"], (string)m["sha256"], (string)m["signature"], progress).ConfigureAwait(false);
                     return "Обновляю до " + version;
                 }
                 catch (Exception e) { Paths.Log("update " + feed + ": " + e.Message); }
@@ -43,11 +44,14 @@ namespace Bloodmoon
             return "Не удалось проверить обновления";
         }
 
-        static async Task Apply(string url, string sha256, string signature)
+        static async Task Apply(string url, string sha256, string signature, Action<int> progress)
         {
             var tmp = Path.Combine(Path.GetTempPath(), "190x4-Bloodmoon-update.exe");
-            using (var w = new WebClient())
+            using (var w = new Downloader())
+            {
+                if (progress != null) w.DownloadProgressChanged += (s, e) => progress(e.ProgressPercentage);
                 await w.DownloadFileTaskAsync(url, tmp).ConfigureAwait(false);
+            }
             var data = File.ReadAllBytes(tmp);
             if (!Verify(data, sha256, signature))
             {
@@ -55,7 +59,7 @@ namespace Bloodmoon
                 throw new InvalidDataException("подпись обновления не совпала");
             }
             Paths.Log("update verified");
-            Process.Start(new ProcessStartInfo(tmp, "--apply-update") { UseShellExecute = false });
+            Process.Start(new ProcessStartInfo(tmp, progress != null ? "--apply-update --reopen" : "--apply-update") { UseShellExecute = false });
             Environment.Exit(0);
         }
 

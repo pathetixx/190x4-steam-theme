@@ -25,7 +25,6 @@ namespace Bloodmoon
         readonly LocalServer server = new LocalServer(Paths.ResourceText("web.css"));
         readonly CancellationTokenSource stop = new CancellationTokenSource();
         volatile bool enabled;
-        volatile bool reset;
 
         const string PopupHook = @"(function(){
   if(window.__x4bmhooked)return;
@@ -42,13 +41,14 @@ namespace Bloodmoon
 })();";
         const string Clear = "(function(){if(window.__x4recolor)window.__x4recolor.revert();return 1;})()";
 
-        public Agent(bool enabled)
+        public Agent()
         {
-            this.enabled = enabled;
+            SyncEnabled();
             server.Start();
         }
 
-        public void SetEnabled(bool on) { enabled = on; reset = true; }
+        // Тему выключают через файл-флаг: им пользуется и значок в трее, и окно программы.
+        void SyncEnabled() { enabled = !System.IO.File.Exists(Paths.DisabledFlag); }
         public void Stop() { stop.Cancel(); }
 
         public async Task Run()
@@ -57,11 +57,12 @@ namespace Bloodmoon
             {
                 try
                 {
+                    SyncEnabled();
                     // пока Steam не запущен, просто спим: никаких подключений
                     if (Process.GetProcessesByName("steamwebhelper").Length == 0 || !enabled)
                     {
                         await Task.Delay(enabled ? 3000 : 1000, stop.Token).ConfigureAwait(false);
-                        reset = false;
+                        SyncEnabled();
                         continue;
                     }
                     await Session().ConfigureAwait(false);
@@ -103,7 +104,13 @@ namespace Bloodmoon
                 var lastReady = DateTime.MinValue;
                 while (!stop.IsCancellationRequested)
                 {
-                    if (reset || !enabled) { reset = false; if (!enabled) await ClearAll(targets.Values).ConfigureAwait(false); return; }
+                    SyncEnabled();
+                    if (!enabled)
+                    {
+                        if (sharedId != null) await Evaluate(sharedId, "window.__x4bm=null;1", 3000).ConfigureAwait(false);
+                        await ClearAll(targets.Values).ConfigureAwait(false);
+                        return;
+                    }
                     if (sharedId != null && !sharedReady && DateTime.UtcNow - lastReady > TimeSpan.FromSeconds(1))
                     {
                         lastReady = DateTime.UtcNow;
@@ -196,7 +203,7 @@ namespace Bloodmoon
         async Task ClearAll(IEnumerable<Target> list)
         {
             foreach (var t in list.ToList())
-                if (t.Type == "page" && t.Themed && t.Session == null)
+                if (t.Type == "page" && t.Themed)
                     await Evaluate(t.Id, Clear, 3000).ConfigureAwait(false);
         }
 
