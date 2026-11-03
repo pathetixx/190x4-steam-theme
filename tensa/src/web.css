@@ -67,3 +67,8 @@ html.x4-web .game_area_dlc_row { background: rgba(5, 4, 5, .72) !important; bord
 html.x4-web .game_area_dlc_row:hover { background: rgba(179, 18, 46, .28) !important; }
 html.x4-web .dlc_highlight_reason { background: #b3122e !important; color: #e8e0d4 !important; }
 html.x4-web .ds_flag.ds_owned_flag { background-color: #b3122e !important; color: #e8e0d4 !important; }
+/* Страница игры: Steam подкрашивает фон цветом игры, поверх темы этого быть не должно */
+html.x4-web .game_page_background_ctn, html.x4-web .game_background_lighten, html.x4-web .game_background_glow { background: transparent !important; }
+html.x4-web .game_area_play_stats { background: rgba(5, 4, 5, .78) !important; border: 1px solid rgba(232, 224, 212, .14) !important; }
+html.x4-web .btnv6_lightblue_blue, html.x4-web .btnv6_lightblue_blue > span { background: #b3122e !important; color: #e8e0d4 !important; border-radius: 0 !important; border-color: #b3122e !important; text-shadow: none !important; }
+html.x4-web .btnv6_lightblue_blue:hover, html.x4-web .btnv6_lightblue_blue:hover > span { background: #d21a3c !important; }
