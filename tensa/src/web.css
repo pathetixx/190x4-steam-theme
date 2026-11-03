@@ -53,3 +53,12 @@ div:has(> div.Panel > div > div > form) { background: linear-gradient(180deg, rg
 .btn_blue_white_innerfade, .btn_blue_white_innerfade > span, .btn_darkblue_white_innerfade, .btn_darkblue_white_innerfade > span, .btn_profile_action, .btn_profile_action > span { background: rgba(232, 224, 212, .08) !important; color: #e8e0d4 !important; border-radius: 0 !important; }
 .group_content, .group_content.bottomless { background: rgba(5, 4, 5, .72) !important; }
 .discussionSearchTextContainer { background: rgba(232, 224, 212, .08) !important; border-radius: 0 !important; }
+/* Синие значки Steam зашиты в картинки: разворачиваем их оттенок в багровый */
+html.x4-web img[src*="forum_topicicon"], html.x4-web img[src*="award_icon_blue"], html.x4-web img[src*="icon_thumbsUp"], html.x4-web img[src*="searchbox_workshop_submit"],
+html.x4-web .discussions_link_icon, html.x4-web .apphub_CardRating.rateUp, html.x4-web .ico16.thumb_up, html.x4-web .discussionSearchTextContainer img {
+  filter: hue-rotate(145deg) saturate(1.25) !important;
+}
+html.x4-web .discussionSearchTextContainer::before { filter: hue-rotate(145deg) saturate(1.25) !important; }
+html.x4-web .game_area_dlc_row { background: rgba(5, 4, 5, .72) !important; border-radius: 0 !important; }
+html.x4-web .game_area_dlc_row:hover { background: rgba(179, 18, 46, .28) !important; }
+html.x4-web .dlc_highlight_reason { background: #b3122e !important; color: #e8e0d4 !important; }
