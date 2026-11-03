@@ -1,7 +1,8 @@
 /* Tensa Zangetsu - магазин и сообщество: синее снимает recolor.js, здесь только фон и характер. */
 html, body { background: var(--t-black, #050405) !important; }
-html.x4-store body { background: url(assets/storebg.webp) center top / 100% auto no-repeat fixed #050405 !important; }
-html.x4-store .responsive_page_frame, html.x4-store .responsive_page_content, html.x4-store .responsive_page_template_content, html.x4-store .page_background_holder, html.x4-store .page_header_ctn { background: transparent !important; }
+/* Общий фон магазина и сообщества. Профиль со своим фоном не трогаем. */
+html.x4-web body:not(.has_profile_background) { background: url(assets/storebg.webp) center top / 100% auto no-repeat fixed #050405 !important; }
+html.x4-web body:not(.has_profile_background) .responsive_page_frame, html.x4-web body:not(.has_profile_background) .responsive_page_content, html.x4-web body:not(.has_profile_background) .responsive_page_template_content, html.x4-web body:not(.has_profile_background) .page_background_holder, html.x4-web .page_header_ctn { background: transparent !important; }
 body, body * { font-family: "Oswald", "Arial Narrow", Arial, sans-serif !important; letter-spacing: .01em; }
 .home_page_content, .page_content, .page_background, .home_page_body_ctn, .page_content_ctn, .responsive_page_content, .responsive_page_template_content, .game_page_background { background: transparent !important; }
 .home_page_gutter { background: transparent !important; }
@@ -37,8 +38,7 @@ a:hover img, img:hover { filter: none !important; }
 /* Прочие страницы: ровный чёрный фон там, где Steam рисует цветные шапки */
 .market_header_bg, .market_tab_well_tabs, .pagecontent, .apphub_background, .profile_small_header_bg, .search_results_filtered_warning, #global_header { background: transparent !important; }
 #global_header { border: 0 !important; }
-body.flat_page, body.flat_page .responsive_page_content { background: #050405 !important; }
-body.community_home_page, body.apphub_blue, .apphub_HomeHeaderContent, .community_home_header { background: #050405 !important; }
+.apphub_HomeHeaderContent, .community_home_header { background: transparent !important; }
 .market_tab_well_tab_contents.active, .market_tab_well_tabs .market_tab_well_tab.market_tab_well_tab_active, .market_listing_tab_active { background: #b3122e !important; color: #e8e0d4 !important; }
 .game_area_already_owned { color: #e8e0d4 !important; }
 .item_market_action_button_green, .item_market_action_button_green .item_market_action_button_contents, .btn_green_white_innerfade, .btn_green_white_innerfade > span { background: #b3122e !important; color: #e8e0d4 !important; border-radius: 0 !important; }
@@ -46,3 +46,10 @@ body.community_home_page, body.apphub_blue, .apphub_HomeHeaderContent, .communit
 .market_header_logo { background: url(assets/btn.webp) center / cover no-repeat !important; clip-path: polygon(0 0, 100% 0, calc(100% - 24px) 100%, 0 100%); }
 /* Верхнее меню магазина без сплошной полосы: только мягкая тень, чтобы читалось над прокрученной страницей */
 div:has(> div.Panel > div > div > form) { background: linear-gradient(180deg, rgba(5, 4, 5, .82), rgba(5, 4, 5, 0)) !important; box-shadow: none !important; border: 0 !important; }
+/* Сообщество: синие картинки Steam заменены */
+.friends_header_bg { background: url(assets/splash.webp) right top / auto 100% no-repeat !important; }
+.blotter_appselect, .blotter_appselect .option { background: rgba(232, 224, 212, .08) !important; color: #e8e0d4 !important; border-radius: 0 !important; }
+.blotter_page_title h1, .profile_small_header_name, .friends_title { color: #e8e0d4 !important; }
+.btn_blue_white_innerfade, .btn_blue_white_innerfade > span, .btn_darkblue_white_innerfade, .btn_darkblue_white_innerfade > span, .btn_profile_action, .btn_profile_action > span { background: rgba(232, 224, 212, .08) !important; color: #e8e0d4 !important; border-radius: 0 !important; }
+.group_content, .group_content.bottomless { background: rgba(5, 4, 5, .72) !important; }
+.discussionSearchTextContainer { background: rgba(232, 224, 212, .08) !important; border-radius: 0 !important; }

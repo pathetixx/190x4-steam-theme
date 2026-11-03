@@ -16,8 +16,7 @@
   whenRoot(function () { if (gate) (document.head || document.documentElement).appendChild(gate); });
   function ready() { if (gate) { gate.remove(); gate = null; } }
   setTimeout(ready, isWeb ? 1500 : 700);
-  // фон магазина вешаем только там, где у страницы нет своего оформления
-  if (location.hostname === "store.steampowered.com") whenRoot(function () { document.documentElement.classList.add("x4-store"); });
+  if (isWeb) whenRoot(function () { document.documentElement.classList.add("x4-web"); });
   var done = {};
   var RE = /#[0-9a-fA-F]{3,8}\b|rgba?\(\s*[\d.]+[ ,]+[\d.]+[ ,]+[\d.]+(?:[ ,/]+[\d.]+%?)?\s*\)/g;
   var cache = {};
