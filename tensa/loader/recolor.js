@@ -186,6 +186,8 @@
     rootObs.observe(document, { childList: true, subtree: true });
   }
   document.addEventListener("DOMContentLoaded", later);
+  // Стили, вставленные до нас, сигнала о добавлении не дадут: пока шторка закрыта, проверяем их часто.
+  var poll = setInterval(function () { run(); if (!gate) clearInterval(poll); }, 40);
   window.__x4recolor = {
     run: run,
     pending: pending,
