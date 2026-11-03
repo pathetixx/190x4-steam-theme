@@ -174,18 +174,18 @@
       if (/Big Picture/i.test(n.textContent)) n.style.display = "none";
     });
   }
-  if (!isWeb) {
-    var menuWait = setInterval(function () {
-      if (!document.body) return;
-      clearInterval(menuWait);
-      hideBigPicture();
-      var menuObs = new MutationObserver(function () {
-        // в больших окнах (главное, настройки) меню нет, следить там незачем
-        if (document.querySelector(".FocusNavigationRoot")) { menuObs.disconnect(); return; }
-        hideBigPicture();
-      });
-      menuObs.observe(document.body, { childList: true, subtree: true });
-    }, 100);
+  // Скрытые окна меню почти не получают таймеров, поэтому проверяем сразу и в момент показа.
+  function watchMenus() {
+    if (!document.body) return false;
+    hideBigPicture();
+    // меню это маленькие окна; в главном и настройках искать незачем, там всё время идут изменения
+    new MutationObserver(function () { if (window.innerWidth <= 700) hideBigPicture(); })
+      .observe(document.body, { childList: true, subtree: true });
+    document.addEventListener("visibilitychange", hideBigPicture);
+    return true;
+  }
+  if (!isWeb && !watchMenus()) {
+    var menuWait = setInterval(function () { if (watchMenus()) clearInterval(menuWait); }, 100);
   }
   var timer = 0;
   function later() { clearTimeout(timer); timer = setTimeout(run, 150); }
