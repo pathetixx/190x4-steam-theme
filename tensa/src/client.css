@@ -1,0 +1,303 @@
+/* Tensa Zangetsu - окна клиента Steam. Классы в двойных фигурных скобках разрешаются в текущие хеши на живом клиенте. */
+
+:root, body.DesktopUI {
+  --t-black: #050405;
+  --t-ink: #0b090a;
+  --t-ink2: #141012;
+  --t-line: rgba(232, 224, 212, .16);
+  --t-line2: rgba(232, 224, 212, .3);
+  --t-bone: #e8e0d4;
+  --t-dim: #9b9288;
+  --t-blood: #b3122e;
+  --t-blood2: #d21a3c;
+  --t-spark: #e8560f;
+
+  --SystemAccentColor: #b3122e !important;
+  --SystemAccentColorLight1: #d21a3c !important;
+  --SystemAccentColorLight2: #e0485f !important;
+  --SystemAccentColorLight3: #ec8392 !important;
+  --SystemAccentColorDark1: #8f0e25 !important;
+  --SystemAccentColorDark2: #6d0a1c !important;
+  --SystemAccentColorDark3: #3b0510 !important;
+  --SystemAccentColor-RGB: 179, 18, 46 !important;
+  --SystemAccentColorLight1-RGB: 210, 26, 60 !important;
+  --SystemAccentColorLight2-RGB: 224, 72, 95 !important;
+  --SystemAccentColorLight3-RGB: 236, 131, 146 !important;
+  --SystemAccentColorDark1-RGB: 143, 14, 37 !important;
+  --virtualmenu-accent: #b3122e !important;
+  --virtualmenu-bg: #0b090a !important;
+  --virtualmenu-bg-hover: #3b0510 !important;
+  --virtualmenu-fg: #e8e0d4 !important;
+  --virtualmenupointer-color: #b3122e !important;
+  --gpfocus-color: #b3122e !important;
+  --gpfocus-glow-color: rgba(179, 18, 46, .5) !important;
+  --color-greyneutral-1: #050405 !important;
+  --color-greyneutral-2: #0b090a !important;
+  --color-greyneutral-3: #100d0e !important;
+  --color-greyneutral-4: #141012 !important;
+  --color-greyneutral-5: #1a1517 !important;
+  --color-greyneutral-6: #211b1d !important;
+  --color-greyneutral-7: #2b2426 !important;
+  --color-greyneutral-8: #3a3235 !important;
+  --color-greyneutral-9: #4a4144 !important;
+  --color-greyneutral-10: #6d6467 !important;
+  --color-greyneutral-11: #9b9288 !important;
+  --color-greyneutral-12: #e8e0d4 !important;
+}
+
+/* --- основа: шрифт, бумага --- */
+body, body * { font-family: "Oswald", "Arial Narrow", Arial, sans-serif !important; letter-spacing: .015em; }
+body { background: var(--t-black) !important; color: var(--t-bone); }
+{{Wrapper@OuterFrame}}, {{ForceOpaqueBackground}} { background: var(--t-black) !important; }
+{{OuterFrame}} {
+  background: url(assets/paper.webp) center / cover no-repeat var(--t-black) !important;
+  position: relative;
+}
+{{OuterFrame}}::before {
+  content: ""; position: absolute; z-index: 0; top: 0; right: 0; width: 760px; height: 150px; pointer-events: none;
+  background: url(assets/splash.webp) right top / contain no-repeat; opacity: .55;
+}
+{{OuterFrame}} > * { position: relative; z-index: 1; }
+{{TopBar}}, {{TitleBar@TopBar}}, {{SuperNavBar}}, {{SuperNav}}, {{ContentFrame}}, {{LocalContentContainer}},
+{{Library@LocalContentContainer}}, {{URLBarReplacement}}, {{MainPanel}}, {{AppDetailsMain}}, {{AppDetailsTransitionGroup}},
+{{LibraryHome}}, {{ShowcaseOuter}}, {{Showcase}}, {{UpdatesContainer}} { background: transparent !important; box-shadow: none !important; }
+{{Body@InnerContainer}}, {{Body@ScrollContainer}}, {{AppDetailsMain}} > div { background: transparent !important; }
+
+/* --- верхнее меню --- */
+{{RootMenuButton}} { color: var(--t-dim) !important; font-size: 14px !important; }
+{{RootMenuButton}}:hover { color: var(--t-bone) !important; background: transparent !important; }
+{{SteamButton}} { color: var(--t-dim) !important; }
+{{AnnouncementsButton}} { background: var(--t-blood) !important; clip-path: polygon(6px 0, 100% 0, calc(100% - 6px) 100%, 0 100%); border-radius: 0 !important; color: var(--t-bone) !important; }
+{{NotificationButtonContainer}} > div { background: rgba(232, 224, 212, .08) !important; border-radius: 0 !important; color: var(--t-bone) !important; }
+{{TitleBarControls}} { color: var(--t-bone) !important; }
+{{TitleBarControls}} [class*="Focusable"] > div { border-radius: 0 !important; }
+
+/* --- вкладки: активную подчёркивает клинок --- */
+{{TopBar}}, {{SuperNavBar}}, {{SuperNav}}, {{SuperNavMenu}} { overflow: visible !important; }
+{{TopBar}} { z-index: 5 !important; }
+{{SuperNavMenu}} { background: transparent !important; }
+{{MenuButton@SuperNavMenu}} {
+  font-family: "Oswald" !important; font-weight: 500 !important; font-size: 22px !important; line-height: 28px !important;
+  text-transform: uppercase; letter-spacing: .03em; color: var(--t-dim) !important; border: 0 !important; background: none !important; text-shadow: none !important;
+}
+{{SuperNavMenu}}:hover {{MenuButton@SuperNavMenu}} { color: var(--t-bone) !important; }
+{{SuperNavMenu}}{{Selected@SuperNavMenu}} {{MenuButton@SuperNavMenu}} { color: var(--t-bone) !important; font-weight: 700 !important; position: relative; }
+{{SuperNavMenu}}{{Selected@SuperNavMenu}} {{MenuButton@SuperNavMenu}}::after {
+  content: ""; position: absolute; left: -12px; right: -26px; bottom: -3px; height: 10px;
+  background: url(assets/blade.webp) center / 100% 100% no-repeat !important; border: 0 !important;
+}
+{{Arrow@SuperNav}} { color: var(--t-bone) !important; fill: currentColor !important; }
+
+/* --- левая панель --- */
+{{LeftListSizableContainer}} {
+  background: linear-gradient(180deg, rgba(5, 4, 5, .55), rgba(5, 4, 5, .25)) !important;
+  border-right: 1px solid var(--t-line);
+}
+{{LeftListSizableContainer}} > div { background: transparent !important; }
+{{LibraryWindowDivider}} { background: transparent !important; }
+{{HomeBox}} a, {{CollectionBar}} a, {{SearchBar}}, {{SearchInput}} input {
+  background: rgba(232, 224, 212, .05) !important; border: 1px solid var(--t-line) !important; border-radius: 0 !important; box-shadow: none !important;
+  color: var(--t-bone) !important;
+}
+{{HomeBox}} a { clip-path: polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%); }
+{{HomeBox}} a svg { display: none !important; }
+{{HomeBox}} a *, {{ViewName}} { color: var(--t-bone) !important; font-size: 15px !important; }
+{{GameListHomeAndSearch}}, {{ViewFiltersBar}} { background: transparent !important; }
+{{SectionHeaderContent}} { overflow: visible !important; line-height: 24px !important; }
+{{SectionName}} { line-height: 24px !important; height: 24px !important; overflow: visible !important; font-weight: 700 !important; font-size: 15px !important; color: var(--t-bone) !important; letter-spacing: .05em; }
+{{SectionCount}} { color: var(--t-dim) !important; }
+{{SectionRule}} { background: url(assets/chain.webp) left center / auto 11px repeat-x !important; border: 0 !important; height: 10px !important; opacity: .8; }
+
+/* --- строки игр: выбранная идёт по мазку туши --- */
+{{GameListEntryContainer}} { color: var(--t-dim) !important; background: transparent !important; font-size: 15px !important; }
+{{CollapseIconParent}} { background: transparent !important; }
+{{Container@GameListEntryContainer}} { background: transparent !important; color: var(--t-dim) !important; }
+{{Container@GameListEntryContainer}}:hover { background: rgba(232, 224, 212, .06) !important; }
+{{Container@GameListEntryContainer}}:hover {{GameListEntryContainer}} { color: var(--t-bone) !important; }
+{{Selected@GameListEntryContainer}} {
+  background: url(assets/brush.webp) center / 100% 130% no-repeat !important; color: #fff !important; box-shadow: none !important; border: 0 !important;
+}
+{{Selected@GameListEntryContainer}} {{GameListEntryContainer}}, {{Selected@GameListEntryContainer}} span { color: #fff !important; background: transparent !important; }
+{{Selected@GameListEntryContainer}} * { color: #fff !important; }
+{{GameIcon}} img { filter: saturate(.6) !important; }
+{{Arrow@SuperNav}}{{Disabled@SuperNav}} { opacity: .3 !important; }
+
+/* --- приглушённые обложки: цвет возвращается при наведении --- */
+{{PortraitImage}} img, {{Capsule}} img, {{PartnerEventRowCapsule_MainImage}}, {{ImageContainer@PartnerEventLargeImage_Contents}} img {
+  filter: saturate(.5) contrast(1.05) !important; transition: filter .25s ease !important;
+}
+{{LibraryItemBox}}:hover img, {{PartnerEventRowCapsule_Container}}:hover img { filter: none !important; }
+{{LibraryItemBox}}, {{PortraitImage}} {
+  border-radius: 0 !important;
+  clip-path: polygon(16px 0, 100% 0, 100% calc(100% - 16px), calc(100% - 16px) 100%, 0 100%, 0 16px);
+}
+{{PartnerEventRowCapsule_Container}} {
+  border-radius: 0 !important; background: var(--t-ink) !important;
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%);
+}
+
+/* --- домашняя: заголовки и цепь --- */
+{{CollectionDropDown}}, {{CollectionDropDown}} label, {{ShowcaseHeader}} { overflow: visible !important; height: auto !important; }
+{{Name@HeaderPageControls}}, {{CollectionDropDown}} button, {{CollectionDropDown}} button *, {{CountDisplay}} {
+  font-weight: 700 !important; font-size: 24px !important; line-height: 30px !important; height: auto !important; overflow: visible !important; color: var(--t-bone) !important; text-transform: none; background: none !important; border: 0 !important;
+}
+{{CountDisplay}} { color: var(--t-dim) !important; }
+{{EventTime}} { color: var(--t-dim) !important; font-size: 13px !important; text-transform: uppercase; letter-spacing: .08em; }
+{{PartnerEventRowCapsule_TextTitle}} { color: var(--t-bone) !important; font-size: 16px !important; font-weight: 500 !important; }
+{{GameName}} { color: var(--t-dim) !important; }
+{{GameIconAndName}} { background: rgba(232, 224, 212, .05) !important; border-radius: 0 !important; }
+{{Rule@ShowcaseHeader}} { background: url(assets/moon.webp) center / 20px no-repeat, url(assets/chain.webp) left center / auto 11px repeat-x !important; height: 20px !important; border: 0 !important; }
+{{Rule@AddShowcase}} { background: url(assets/chain.webp) left center / auto 8px repeat-x !important; height: 8px !important; border: 0 !important; opacity: .35; }
+{{AddShowcase}} { color: var(--t-dim) !important; }
+{{SortingDropDownLabel}} { color: var(--t-dim) !important; }
+{{SortingDropDown}} button { background: rgba(232, 224, 212, .06) !important; border: 1px solid var(--t-line) !important; border-radius: 0 !important; color: var(--t-bone) !important; }
+
+/* --- страница игры --- */
+{{ImgSrc}} { filter: saturate(.5) contrast(1.05) brightness(.82) !important; }
+{{ImgBlur}}, {{ImgBlurBackdrop}} { display: none !important; }
+{{HeaderBackgroundImage}}::after { content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(180deg, transparent 58%, rgba(5, 4, 5, .9) 100%); }
+{{SectionHeader}}, {{LabelText}} { color: var(--t-bone) !important; font-weight: 700 !important; font-size: 19px !important; letter-spacing: .03em; text-transform: uppercase; }
+{{SectionHeader}} { background: transparent !important; border: 0 !important; }
+{{AppDetailsSection}} {{Body@Subsection}}, {{Highlight@AchievementProgressContainer}}, {{HighlightDiv}} { background: transparent !important; }
+{{Body@Subsection}} { border: 1px solid var(--t-line); background: rgba(5, 4, 5, .45) !important; clip-path: polygon(0 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%); }
+{{SubsectionHeader}} { color: var(--t-bone) !important; font-size: 14px !important; }
+{{PartnerEventLargeUpdate}}, {{PartnerEventLargeImage_Container}}, {{PartnerEventLargeImage_Contents}} { background: rgba(5, 4, 5, .55) !important; border-color: var(--t-line) !important; box-shadow: none !important; }
+{{PartnerEventLargeUpdate}} { clip-path: polygon(0 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%); }
+{{PartnerEventFeaturedHeader}} { background: url(assets/btn.webp) center / cover no-repeat !important; color: var(--t-bone) !important; font-weight: 700 !important; }
+{{PartnerEventType}} { color: #e0485f !important; }
+{{PartnerEventLargeImage_Title}} { color: var(--t-bone) !important; font-size: 22px !important; font-weight: 500 !important; }
+{{PartnerEventLargeImage_Summary}} { color: var(--t-dim) !important; font-size: 15px !important; }
+{{AchievementProgressContainer}} { background: rgba(232, 224, 212, .1) !important; border-radius: 0 !important; }
+{{AchievementProgress}} { background: var(--t-blood2) !important; border-radius: 0 !important; }
+{{Glassy}}, {{Backdrop}}, {{BackdropGlass}}, {{AppDetailsOverviewPanel}} { background: transparent !important; backdrop-filter: none !important; }
+{{PlayBar}} { background: rgba(5, 4, 5, .82) !important; border-top: 1px solid var(--t-line); border-bottom: 1px solid var(--t-line); box-shadow: none !important; backdrop-filter: none !important; }
+{{StickyHeaderShadow}}, {{TopGradient}} { display: none !important; }
+{{PlayButton}} {
+  background: url(assets/btn.webp) center / cover no-repeat var(--t-blood) !important; color: var(--t-bone) !important; border: 0 !important; border-radius: 0 !important; box-shadow: none !important;
+  clip-path: polygon(14px 0, 100% 0, calc(100% - 14px) 100%, 0 100%);
+}
+{{PlayButton}}:hover { filter: brightness(1.2); }
+{{PlayButton}} {{ButtonText}} { font-weight: 700 !important; font-size: 24px !important; letter-spacing: .05em !important; color: var(--t-bone) !important; text-transform: uppercase; }
+{{PlayBarLabel}} { color: var(--t-bone) !important; font-weight: 500 !important; font-size: 14px !important; letter-spacing: .08em; text-transform: uppercase; }
+{{PlayBarDetailLabel}} { color: var(--t-dim) !important; font-size: 13px !important; }
+{{DetailsProgressContainer}} { background: rgba(232, 224, 212, .12) !important; border-radius: 0 !important; }
+{{DetailsProgressBar}} { background: var(--t-blood2) !important; border-radius: 0 !important; }
+{{MenuButton@AppButtonsContainer}} {
+  background: rgba(232, 224, 212, .06) !important; color: var(--t-bone) !important; border-radius: 0 !important; clip-path: polygon(6px 0, 100% 0, calc(100% - 6px) 100%, 0 100%);
+}
+{{FavoriteButton}}{{Favorited}} { color: var(--t-blood2) !important; }
+{{LinksSectionBody}} { background: rgba(232, 224, 212, .03) !important; border-top: 1px solid var(--t-line); border-bottom: 1px solid var(--t-line); }
+{{LinksSectionBody}} * { color: var(--t-bone) !important; font-size: 14px !important; }
+{{LinksSection}}::after { content: ""; display: block; height: 22px; margin: 8px 20px 0; background: url(assets/moon.webp) center / 20px no-repeat, url(assets/chain.webp) left center / auto 11px repeat-x; }
+
+/* --- нижняя полоса --- */
+{{BottomBarContainer}}, {{BottomBar}} { background: rgba(5, 4, 5, .78) !important; box-shadow: none !important; }
+{{BottomBarContainer}} { border-top: 1px solid var(--t-line); }
+{{AddGameButton}}, {{FriendsButton}}, {{DownloadStatusContent}} { background: transparent !important; color: var(--t-bone) !important; border-radius: 0 !important; }
+{{AddGameButton}}:hover, {{FriendsButton}}:hover, {{DownloadStatusContent}}:hover { background: rgba(179, 18, 46, .28) !important; }
+{{Queue}}, {{Text@AddGameButton}}, {{Text@FriendsButton}} { color: var(--t-bone) !important; font-size: 14px !important; }
+
+/* --- скролл и фокус --- */
+::-webkit-scrollbar { width: 8px !important; height: 8px !important; background: transparent !important; }
+::-webkit-scrollbar-track { background: transparent !important; }
+::-webkit-scrollbar-thumb { background: rgba(179, 18, 46, .55) !important; border-radius: 0 !important; }
+::-webkit-scrollbar-thumb:hover { background: var(--t-blood2) !important; }
+::selection { background: var(--t-blood) !important; color: #fff !important; }
+
+/* --- контекстные и верхние меню: чёрная бумага, мазок на наведении, цепь вместо линии --- */
+{{contextMenuContents}}, {{MenuPopup}} {
+  background: url(assets/paper.webp) center / cover no-repeat var(--t-ink) !important;
+  border: 1px solid var(--t-line2) !important; border-radius: 0 !important; box-shadow: 0 8px 28px rgba(0, 0, 0, .8) !important;
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%);
+}
+{{contextMenuItem}}, {{MenuItem@contextMenuContents}} { background: transparent !important; color: var(--t-bone) !important; font-size: 15px !important; border-radius: 0 !important; }
+{{contextMenuItem}}:hover, {{contextMenuItem}}.active, {{contextMenuItem}}[class*="active"] {
+  background: url(assets/brush.webp) center / 100% 120% no-repeat !important; color: #fff !important;
+}
+hr{{Separator@MenuItem}} {
+  height: 10px !important; border: 0 !important; margin: 3px 12px !important; opacity: .75;
+  background: url(assets/chain.webp) left center / auto 11px repeat-x !important;
+}
+
+/* --- список друзей: классы здесь читаемые --- */
+.popup_chat_frame, .chat_main, .chat_main_flex, .friendsListContainer, .friendlist {
+  background: url(assets/paper.webp) center / cover no-repeat var(--t-black) !important;
+}
+.friendListHeaderContainer, .currentUserContainer, .FriendsListContent, .friendlistListContainer, .socialTabSearchContainer, .socialTabContainer, .friendTab, .FriendsListChatSection, .ChatRoomListContainerParent, .quickAccessFriends { background: transparent !important; box-shadow: none !important; }
+.currentUserContainer { position: relative; }
+.currentUserContainer::after { content: ""; position: absolute; top: -28px; right: 0; width: 280px; height: 94px; pointer-events: none; background: url(assets/splash.webp) right top / contain no-repeat; opacity: .55; }
+.statusHeaderGlow, .FriendsListInsetShadowCtn, .FriendListInsetShadowTop { display: none !important; }
+{{playerName}} { font-weight: 700 !important; font-size: 17px !important; color: var(--t-bone) !important; }
+.friendTab .tabLabel, .friendsListSectionTitle, .chatSectionTitle { font-weight: 700 !important; font-size: 15px !important; color: var(--t-bone) !important; text-transform: uppercase; letter-spacing: .05em; }
+.friendTab.activeTab { border-bottom: 0 !important; }
+.TabSearchButton, .tabSearchTransitionGroup input { background: rgba(232, 224, 212, .05) !important; border-radius: 0 !important; border: 1px solid var(--t-line) !important; color: var(--t-bone) !important; }
+.groupHeaderContainer, .groupName { background: transparent !important; color: var(--t-bone) !important; font-weight: 500 !important; font-size: 15px !important; letter-spacing: .04em; }
+.friendGroup + .friendGroup, .groupHeaderContainer { position: relative; }
+.friendGroup + .friendGroup::before { content: ""; display: block; height: 10px; margin: 2px 8px; opacity: .75; background: url(assets/chain.webp) left center / auto 11px repeat-x; }
+.friend { background: transparent !important; border-radius: 0 !important; }
+.friend:hover { background: rgba(179, 18, 46, .22) !important; }
+.friend .avatarHolder, .avatarHolder { border-radius: 0 !important; }
+.chatTabList, .chatTabSetContainer, .chatDialogs { background: transparent !important; }
+.chatTab, .chatTabSetContainer .chatTab { background: rgba(232, 224, 212, .06) !important; border-radius: 0 !important; clip-path: polygon(0 0, 100% 0, calc(100% - 8px) 100%, 0 100%); color: var(--t-bone) !important; }
+.chatTab.ActiveTab, .chatTab.activeTab { background: url(assets/btn.webp) center / cover no-repeat !important; }
+
+/* --- свой аккаунт в заголовке окна: большая аватарка в багровой рамке, ник и кошелёк столбиком --- */
+{{TitleBar@TopBar}} { position: relative; z-index: 6 !important; overflow: visible !important; }
+{{TitleBarControls}} { align-items: flex-start !important; overflow: visible !important; }
+{{TitleBarControls}} > div:has({{AccountMenu}}), {{TitleBarControls}} > div:has({{AccountMenu}}) div:has({{AccountMenu}}) { overflow: visible !important; height: 56px !important; }
+{{AccountMenu}} {
+  display: grid !important; grid-template-columns: 56px auto 14px; grid-template-rows: 28px 24px; column-gap: 8px; align-items: center;
+  height: 56px !important; min-height: 56px !important; max-height: none !important; width: auto !important; padding: 0 6px 0 0 !important; margin-top: -2px; background: transparent !important; border: 0 !important; border-radius: 0 !important; color: var(--t-bone) !important;
+}
+{{AccountMenu}}:hover { background: rgba(179, 18, 46, .18) !important; }
+{{AccountMenu}} .avatarHolder {
+  grid-row: 1 / span 2; grid-column: 1; width: 56px !important; height: 56px !important; padding: 2px; box-sizing: border-box; background: var(--t-blood) !important; border-radius: 0 !important;
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%);
+}
+{{AccountMenu}} .avatarHolder img.avatar { width: 100% !important; height: 100% !important; border: 0 !important; content: var(--x4-me); clip-path: polygon(0 0, 100% 0, 100% calc(100% - 9px), calc(100% - 9px) 100%, 0 100%); }
+{{AccountMenu}} .avatarStatus { display: none !important; }
+{{AccountMenu}} > div:not(.avatarHolder):not({{WalletBalance}}) { grid-column: 2; grid-row: 1; align-self: end; color: var(--t-bone) !important; font-weight: 700 !important; font-size: 19px !important; line-height: 24px !important; letter-spacing: .03em; }
+{{Chevron}} { grid-column: 3; grid-row: 1; align-self: end; margin-bottom: 7px; color: var(--t-dim) !important; }
+{{WalletBalance}} { grid-column: 2 / span 2; grid-row: 2; align-self: start; color: var(--t-dim) !important; font-size: 14px !important; line-height: 20px !important; padding: 0 !important; }
+
+/* --- свой аккаунт в списке друзей: крупная аватарка и серп рядом --- */
+.friendListHeaderContainer, .titleBarContainer { height: auto !important; overflow: visible !important; }
+.currentUserContainer { height: auto !important; min-height: 104px !important; }
+.AvatarAndUser { align-items: center !important; padding: 12px 40px 12px 14px !important; min-height: 104px; height: auto !important; }
+.currentUserAvatar, .currentUserAvatar > div, .currentUserAvatar .avatarHolder { width: 80px !important; height: 80px !important; min-width: 80px; }
+.currentUserAvatar .avatarHolder { padding: 2px; box-sizing: border-box; background: var(--t-blood) !important; border-radius: 0 !important; clip-path: polygon(0 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%); }
+.currentUserAvatar img.avatar { width: 100% !important; height: 100% !important; border: 0 !important; content: var(--x4-me); }
+.currentUserAvatar .avatarStatus, .currentUserAvatar .avatarFrame { display: none !important; }
+.currentUserContainer .labelHolder { margin-left: 16px !important; }
+.currentUserContainer {{playerName}} { font-size: 26px !important; line-height: 32px !important; font-weight: 700 !important; color: var(--t-bone) !important; letter-spacing: .03em; }
+.currentUserContainer .richPresenceLabel { color: var(--t-dim) !important; font-size: 14px !important; }
+.friend {{playerName}} { color: var(--t-bone) !important; font-size: 15px !important; }
+.friend.offline {{playerName}} { color: var(--t-dim) !important; }
+.FriendsListChatSection, .friendsListSectionTitle, .chatSectionTitle { background: rgba(5, 4, 5, .7) !important; border-top: 1px solid var(--t-line); }
+
+/* --- коллекции и пустые экраны библиотеки стоят на той же бумаге --- */
+{{MainPanel}} > * , {{MainPanel}} > * > * { background-color: transparent !important; }
+{{CollectionShelf}}, {{AllCollections}}, {{AllCollectionsContainer}} { background: transparent !important; }
+
+/* --- загрузки --- */
+{{DownloadGraph}}, {{DownloadsPage}} { background: transparent !important; }
+{{DownloadGraph}} { background: linear-gradient(90deg, rgba(179, 18, 46, .12), transparent 45%) !important; }
+
+/* --- настройки и прочие окна на бумаге --- */
+{{PagedSettingsDialog}}, {{PagedSettingsDialog_PageContent}}, {{DialogBody}}, {{DialogContent_InnerWidth}} { background: transparent !important; }
+{{SettingsModal}}, {{ModalPosition}} > div, {{DialogContent}} { background: url(assets/paper.webp) center / cover no-repeat var(--t-black) !important; }
+{{PagedSettingsDialog_PageListColumn}}, {{PagedSettingsDialog_PageList}} { background: rgba(5, 4, 5, .55) !important; border-right: 1px solid var(--t-line); }
+{{PagedSettingsDialog_Title}} { color: var(--t-bone) !important; font-weight: 700 !important; font-size: 22px !important; letter-spacing: .05em; text-transform: uppercase; }
+{{PagedSettingsDialog_PageListItem}} { color: var(--t-dim) !important; border-radius: 0 !important; }
+{{PagedSettingsDialog_PageListItem}}:hover { background: rgba(232, 224, 212, .06) !important; color: var(--t-bone) !important; }
+{{PagedSettingsDialog_PageListItem}}{{Active@PagedSettingsDialog_PageListItem}} { background: url(assets/brush.webp) center / 100% 110% no-repeat !important; color: #fff !important; }
+{{DialogHeader}} { color: var(--t-bone) !important; font-weight: 700 !important; letter-spacing: .03em; }
+button{{DialogButton}}, {{DialogButton}} { border-radius: 0 !important; background: rgba(232, 224, 212, .08) !important; color: var(--t-bone) !important; box-shadow: none !important; }
+{{DialogButton}}:hover { background: rgba(179, 18, 46, .5) !important; }
+{{DialogButton}}{{Primary}} { background: url(assets/btn.webp) center / cover no-repeat var(--t-blood) !important; color: var(--t-bone) !important; }
+{{DialogButton}}{{Primary}}:hover { filter: brightness(1.2); }
+{{DialogInput}}, {{DialogDropDown}} { background: rgba(232, 224, 212, .06) !important; border-radius: 0 !important; box-shadow: none !important; color: var(--t-bone) !important; }
+{{DialogInput}}:focus { outline: 1px solid var(--t-blood2) !important; }
+{{DialogToggle}} { border-radius: 0 !important; }
+{{DialogToggle}}{{On}} { background: var(--t-blood) !important; }
