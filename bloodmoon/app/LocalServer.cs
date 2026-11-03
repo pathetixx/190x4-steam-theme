@@ -123,7 +123,16 @@ namespace Bloodmoon
                 if (File.Exists(path)) return File.ReadAllBytes(path);
                 string css;
                 using (var w = new WebClient { Encoding = Utf8 })
-                    css = await w.DownloadStringTaskAsync(u).ConfigureAwait(false);
+                {
+                    // у WebClient нет своего срока ожидания: зависшая загрузка не должна держать страницу и очередь
+                    var job = w.DownloadStringTaskAsync(u);
+                    if (await Task.WhenAny(job, Task.Delay(15000)).ConfigureAwait(false) != job)
+                    {
+                        w.CancelAsync();
+                        throw new TimeoutException("нет ответа 15 с");
+                    }
+                    css = await job.ConfigureAwait(false);
+                }
                 var body = Utf8.GetBytes(Recolor.Sheet(href, css));
                 // кеш только ускоряет: если записать не вышло, стиль всё равно отдаём
                 try

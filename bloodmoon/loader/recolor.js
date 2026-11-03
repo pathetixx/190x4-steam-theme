@@ -204,12 +204,12 @@
       if (l.__x4p || !l.href || l.id === "x4bloodmoon" || l.getAttribute("data-x4copy")) return;
       l.__x4p = 1;
       var c = addCopy(l, srv + "/css?u=" + encodeURIComponent(l.href));
-      l.setAttribute("data-x4off", l.media || "all");
-      l.media = "not all";
-      c.onerror = function () {
-        window.__x4blocked = 1;
-        l.media = l.getAttribute("data-x4off"); l.removeAttribute("data-x4off"); c.remove(); later();
+      // родной стиль отключаем только после загрузки копии: без неё страница должна остаться рабочей
+      c.onload = function () {
+        l.setAttribute("data-x4off", l.media || "all");
+        l.media = "not all";
       };
+      c.onerror = function () { c.remove(); later(); };
     });
   }
   function run() {
