@@ -2,7 +2,8 @@
 // Так не надо охотиться за каждым классом, и новые экраны после обновлений Steam тоже становятся тёмными.
 (function () {
   if (window.__x4recolor) { window.__x4recolor.run(); return; }
-  var isWeb = location.protocol === "https:";
+  // окна клиента тоже бывают на https (steamloopback.host), поэтому проверяем сам сайт
+  var isWeb = /(^|\.)(steampowered|steamcommunity)\.com$/.test(location.hostname);
   // Пока тема не встала, окно остаётся чёрным: родной вид не успевает мелькнуть. Таймер снимет шторку в любом случае.
   var gate = document.createElement("style");
   gate.id = "x4gate";
