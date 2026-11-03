@@ -93,7 +93,7 @@
     var list = document.styleSheets;
     for (var i = 0; i < list.length; i++) {
       var s = list[i];
-      if (seen.has(s) || (s.ownerNode && (s.ownerNode.id === "x4tensa" || s.ownerNode.getAttribute("data-x4copy")))) continue;
+      if (seen.has(s) || (s.ownerNode && (s.ownerNode.id === "x4bloodmoon" || s.ownerNode.getAttribute("data-x4copy")))) continue;
       var rules;
       try { rules = s.cssRules; } catch (e) { continue; }
       if (!rules) continue;
@@ -195,7 +195,7 @@
       [].forEach.call(m.addedNodes, function (n) { if (n.tagName === "LINK") n.addEventListener("load", later); });
     });
     swapKnown();
-    var t = document.getElementById("x4tensa");
+    var t = document.getElementById("x4bloodmoon");
     if (t && document.head && t !== document.head.lastElementChild) document.head.appendChild(t);
     later();
   });

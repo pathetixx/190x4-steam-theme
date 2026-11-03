@@ -1,8 +1,8 @@
-# Tensa Zangetsu for Steam: applies the theme to every Steam window over the local debug port.
+# 190x4 Bloodmoon for Steam: applies the theme to every Steam window over the local debug port.
 # No hooks and no files changed in Steam. Close this script and restart Steam to get the stock look.
-#   powershell -File x4-steam-tensa.ps1            keep running
-#   powershell -File x4-steam-tensa.ps1 -Once      one pass and exit
-#   powershell -File x4-steam-tensa.ps1 -Remove    remove the theme from open windows
+#   powershell -File x4-steam-bloodmoon.ps1            keep running
+#   powershell -File x4-steam-bloodmoon.ps1 -Once      one pass and exit
+#   powershell -File x4-steam-bloodmoon.ps1 -Remove    remove the theme from open windows
 param([switch]$Once, [switch]$Remove, [int]$Port = 8080, [string]$LogFile = "")
 $ErrorActionPreference = "Stop"
 Add-Type -AssemblyName System.Web.Extensions
@@ -13,7 +13,7 @@ $utf8 = New-Object System.Text.UTF8Encoding($false)
 function Read-Text($name) { [IO.File]::ReadAllText((Join-Path $root $name), $utf8) }
 function Log($m) { if ($LogFile) { Add-Content -Path $LogFile -Value ((Get-Date -Format "HH:mm:ss") + " " + $m) } }
 
-$mutex = New-Object System.Threading.Mutex($false, "x4-steam-tensa")
+$mutex = New-Object System.Threading.Mutex($false, "x4-steam-bloodmoon")
 if (-not $Remove -and -not $mutex.WaitOne(0)) { exit 0 }
 
 function Read-Theme {
@@ -24,8 +24,8 @@ function Read-Theme {
   $script:stamp = (Get-ChildItem -Path $root -Include *.css, *.js -Recurse | Measure-Object -Property LastWriteTimeUtc -Maximum).Maximum
 }
 Read-Theme
-$placeJs = '(function(c){var s=document.getElementById("x4tensa");if(!s){s=document.createElement("style");s.id="x4tensa";(document.head||document.documentElement).appendChild(s);}if(s.textContent!==c)s.textContent=c;window.__x4tensa=1;return 1;})'
-$clearJs = '(function(){var s=document.getElementById("x4tensa");if(s)s.remove();if(window.__x4recolor)window.__x4recolor.revert();delete window.__x4tensa;return 1;})()'
+$placeJs = '(function(c){var s=document.getElementById("x4bloodmoon");if(!s){s=document.createElement("style");s.id="x4bloodmoon";(document.head||document.documentElement).appendChild(s);}if(s.textContent!==c)s.textContent=c;window.__x4bloodmoon=1;return 1;})'
+$clearJs = '(function(){var s=document.getElementById("x4bloodmoon");if(s)s.remove();if(window.__x4recolor)window.__x4recolor.revert();delete window.__x4bloodmoon;return 1;})()'
 
 $popupHook = @'
 (function(){
@@ -33,12 +33,12 @@ $popupHook = @'
     try{
       if(!w||!w.document)return;
       var d=w.document;
-      if(!d.getElementById("x4tensa")){var s=d.createElement("style");s.id="x4tensa";s.textContent=window.__x4h.css;(d.head||d.documentElement).appendChild(s);w.__x4tensa=1;}
-      w.eval(window.__x4h.code);
+      if(!d.getElementById("x4bloodmoon")){var s=d.createElement("style");s.id="x4bloodmoon";s.textContent=window.__x4bm.css;(d.head||d.documentElement).appendChild(s);w.__x4bloodmoon=1;}
+      w.eval(window.__x4bm.code);
     }catch(e){}
   }
-  if(window.__x4hooked)return;
-  window.__x4hooked=1;
+  if(window.__x4bmhooked)return;
+  window.__x4bmhooked=1;
   g_PopupManager.AddPopupCreatedCallback(function(p){apply(p.window||p.m_popup);});
 })();
 '@
@@ -108,7 +108,7 @@ $keep = @{}        # web target id -> open connection
 $drain = @{}       # web target id -> pending read
 
 function Get-WebBoot {
-  return "(function(){if(window!==top)return;var c=" + $json.Serialize($webCss) + ";function put(){var s=document.createElement('style');s.id='x4tensa';s.textContent=c;(document.head||document.documentElement).appendChild(s);window.__x4tensa=1;}if(document.documentElement){put();}else{var o=new MutationObserver(function(){if(document.documentElement){o.disconnect();put();}});o.observe(document,{childList:true});}})();" + $recolor
+  return "(function(){if(window!==top)return;var c=" + $json.Serialize($webCss) + ";function put(){var s=document.createElement('style');s.id='x4bloodmoon';s.textContent=c;(document.head||document.documentElement).appendChild(s);window.__x4bloodmoon=1;}if(document.documentElement){put();}else{var o=new MutationObserver(function(){if(document.documentElement){o.disconnect();put();}});o.observe(document,{childList:true});}})();" + $recolor
 }
 
 function Keep-Web($id, $wsUrl) {
@@ -181,7 +181,7 @@ while ($true) {
         $client = Resolve-Client $shared["webSocketDebuggerUrl"]
         Log "resolved classes"
         # Steam reports every new window here before showing it: the theme gets in ahead of the first paint.
-        [void](Invoke-Page $shared["webSocketDebuggerUrl"] ("window.__x4h={css:" + $json.Serialize($client) + ",code:" + $json.Serialize($recolor) + "};" + $popupHook))
+        [void](Invoke-Page $shared["webSocketDebuggerUrl"] ("window.__x4bm={css:" + $json.Serialize($client) + ",code:" + $json.Serialize($recolor) + "};" + $popupHook))
       }
       $alive = @{}
       foreach ($t in $targets) { $alive[$t["id"]] = 1 }
@@ -198,7 +198,7 @@ while ($true) {
           if ($Remove) { [void](Invoke-Page $ws $clearJs); continue }
           $fresh = $seen[$t["id"]] -ne $url
           # a web page can reload at the same address and lose the theme
-          if (-not $fresh -and $isWeb) { $fresh = -not (Invoke-Page $ws "!!window.__x4tensa") }
+          if (-not $fresh -and $isWeb) { $fresh = -not (Invoke-Page $ws "!!window.__x4bloodmoon") }
           if ($fresh) {
             $css = $(if ($isClient) { $client } else { $webCss })
             [void](Invoke-Page $ws ($placeJs + "(" + $json.Serialize($css) + ")"))

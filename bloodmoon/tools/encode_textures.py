@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 """Перекодирует фоновые текстуры без блоков: тёмные плавные области webp сжимает слишком грубо,
 поэтому качество высокое, а лёгкое зерно убирает ступеньки на градиентах.
-Запуск: encode_textures.py <папка генерации> <assets Tensa> <assets темы>"""
+Запуск: encode_textures.py <папка генерации> <исходные ассеты> <assets темы>"""
 import sys
 import numpy as np
 from PIL import Image
 
-gen, tensa, out = sys.argv[1:4]
+gen, source, out = sys.argv[1:4]
 
 def grain(im, amount=1.6, seed=7):
     a = np.asarray(im.convert("RGB")).astype(np.float32)
@@ -30,4 +30,4 @@ save_rgb(grain(store.resize((2048, round(store.height * 2048 / store.width)), Im
 btn = Image.open(f"{gen}/w-btn/btn.png").convert("RGB")
 save_rgb(btn.resize((840, round(btn.height * 840 / btn.width)), Image.LANCZOS), "btn.webp")
 save_rgba(f"{gen}/w-splash/splash.png", "splash.webp", 1400)
-save_rgba(f"{tensa}/brush.png", "brush.webp", 640)
+save_rgba(f"{source}/brush.png", "brush.webp", 640)

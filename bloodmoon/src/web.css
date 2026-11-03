@@ -1,4 +1,4 @@
-/* Tensa Zangetsu - магазин и сообщество: синее снимает recolor.js, здесь только фон и характер. */
+/* 190x4 Bloodmoon - магазин и сообщество: синее снимает recolor.js, здесь только фон и характер. */
 html, body { background: var(--t-black, #050405) !important; }
 /* Общий фон магазина и сообщества. Профиль со своим фоном не трогаем. */
 html.x4-web body:not(.has_profile_background) { background: url(assets/storebg.webp) center top / 100% auto no-repeat fixed #050405 !important; }
