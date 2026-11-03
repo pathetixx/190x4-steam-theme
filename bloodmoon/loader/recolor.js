@@ -3,9 +3,19 @@
 // В окнах клиента оригинальные стили не трогаем: Chromium держит их одной копией на все окна,
 // а правка через CSSOM размножила бы их. Поверх кладём только правила оформления.
 (function () {
-  if (window.__x4recolor) { window.__x4recolor.run(); return; }
-  // окна клиента тоже бывают на https (steamloopback.host), поэтому проверяем сам сайт
-  var isWeb = /(^|\.)(steampowered|steamcommunity)\.com$/.test(location.hostname);
+  // Страница при запуске Steam могла получить код как окно клиента: тогда начинаем заново как сайт.
+  if (window.__x4recolor) {
+    if (window.__x4recolor.web === !!window.__x4srv) { window.__x4recolor.run(); return; }
+    window.__x4recolor.revert();
+  }
+  // Сайт узнаём по адресу локального сервера: страница при запуске Steam может быть ещё about:blank,
+  // а окна клиента тоже бывают на https (steamloopback.host).
+  var isWeb = !!window.__x4srv;
+  // Готовое один раз лежит в общем окне Steam: все окна клиента берут один и тот же файл стилей.
+  var shared = window;
+  try { if (window.opener && window.opener.document) shared = window.opener; } catch (e) {}
+  var cfg = isWeb ? null : shared.__x4bm;
+  var srv = window.__x4srv;
   // Пока тема не встала, окно остаётся чёрным: родной вид не успевает мелькнуть. Таймер снимет шторку в любом случае.
   var gate = document.createElement("style");
   gate.id = "x4gate";
@@ -20,7 +30,18 @@
   function ready() { if (gate) { gate.remove(); gate = null; } }
   setTimeout(ready, isWeb ? 1500 : 700);
   if (isWeb) whenRoot(function () { document.documentElement.classList.add("x4-web"); });
-  var done = {};
+  function placeTheme() {
+    if (document.getElementById("x4bloodmoon")) return;
+    var href = isWeb ? srv + "/web.css" : cfg && cfg.cssUrl;
+    if (!href) return;
+    var l = document.createElement("link");
+    l.rel = "stylesheet"; l.id = "x4bloodmoon"; l.href = href;
+    // на сайте программа увидит ошибку и перезагрузит страницу, пока шторка закрыта
+    l.onerror = function () { if (isWeb) window.__x4blocked = 1; else ready(); };
+    (document.head || document.documentElement).appendChild(l);
+    window.__x4bloodmoon = 1;
+  }
+  whenRoot(placeTheme);
   var RE = /#[0-9a-fA-F]{3,8}\b|rgba?\(\s*[\d.]+[ ,]+[\d.]+[ ,]+[\d.]+(?:[ ,/]+[\d.]+%?)?\s*\)/g;
   var cache = {};
   var undo = [];
@@ -150,48 +171,66 @@
       try { return 'url("' + new URL(u, href).href + '")'; } catch (e) { return _; }
     });
   }
-  // Готовый текст один на все окна: он хранится в общем окне Steam.
-  var shared = window;
-  try { if (window.opener && window.opener.document) shared = window.opener; } catch (e) {}
+  // Перекрашенная копия тоже одна на все окна: браузер не разбирает её заново для каждого окна.
   var inflight = 0;
   function overlay(href) {
     var all = shared.__x4over || (shared.__x4over = {});
-    if (!all[href]) all[href] = fetch(href).then(function (r) { return r.text(); }).then(function (t) { return paintRules(absoluteUrls(href, t)); });
+    if (!all[href]) all[href] = fetch(href).then(function (r) { return r.text(); }).then(function (t) {
+      return shared.URL.createObjectURL(new shared.Blob([paintRules(absoluteUrls(href, t))], { type: "text/css" }));
+    });
     return all[href];
+  }
+  function addCopy(after, href) {
+    var c = document.createElement("link");
+    c.rel = "stylesheet"; c.href = href;
+    c.setAttribute("data-x4copy", "1");
+    after.parentNode.insertBefore(c, after.nextSibling);
+    return c;
   }
   function paintLinks() {
     [].forEach.call(document.querySelectorAll("link[rel=stylesheet]"), function (l) {
-      if (l.__x4p || !l.href) return;
+      if (l.__x4p || !l.href || l.id === "x4bloodmoon" || l.getAttribute("data-x4copy")) return;
       l.__x4p = 1;
       inflight++;
-      overlay(l.href).then(function (css) {
-        var st = document.createElement("style");
-        st.setAttribute("data-x4copy", "1");
-        st.textContent = css;
-        if (l.parentNode) l.parentNode.insertBefore(st, l.nextSibling);
+      overlay(l.href).then(function (url) {
+        if (l.parentNode) addCopy(l, url);
       }).catch(function () {}).then(function () { inflight--; later(); });
     });
   }
+  // Сайт: вместо стиля Steam грузим его перекрашенную копию с локального сервера программы.
+  function swapWeb() {
+    if (!srv) return;
+    [].forEach.call(document.querySelectorAll("link[rel=stylesheet]"), function (l) {
+      if (l.__x4p || !l.href || l.id === "x4bloodmoon" || l.getAttribute("data-x4copy")) return;
+      l.__x4p = 1;
+      var c = addCopy(l, srv + "/css?u=" + encodeURIComponent(l.href));
+      l.setAttribute("data-x4off", l.media || "all");
+      l.media = "not all";
+      c.onerror = function () {
+        window.__x4blocked = 1;
+        l.media = l.getAttribute("data-x4off"); l.removeAttribute("data-x4off"); c.remove(); later();
+      };
+    });
+  }
   function run() {
-    if (!isWeb) paintLinks();
+    placeTheme();
+    if (isWeb) swapWeb(); else paintLinks();
     var list = document.styleSheets;
     for (var i = 0; i < list.length; i++) {
       var s = list[i];
-      if (!isWeb && s.href) continue;
-      if (seen.has(s) || (s.ownerNode && (s.ownerNode.id === "x4bloodmoon" || s.ownerNode.getAttribute("data-x4copy")))) continue;
+      if (s.href || seen.has(s)) continue;
       var rules;
       try { rules = s.cssRules; } catch (e) { continue; }
       if (!rules) continue;
       seen.add(s);
       walk(rules);
     }
-    swapKnown();
     var wait = false;
     [].forEach.call(document.querySelectorAll("link[rel=stylesheet]"), function (l) {
       if (!l.sheet && l.media !== "not all") wait = true;
     });
     if (isWeb) markNav();
-    if (!wait && !inflight && document.readyState !== "loading" && (!isWeb || !pending().length)) ready();
+    if (!wait && !inflight && document.readyState !== "loading") ready();
   }
   // Верхнее меню магазина: классы у него хешированные, поэтому находим его по форме поиска.
   function markNav() {
@@ -202,60 +241,6 @@
     for (var i = 0; e && i < 4; i++) e = e.parentElement;
     if (e && e !== document.body) e.setAttribute("data-x4nav", "1");
   }
-  // Стили с чужого домена читать нельзя: подключатель скачивает их сам и передаёт текст сюда.
-  function pending() {
-    var out = [];
-    [].forEach.call(document.styleSheets, function (s) {
-      if (!s.href || done[s.href]) return;
-      try { if (s.cssRules) return; } catch (e) {}
-      out.push(s.href);
-    });
-    return out;
-  }
-  // Копия чужого стиля с заменёнными цветами встаёт на место оригинала: порядок правил Steam не меняется.
-  function rewrite(href, text) {
-    var base = href;
-    return text
-      .replace(/@import[^;]+;/g, "")
-      .replace(/url\(\s*(['"]?)(?!data:|https?:|#)([^'")]+)\1\s*\)/g, function (_, q, u) {
-        try { return 'url("' + new URL(u, base).href + '")'; } catch (e) { return _; }
-      })
-      .replace(/([\w-]+)\s*:\s*([^;{}]*)/g, function (m, k, v) {
-        if (v.indexOf("url(") >= 0 || !(v.indexOf("#") >= 0 || v.indexOf("rgb") >= 0)) return m;
-        var txt = k === "color" || k === "fill";
-        return k + ":" + v.replace(RE, function (c) { return map(c, txt); });
-      });
-  }
-  function swapLink(link, css) {
-    if (link.getAttribute("data-x4off")) return;
-    var st = document.createElement("style");
-    st.setAttribute("data-x4copy", "1");
-    st.textContent = css;
-    link.parentNode.insertBefore(st, link.nextSibling);
-    link.setAttribute("data-x4off", link.media || "all");
-    link.media = "not all";
-  }
-  function swap(href, css) {
-    done[href] = 1;
-    [].forEach.call(document.querySelectorAll("link[rel=stylesheet]"), function (l) {
-      if (l.href === href) swapLink(l, css);
-    });
-    later();
-  }
-  // Подключатель заранее кладёт сюда перекрашенные копии: подмена происходит до загрузки оригинала.
-  function swapKnown() {
-    var c = window.__x4c;
-    if (!c || !document.head) return;
-    [].forEach.call(document.querySelectorAll("link[rel=stylesheet]"), function (l) {
-      if (c[l.href]) { done[l.href] = 1; swapLink(l, c[l.href]); }
-    });
-  }
-  function addText(href, text) {
-    var css = rewrite(href, text);
-    swap(href, css);
-    return css;
-  }
-  function addRaw(href, css) { swap(href, css); }
   // Аватарка своего аккаунта крупнее родной: берём полноразмерную картинку, CSS её подставит.
   function avatar() {
     var img = document.querySelector(".avatarHolder.X-Small img.avatar, .currentUserAvatar img.avatar");
@@ -296,7 +281,7 @@
     ms.forEach(function (m) {
       [].forEach.call(m.addedNodes, function (n) { if (n.tagName === "LINK") n.addEventListener("load", later); });
     });
-    swapKnown();
+    if (isWeb) swapWeb();
     var t = document.getElementById("x4bloodmoon");
     if (t && document.head && t !== document.head.lastElementChild) document.head.appendChild(t);
     later();
@@ -310,19 +295,19 @@
   // Стили, вставленные до нас, сигнала о добавлении не дадут: пока шторка закрыта, проверяем их часто.
   var poll = setInterval(function () { run(); if (!gate) clearInterval(poll); }, 40);
   window.__x4recolor = {
+    web: isWeb,
     run: run,
-    pending: pending,
-    addText: addText,
-    addRaw: addRaw,
     revert: function () {
       obs.disconnect();
       ready();
       undo.forEach(function (u) { try { u[0].style.setProperty(u[1], u[2], u[3]); } catch (e) {} });
       undo = [];
-      try { delete shared.__x4over; } catch (e) {}
-      [].forEach.call(document.querySelectorAll("style[data-x4copy]"), function (n) { n.remove(); });
+      [].forEach.call(document.querySelectorAll("[data-x4copy]"), function (n) { n.remove(); });
       [].forEach.call(document.querySelectorAll("[data-x4off]"), function (n) { n.media = n.getAttribute("data-x4off"); n.removeAttribute("data-x4off"); });
-      done = {};
+      var t = document.getElementById("x4bloodmoon");
+      if (t) t.remove();
+      [].forEach.call(document.querySelectorAll("link"), function (n) { n.__x4p = 0; });
+      delete window.__x4bloodmoon;
       delete window.__x4recolor;
     }
   };

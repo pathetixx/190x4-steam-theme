@@ -1,4 +1,4 @@
-// Runs in SharedJSContext. Maps stable class names from Steam's webpack CSS modules to the
+// Выполняется в общем окне Steam (SharedJSContext). Maps stable class names from Steam's webpack CSS modules to the
 // hashes of the current build. Token: "Name" or "Name@Sibling" (module must also export Sibling).
 window.__x4resolve = function (tokens) {
   var req;

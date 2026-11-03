@@ -22,4 +22,4 @@ for (const f of fs.readdirSync(path.join(root, "src"))) {
   fs.writeFileSync(path.join(root, "out", f), css);
   console.log(f, (css.length / 1024).toFixed(0) + " KB");
 }
-for (const f of ["resolver.js", "recolor.js", "x4-steam-bloodmoon.ps1"]) fs.copyFileSync(path.join(root, "loader", f), path.join(root, "out", f));
+for (const f of ["resolver.js", "recolor.js"]) fs.copyFileSync(path.join(root, "loader", f), path.join(root, "out", f));

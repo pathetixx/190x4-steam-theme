@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net48</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <LangVersion>7.3</LangVersion>
+    <AssemblyName>190x4-Bloodmoon</AssemblyName>
+    <RootNamespace>Bloodmoon</RootNamespace>
+    <Version>0.1.0</Version>
+    <Product>190x4 Bloodmoon</Product>
+    <ApplicationIcon>Assets\app.ico</ApplicationIcon>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+    <DebugType>none</DebugType>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System.Web.Extensions" />
+    <EmbeddedResource Include="..\out\client.css" LogicalName="client.css" />
+    <EmbeddedResource Include="..\out\web.css" LogicalName="web.css" />
+    <EmbeddedResource Include="..\out\resolver.js" LogicalName="resolver.js" />
+    <EmbeddedResource Include="..\out\recolor.js" LogicalName="recolor.js" />
+    <EmbeddedResource Include="Assets\setup-bg.jpg" LogicalName="setup-bg.jpg" />
+    <EmbeddedResource Include="Assets\wordmark.png" LogicalName="wordmark.png" />
+    <EmbeddedResource Include="Assets\button.jpg" LogicalName="button.jpg" />
+    <EmbeddedResource Include="Assets\Oswald-700.ttf" LogicalName="Oswald-700.ttf" />
+    <EmbeddedResource Include="Assets\app.ico" LogicalName="app.ico" />
+  </ItemGroup>
+</Project>
