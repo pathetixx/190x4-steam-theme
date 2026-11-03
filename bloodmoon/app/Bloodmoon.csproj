@@ -6,7 +6,7 @@
     <LangVersion>7.3</LangVersion>
     <AssemblyName>190x4-Bloodmoon</AssemblyName>
     <RootNamespace>Bloodmoon</RootNamespace>
-    <Version>0.1.0</Version>
+    <Version>0.1.1</Version>
     <Product>190x4 Bloodmoon</Product>
     <ApplicationIcon>Assets\app.ico</ApplicationIcon>
     <ApplicationManifest>app.manifest</ApplicationManifest>

@@ -2,7 +2,8 @@
 // Class placeholders {{Name}} stay in place: the loader resolves them on the live client.
 import fs from "node:fs";
 import path from "node:path";
-const root = path.dirname(new URL(import.meta.url).pathname);
+import { fileURLToPath } from "node:url";
+const root = path.dirname(fileURLToPath(import.meta.url));
 const mime = { ".webp": "image/webp", ".png": "image/png", ".jpg": "image/jpeg", ".woff2": "font/woff2", ".svg": "image/svg+xml" };
 const inline = (rel) => `url("data:${mime[path.extname(rel)]};base64,${fs.readFileSync(path.join(root, rel)).toString("base64")}")`;
 fs.mkdirSync(path.join(root, "out"), { recursive: true });
